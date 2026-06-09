@@ -1,0 +1,436 @@
+{
+  "$schema": "cli-index.schema.json",
+  "description": "CLI工具索引表——按需搜索。优先CLI工具，通过OpenCLI将MCP转化为CLI。查询顺序：Skill索引表 → CLI索引表",
+  "last_updated": "2026-06-09",
+  "total_tools": 34,
+  "tools": [
+    {
+      "name": "git",
+      "source": "native-cli",
+      "description": "分布式版本控制系统",
+      "commands": [
+        {"name": "clone", "usage": "git clone <url> [dir]", "description": "克隆仓库"},
+        {"name": "pull", "usage": "git pull [remote] [branch]", "description": "拉取并合并"},
+        {"name": "push", "usage": "git push [remote] [branch]", "description": "推送提交"},
+        {"name": "commit", "usage": "git commit -m <msg>", "description": "提交变更"},
+        {"name": "branch", "usage": "git branch [name]", "description": "管理分支"},
+        {"name": "checkout", "usage": "git checkout <branch>", "description": "切换分支"},
+        {"name": "status", "usage": "git status", "description": "查看状态"},
+        {"name": "diff", "usage": "git diff [file]", "description": "查看差异"},
+        {"name": "log", "usage": "git log [--oneline]", "description": "查看历史"},
+        {"name": "stash", "usage": "git stash [pop]", "description": "暂存工作区"}
+      ],
+      "category": "version-control",
+      "install_required": false
+    },
+    {
+      "name": "npm",
+      "source": "native-cli",
+      "description": "Node.js包管理器",
+      "commands": [
+        {"name": "install", "usage": "npm install [pkg]", "description": "安装依赖"},
+        {"name": "run", "usage": "npm run <script>", "description": "执行脚本"},
+        {"name": "test", "usage": "npm test", "description": "运行测试"},
+        {"name": "link", "usage": "npm link [pkg]", "description": "全局链接包"},
+        {"name": "init", "usage": "npm init [-y]", "description": "初始化项目"},
+        {"name": "publish", "usage": "npm publish", "description": "发布包"}
+      ],
+      "category": "package-manager",
+      "install_required": false
+    },
+    {
+      "name": "node",
+      "source": "native-cli",
+      "description": "JavaScript运行时",
+      "commands": [
+        {"name": "run", "usage": "node <script.js>", "description": "执行JS脚本"},
+        {"name": "version", "usage": "node --version", "description": "查看版本"}
+      ],
+      "category": "runtime",
+      "install_required": false
+    },
+    {
+      "name": "bash",
+      "source": "native-cli",
+      "description": "Unix shell (Git Bash/MSYS2 on Windows)",
+      "commands": [
+        {"name": "script", "usage": "bash <script.sh>", "description": "执行Shell脚本"},
+        {"name": "loop", "usage": "for f in *.txt; do ...; done", "description": "批量循环处理"}
+      ],
+      "category": "shell",
+      "install_required": false
+    },
+    {
+      "name": "jq",
+      "source": "native-cli",
+      "description": "命令行JSON处理器",
+      "commands": [
+        {"name": "filter", "usage": "jq '.key' file.json", "description": "提取JSON字段"},
+        {"name": "transform", "usage": "jq '[.[] | {id, name}]'", "description": "JSON转换"},
+        {"name": "merge", "usage": "jq -s '.[0] * .[1]' a.json b.json", "description": "合并JSON"}
+      ],
+      "category": "data-processing",
+      "install_required": false
+    },
+    {
+      "name": "curl",
+      "source": "native-cli",
+      "description": "HTTP客户端，API调用和健康检查",
+      "commands": [
+        {"name": "get", "usage": "curl <url>", "description": "GET请求"},
+        {"name": "post", "usage": "curl -X POST -d <data> <url>", "description": "POST请求"},
+        {"name": "header", "usage": "curl -H 'Key: Val' <url>", "description": "带Header请求"},
+        {"name": "health", "usage": "curl -s -o /dev/null -w '%{http_code}' <url>", "description": "健康检查"}
+      ],
+      "category": "api-client",
+      "install_required": false
+    },
+    {
+      "name": "playwright",
+      "source": "native-cli",
+      "description": "浏览器自动化CLI（优先于OpenCLI browser）",
+      "commands": [
+        {"name": "install", "usage": "npx playwright install chromium", "description": "安装浏览器"},
+        {"name": "open", "usage": "npx playwright open <url>", "description": "打开页面"},
+        {"name": "screenshot", "usage": "npx playwright screenshot <url> <out.png>", "description": "截图"},
+        {"name": "codegen", "usage": "npx playwright codegen <url>", "description": "录制操作生成代码"}
+      ],
+      "category": "browser-automation",
+      "install_required": true
+    },
+    {
+      "name": "ecc",
+      "source": "native-cli",
+      "description": "ECC CLI——Everything Claude Code 操作系统的命令行入口",
+      "commands": [
+        {"name": "install", "usage": "npx ecc-install --profile <name> --target claude", "description": "安装ECC组件到Claude Code"},
+        {"name": "plan", "usage": "npx ecc-install --profile <name> --target claude --dry-run", "description": "预览安装计划"},
+        {"name": "catalog", "usage": "node scripts/catalog.js profiles", "description": "列出安装配置"},
+        {"name": "consult", "usage": "npx ecc consult <query> --target claude", "description": "查询匹配的ECC组件"},
+        {"name": "status", "usage": "node scripts/status.js --markdown --write status.md", "description": "导出ECC状态报告"},
+        {"name": "doctor", "usage": "node scripts/doctor.js", "description": "ECC诊断检查"},
+        {"name": "repair", "usage": "node scripts/repair.js", "description": "修复ECC安装"},
+        {"name": "uninstall", "usage": "node scripts/uninstall.js", "description": "卸载ECC组件"},
+        {"name": "list", "usage": "node scripts/list-installed.js", "description": "列出已安装组件"},
+        {"name": "harness-audit", "usage": "ecc harness-audit", "description": "仓库自动化审计评分"},
+        {"name": "security-scan", "usage": "npm run security:ioc-scan", "description": "供应链安全扫描"},
+        {"name": "skills-health", "usage": "node scripts/skills-health.js", "description": "Skill健康仪表盘"},
+        {"name": "test", "usage": "npm test", "description": "ECC完整验证套件"},
+        {"name": "auto-update", "usage": "node scripts/auto-update.js --profile <name>", "description": "自动更新ECC"}
+      ],
+      "category": "agent-ops",
+      "install_required": true
+    },
+    {
+      "name": "opencli",
+      "source": "opencli-converted",
+      "original_mcp": null,
+      "description": "通用CLI桥接器——将任意网站/API转化为命令行接口。166个适配器，优先用于MCP→CLI转化",
+      "commands": [
+        {"name": "list", "usage": "opencli list", "description": "列出所有可用适配器(166个)"},
+        {"name": "validate", "usage": "opencli validate", "description": "校验所有适配器"},
+        {"name": "playwright", "usage": "opencli playwright navigate/snapshot/click/type/evaluate/screenshot <url>", "description": "内置Playwright CLI（首选浏览器自动化）"},
+        {"name": "github", "usage": "opencli github <subcmd>", "description": "GitHub操作（issues/prs/repos/search等）"},
+        {"name": "gitlab", "usage": "opencli gitlab <subcmd>", "description": "GitLab操作"},
+        {"name": "npm", "usage": "opencli npm search/info <pkg>", "description": "npm包搜索"},
+        {"name": "pypi", "usage": "opencli pypi search/info <pkg>", "description": "PyPI包搜索"},
+        {"name": "dockerhub", "usage": "opencli dockerhub search/tags <image>", "description": "Docker Hub搜索"},
+        {"name": "confluence", "usage": "opencli confluence <subcmd>", "description": "Confluence文档操作"},
+        {"name": "arxiv", "usage": "opencli arxiv search <query>", "description": "arXiv论文搜索"},
+        {"name": "google", "usage": "opencli google search <query>", "description": "Google搜索"},
+        {"name": "duckduckgo", "usage": "opencli duckduckgo search <query>", "description": "DuckDuckGo搜索"},
+        {"name": "browser", "usage": "opencli browser navigate/snapshot/click/type", "description": "浏览器自动化（需要Chrome扩展，仅登录态Cookie场景）"},
+        {"name": "claude", "usage": "opencli claude <subcmd>", "description": "Claude AI对话（需要登录态）"},
+        {"name": "gemini", "usage": "opencli gemini <subcmd>", "description": "Google Gemini对话"},
+        {"name": "deepseek", "usage": "opencli deepseek <subcmd>", "description": "DeepSeek对话"}
+      ],
+      "category": "api-client",
+      "install_required": true
+    },
+    {
+      "name": "tsx",
+      "source": "native-cli",
+      "description": "TypeScript直接执行器（无需编译）",
+      "commands": [
+        {"name": "run", "usage": "npx tsx <file.ts>", "description": "直接执行TypeScript文件"}
+      ],
+      "category": "build-tool",
+      "install_required": false
+    },
+    {
+      "name": "tsc",
+      "source": "native-cli",
+      "description": "TypeScript编译器",
+      "commands": [
+        {"name": "build", "usage": "npx tsc", "description": "编译TypeScript"},
+        {"name": "check", "usage": "npx tsc --noEmit", "description": "仅类型检查不输出"}
+      ],
+      "category": "build-tool",
+      "install_required": false
+    },
+    {
+      "name": "eslint",
+      "source": "native-cli",
+      "description": "JavaScript/TypeScript代码检查",
+      "commands": [
+        {"name": "lint", "usage": "npx eslint <files>", "description": "代码检查"},
+        {"name": "fix", "usage": "npx eslint --fix <files>", "description": "自动修复"}
+      ],
+      "category": "linter-formatter",
+      "install_required": false
+    },
+    {
+      "name": "pytest",
+      "source": "native-cli",
+      "description": "Python测试框架",
+      "commands": [
+        {"name": "run", "usage": "pytest [test_file.py] [-k <pattern>]", "description": "运行测试"},
+        {"name": "coverage", "usage": "pytest --cov=<pkg> --cov-report=term", "description": "带覆盖率运行"}
+      ],
+      "category": "test-runner",
+      "install_required": false
+    },
+    {
+      "name": "vitest",
+      "source": "native-cli",
+      "description": "Vite原生测试框架",
+      "commands": [
+        {"name": "run", "usage": "npx vitest run [test_file]", "description": "运行测试"},
+        {"name": "watch", "usage": "npx vitest", "description": "监视模式"},
+        {"name": "coverage", "usage": "npx vitest run --coverage", "description": "带覆盖率运行"}
+      ],
+      "category": "test-runner",
+      "install_required": false
+    },
+    {
+      "name": "go",
+      "source": "native-cli",
+      "description": "Go语言工具链",
+      "commands": [
+        {"name": "build", "usage": "go build ./...", "description": "构建"},
+        {"name": "test", "usage": "go test ./... [-cover]", "description": "运行测试(带覆盖率)"},
+        {"name": "vet", "usage": "go vet ./...", "description": "静态分析"},
+        {"name": "fmt", "usage": "go fmt ./...", "description": "格式化代码"}
+      ],
+      "category": "build-tool",
+      "install_required": false
+    },
+    {
+      "name": "cargo",
+      "source": "native-cli",
+      "description": "Rust构建工具和包管理器",
+      "commands": [
+        {"name": "build", "usage": "cargo build [--release]", "description": "构建项目"},
+        {"name": "test", "usage": "cargo test", "description": "运行测试"},
+        {"name": "check", "usage": "cargo check", "description": "快速检查编译(不生成二进制)"},
+        {"name": "clippy", "usage": "cargo clippy", "description": "代码检查"},
+        {"name": "fmt", "usage": "cargo fmt", "description": "格式化代码"}
+      ],
+      "category": "build-tool",
+      "install_required": false
+    },
+    {
+      "name": "gradle",
+      "source": "native-cli",
+      "description": "JVM构建工具(Java/Kotlin/Android)",
+      "commands": [
+        {"name": "build", "usage": "./gradlew build", "description": "构建项目"},
+        {"name": "test", "usage": "./gradlew test", "description": "运行测试"},
+        {"name": "lint", "usage": "./gradlew lint", "description": "代码检查"}
+      ],
+      "category": "build-tool",
+      "install_required": false
+    },
+    {
+      "name": "docker",
+      "source": "native-cli",
+      "description": "容器管理",
+      "commands": [
+        {"name": "build", "usage": "docker build -t <name> .", "description": "构建镜像"},
+        {"name": "run", "usage": "docker run -p <host>:<container> <image>", "description": "运行容器"},
+        {"name": "compose", "usage": "docker compose up [-d]", "description": "启动多容器服务"}
+      ],
+      "category": "deployment",
+      "install_required": false
+    },
+    {
+      "name": "pm2",
+      "source": "native-cli",
+      "description": "Node.js进程管理器",
+      "commands": [
+        {"name": "start", "usage": "pm2 start <app.js> --name <name>", "description": "启动进程"},
+        {"name": "list", "usage": "pm2 list", "description": "列出所有进程"},
+        {"name": "logs", "usage": "pm2 logs [name]", "description": "查看日志"},
+        {"name": "stop", "usage": "pm2 stop <name>", "description": "停止进程"},
+        {"name": "restart", "usage": "pm2 restart <name>", "description": "重启进程"}
+      ],
+      "category": "deployment",
+      "install_required": false
+    },
+    {
+      "name": "uv",
+      "source": "native-cli",
+      "description": "Python极速包管理器(virtualenv替代)",
+      "commands": [
+        {"name": "run", "usage": "uv run <script.py>", "description": "在虚拟环境中运行脚本"},
+        {"name": "pip", "usage": "uv pip install <pkg>", "description": "安装Python包"},
+        {"name": "venv", "usage": "uv venv", "description": "创建虚拟环境"}
+      ],
+      "category": "package-manager",
+      "install_required": false
+    },
+    {
+      "name": "pnpm",
+      "source": "native-cli",
+      "description": "快速、节省磁盘的包管理器",
+      "commands": [
+        {"name": "install", "usage": "pnpm install", "description": "安装依赖"},
+        {"name": "run", "usage": "pnpm run <script>", "description": "执行脚本"},
+        {"name": "add", "usage": "pnpm add <pkg>", "description": "添加依赖"}
+      ],
+      "category": "package-manager",
+      "install_required": false
+    },
+    {
+      "name": "yarn",
+      "source": "native-cli",
+      "description": "包管理器(替代npm)",
+      "commands": [
+        {"name": "install", "usage": "yarn install", "description": "安装依赖"},
+        {"name": "run", "usage": "yarn run <script>", "description": "执行脚本"},
+        {"name": "add", "usage": "yarn add <pkg>", "description": "添加依赖"}
+      ],
+      "category": "package-manager",
+      "install_required": false
+    },
+    {
+      "name": "bun",
+      "source": "native-cli",
+      "description": "快速JavaScript运行时和包管理器",
+      "commands": [
+        {"name": "run", "usage": "bun run <script>", "description": "执行脚本"},
+        {"name": "install", "usage": "bun install", "description": "安装依赖"},
+        {"name": "add", "usage": "bun add <pkg>", "description": "添加依赖"},
+        {"name": "test", "usage": "bun test", "description": "运行测试"}
+      ],
+      "category": "package-manager",
+      "install_required": false
+    },
+    {
+      "name": "npx",
+      "source": "native-cli",
+      "description": "npm包执行器（无需安装即可运行CLI工具）",
+      "commands": [
+        {"name": "run", "usage": "npx <package> [args]", "description": "直接执行npm包命令"}
+      ],
+      "category": "package-manager",
+      "install_required": false
+    },
+    {
+      "name": "mkdocs",
+      "source": "native-cli",
+      "description": "文档站点生成器(Material主题)",
+      "commands": [
+        {"name": "serve", "usage": "mkdocs serve", "description": "启动文档开发服务器"},
+        {"name": "build", "usage": "mkdocs build", "description": "构建文档站点"}
+      ],
+      "category": "build-tool",
+      "install_required": false
+    },
+    {
+      "name": "ralph",
+      "source": "native-cli",
+      "description": "Ralph Harness工作流引擎——Generator-Evaluator双代理自主开发系统",
+      "commands": [
+        {"name": "run", "usage": "bash subprojects/ralph-harness/ralph.sh", "description": "启动Ralph工作流"},
+        {"name": "simple", "usage": "bash subprojects/ralph-harness/ralph.sh --mode simple", "description": "简化模式（单代理）"},
+        {"name": "resume", "usage": "bash subprojects/ralph-harness/ralph.sh --resume", "description": "恢复中断的会话"}
+      ],
+      "category": "agent-ops",
+      "install_required": false
+    },
+    {
+      "name": "ecc-agentshield",
+      "source": "native-cli",
+      "description": "ECC AgentShield——代理、Hook、MCP、权限、密钥安全扫描",
+      "commands": [
+        {"name": "scan", "usage": "npx ecc-agentshield", "description": "运行AgentShield安全扫描"}
+      ],
+      "category": "agent-ops",
+      "install_required": true
+    },
+    {
+      "name": "ecc-universal",
+      "source": "native-cli",
+      "description": "ECC Universal——跨平台ECC运行时",
+      "commands": [
+        {"name": "typescript", "usage": "npx ecc-universal typescript", "description": "安装TypeScript规则"},
+        {"name": "python", "usage": "npx ecc-universal python", "description": "安装Python规则"}
+      ],
+      "category": "agent-ops",
+      "install_required": true
+    },
+    {
+      "name": "code-review",
+      "source": "native-cli",
+      "description": "Claude Code内置代码审查（ECC命令）",
+      "commands": [
+        {"name": "diff", "usage": "/code-review", "description": "审查当前diff"},
+        {"name": "pr", "usage": "/code-review <PR_URL>", "description": "审查GitHub PR"},
+        {"name": "fix", "usage": "/code-review --fix", "description": "审查并自动修复"}
+      ],
+      "category": "code-quality",
+      "install_required": false
+    },
+    {
+      "name": "prp",
+      "source": "native-cli",
+      "description": "PRP工作流（Plan→Review→Push）——ECC命令集",
+      "commands": [
+        {"name": "plan", "usage": "/prp-plan", "description": "创建实现计划"},
+        {"name": "implement", "usage": "/prp-implement", "description": "执行实现计划"},
+        {"name": "commit", "usage": "/prp-commit <desc>", "description": "自然语言提交"},
+        {"name": "pr", "usage": "/prp-pr", "description": "创建Pull Request"},
+        {"name": "prd", "usage": "/prp-prd", "description": "交互式PRD生成"}
+      ],
+      "category": "code-quality",
+      "install_required": false
+    },
+    {
+      "name": "gan",
+      "source": "native-cli",
+      "description": "GAN Harness——生成器-评估器双代理构建循环",
+      "commands": [
+        {"name": "build", "usage": "/gan-build", "description": "启动GAN构建循环"},
+        {"name": "design", "usage": "/gan-design", "description": "启动GAN设计循环"}
+      ],
+      "category": "agent-ops",
+      "install_required": false
+    },
+    {
+      "name": "santa-loop",
+      "source": "native-cli",
+      "description": "Santa Loop——对抗性双审查收敛循环（两个独立模型都批准才能通过）",
+      "commands": [
+        {"name": "run", "usage": "/santa-loop", "description": "启动双审查循环"}
+      ],
+      "category": "code-quality",
+      "install_required": false
+    }
+  ],
+  "categories": {
+    "version-control": "版本控制",
+    "package-manager": "包管理器",
+    "build-tool": "构建工具",
+    "test-runner": "测试运行器",
+    "linter-formatter": "代码检查与格式化",
+    "runtime": "运行时",
+    "shell": "Shell环境",
+    "browser-automation": "浏览器自动化",
+    "api-client": "API调用与数据获取",
+    "data-processing": "数据处理",
+    "deployment": "部署工具",
+    "agent-ops": "Agent运维",
+    "code-quality": "代码质量"
+  }
+}

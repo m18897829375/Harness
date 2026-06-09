@@ -1,0 +1,15 @@
+[submodule "subprojects/claude-skills-main"]
+	path = subprojects/claude-skills-main
+	url = https://github.com/m18897829375/claude-skills-main
+[submodule "subprojects/ralph-harness"]
+	path = subprojects/ralph-harness
+	url = https://github.com/m18897829375/ralph-harness
+[submodule "subprojects/everything-claude-code"]
+	path = subprojects/everything-claude-code
+	url = https://github.com/m18897829375/everything-claude-code
+[submodule "subprojects/awesome-mcp-servers"]
+	path = subprojects/awesome-mcp-servers
+	url = https://github.com/m18897829375/awesome-mcp-servers
+[submodule "subprojects/OpenCLI"]
+	path = subprojects/OpenCLI
+	url = https://github.com/m18897829375/OpenCLI

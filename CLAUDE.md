@@ -1,0 +1,94 @@
+# CLAUDE.md
+
+本文件为 Claude Code 在此仓库中工作时提供指导。
+
+## 项目定位
+
+**harness** 是元项目，编排5个子项目形成AI辅助开发流水线。
+
+- **Agent框架**: Claude Code
+- **工作流引擎**: Ralph Harness（PRD驱动的Generator-Evaluator自主开发循环）
+- **技能系统**: Claude Skills(343) + ECC(261) + OpenCLI — 三来源合并去重，统一索引
+- **工具体系**: CLI优先（CLI > MCP），MCP通过OpenCLI转化为CLI
+
+## 工作流
+
+```
+用户需求 → 阶段1 Plan(加载skill分析,禁改代码,网络搜索必须有效) → 阶段2 PRD(ralph-harness生成) → 阶段3 Ralph Loop(合同协商→Generator(ReAct+Daemon,按需加载skill/CLI)→Evaluator(ReAct+Daemon,按需加载skill/CLI+ECC验证)→通过则完成/未通过回Generator) → 阶段4 最终验证(ECC验证,不通过回阶段1) → 交付
+```
+
+### Ralph Loop 关键步骤
+
+1. **子任务分析**: 先查skill-index.json按需加载skill（辅助发现额外CLI），Claude Code自主判断CLI需求，合并后按需查cli-index.json加载CLI条目。**禁止全量加载索引表**
+2. **合同协商**: Generator↔Evaluator协商完成标准，成功锁定执行，失败回Generator重协商
+3. **Generator**: ReAct+Daemon模式，按合同实现，调用skill/CLI工具
+4. **Evaluator**: ReAct+Daemon模式，按合同验收，调用skill/CLI+ECC测试验证
+5. **闭环**: 不通过→回Generator，通过→下一子任务。全部完成→阶段4
+
+## 子项目体系（只读，git pull同步）
+
+| 子项目 | 角色 |
+|--------|------|
+| `subprojects/claude-skills-main/` | 技能来源1：343个skill |
+| `subprojects/ralph-harness/` | 工作流引擎：PRD生成+Ralph Loop(含合同协商) |
+| `subprojects/everything-claude-code/` | 技能来源2+验证工具：261个skill+子任务验证(阶段3)+最终验证(阶段4) |
+| `subprojects/awesome-mcp-servers/` | MCP服务目录，供OpenCLI转化 |
+| `subprojects/OpenCLI/` | 技能来源3+MCP→CLI转化(166个适配器) |
+
+## 工程约束
+
+### 硬性约束（必须遵守）
+
+1. **Plan模式禁改代码**: 进入Plan模式后，严格禁止修改任何代码。只能讨论、制定计划、使用CLI工具辅助分析、进行网络搜索分析可行性和方案。**网络搜索必须获取到有效网页内容，不能收到0KB数据就结束搜索。**
+2. **CLI优先 > MCP**: 任何工具调用优先使用CLI工具。如只有MCP工具，通过OpenCLI将其转化为CLI工具并全局注册。既有MCP又有CLI时，只保留CLI工具。
+3. **禁止降级处理**: 不能靠编写脚本替代使用CLI工具。必须直接调用。
+4. **子项目只读**: 5个子项目的源码只能通过 `git pull` 同步上游，禁止直接修改。
+5. **ReAct + Daemon**: Generator和Evaluator均采用ReAct架构（先思考后调用工具循环），以Daemon模式运行确保中断后执行不中断。
+6. **合同协商**: 每个子任务执行前，Generator和Evaluator必须先协商完成标准，协商成功锁定合同后执行，协商失败返回Generator重新协商。严格遵守 ralph-harness 工作流规范。
+7. **子任务启动前分析**: 每个PRD子任务执行前，必须按需搜索索引表，只加载当前子任务所需的Skill和CLI条目，禁止全量加载索引表。
+8. **索引表查询顺序与原因**: 先按需搜索 Skill索引表 → 加载所需skill作为补充 → 结合Claude Code自主判断 → 按需搜索 CLI索引表 → 加载所需CLI条目 → 最后搜索子项目源码。**先查Skill是因为Skill能辅助发现额外的CLI工具，不是Skill全权决定CLI需求。**
+9. **索引表按需渐进加载**: Skill索引表和CLI索引表**禁止一次性全部加载到上下文**。每次只搜索并加载当前子任务所需的条目，像Skill一样渐进式加载。
+
+### 设计原则
+
+- **Skill去重合并**: 三个技能来源（claude-skills-main、ECC、OpenCLI）可能存在重复skill，需按功能分类和开发阶段分类合并去重，避免冗余
+- **全局注册**: 通过OpenCLI转化的CLI工具应注册为全局可用
+- **索引表动态更新**: 子项目更新后，索引表需同步更新
+- **ECC双角色**: ECC同时承担技能提供和测试验证两个角色，覆盖阶段3（子任务验证）和阶段4（最终验证）
+- **CLAUDE.md精简策略**: 每次对话Claude Code都会加载完整CLAUDE.md到上下文，因此在harness项目成型后，应删除冗余内容。
+
+
+## 目录结构
+
+```
+harness/
+├── CLAUDE.md                    # 本文件
+├── cli-index.json               # CLI工具索引(34个工具,按需搜索)
+├── skill-index.json             # Skill索引(156个核心skill,按需搜索)
+├── prds/                        # PRD文档
+├── subprojects/                 # 子项目(只读)
+│   ├── claude-skills-main/      # 技能来源1
+│   ├── ralph-harness/           # 工作流引擎
+│   ├── everything-claude-code/  # 技能来源2+验证
+│   ├── awesome-mcp-servers/     # MCP目录
+│   └── OpenCLI/                 # 技能来源3+MCP→CLI
+└── workspace/                   # 工作区
+```
+
+## 索引系统
+
+> **按需搜索，禁止全量加载。** 索引表是搜索工具，不是参考资料。
+
+### Skill索引表 (`skill-index.json`) — 查询优先级最高
+
+- 156个核心skill（从604个筛选），按category（需求分析/开发/测试/部署/安全/性能/数据库/工具）× phase（plan/prd/generator/evaluator/verify）分类
+- 先查此表：Claude Code自主分析CLI需求 → skill辅助发现额外CLI → 合并后查CLI索引表
+
+### CLI索引表 (`cli-index.json`) — 查询优先级次之
+
+- 34个CLI工具，按13个category分类，每个工具含commands数组
+- 来源标注：native-cli / opencli-converted
+
+## 使用
+
+启动新任务时：进入Plan模式→加载skill-index.json中需求分析skill→生成PRD→启动Ralph Loop。
