@@ -8,14 +8,22 @@
 
 - **Agent框架**: Claude Code
 - **工作流引擎**: Ralph Harness（PRD驱动的Generator-Evaluator自主开发循环）
-- **技能系统**: Claude Skills(343) + ECC(261) + OpenCLI — 三来源合并去重，统一索引
+- **技能系统**: Claude Skills(422) + ECC(264) + ralph-harness(2) + OpenCLI(6) — 四来源合并去重，694个skill统一索引
 - **工具体系**: CLI优先（CLI > MCP），MCP通过OpenCLI转化为CLI
 
 ## 工作流
 
 ```
-用户需求 → 阶段1 Plan(加载skill分析,禁改代码,网络搜索必须有效) → 阶段2 PRD(ralph-harness生成) → 阶段3 Ralph Loop(合同协商→Generator(ReAct+Daemon,按需加载skill/CLI)→Evaluator(ReAct+Daemon,按需加载skill/CLI+ECC验证)→通过则完成/未通过回Generator) → 阶段4 最终验证(ECC验证,不通过回阶段1) → 交付
+用户需求 → 阶段1 Plan(加载skill分析,禁改代码,网络搜索必须有效,分析完成后精简rules) → 阶段2 PRD(ralph-harness生成) → 阶段3 Ralph Loop(合同协商→Generator(ReAct+Daemon,按需加载skill/CLI)→Evaluator(ReAct+Daemon,按需加载skill/CLI+ECC验证)→通过则完成/未通过回Generator) → 阶段4 最终验证(ECC验证,不通过回阶段1) → 交付
 ```
+
+### 阶段1收尾：精简 Rules
+
+Plan 阶段分析完产品需求和技术栈后，删除 `.claude/rules/ecc/` 中与当前项目技术栈无关的语言目录，只保留 `common/` + 项目使用的语言目录。
+
+> ECC rules 安装在项目级 `.claude/rules/ecc/`，不影响其他项目。每条 rule 都进入 System Prompt 消耗 token——删除无关 rules 可节省数万 tokens/会话。
+> 
+> Skills 不需要精简：subprojects 里的 skill 不进入 System Prompt，只在 skill-index.json 中被搜索，不消耗 token。
 
 ### Ralph Loop 关键步骤
 
@@ -29,9 +37,9 @@
 
 | 子项目 | 角色 |
 |--------|------|
-| `subprojects/claude-skills-main/` | 技能来源1：343个skill |
-| `subprojects/ralph-harness/` | 工作流引擎：PRD生成+Ralph Loop(含合同协商) |
-| `subprojects/everything-claude-code/` | 技能来源2+验证工具：261个skill+子任务验证(阶段3)+最终验证(阶段4) |
+| `subprojects/claude-skills-main/` | 技能来源1：422个skill |
+| `subprojects/ralph-harness/` | 工作流引擎 + 技能来源4：2个skill(prd/ralph) |
+| `subprojects/everything-claude-code/` | 技能来源2+验证工具：264个skill+子任务验证(阶段3)+最终验证(阶段4) |
 | `subprojects/awesome-mcp-servers/` | MCP服务目录，供OpenCLI转化 |
 | `subprojects/OpenCLI/` | 技能来源3+MCP→CLI转化(166个适配器) |
 
@@ -51,7 +59,7 @@
 
 ### 设计原则
 
-- **Skill去重合并**: 三个技能来源（claude-skills-main、ECC、OpenCLI）可能存在重复skill，需按功能分类和开发阶段分类合并去重，避免冗余
+- **Skill去重合并**: 四个技能来源（claude-skills-main、ECC、ralph-harness、OpenCLI）可能存在重复skill，由 `scripts/build_skill_index.py` 自动扫描合并去重
 - **全局注册**: 通过OpenCLI转化的CLI工具应注册为全局可用
 - **索引表动态更新**: 子项目更新后，索引表需同步更新
 - **ECC双角色**: ECC同时承担技能提供和测试验证两个角色，覆盖阶段3（子任务验证）和阶段4（最终验证）
@@ -63,15 +71,15 @@
 ```
 harness/
 ├── CLAUDE.md                    # 本文件
-├── cli-index.json               # CLI工具索引(34个工具,按需搜索)
-├── skill-index.json             # Skill索引(156个核心skill,按需搜索)
+├── cli-index.json               # CLI工具索引(34个工具,按需grep搜索)
+├── skill-index.json             # Skill索引(694个skill,四来源去重,按需grep搜索)
 ├── prds/                        # PRD文档
 ├── subprojects/                 # 子项目(只读)
-│   ├── claude-skills-main/      # 技能来源1
-│   ├── ralph-harness/           # 工作流引擎
-│   ├── everything-claude-code/  # 技能来源2+验证
+│   ├── claude-skills-main/      # 技能来源1(422)
+│   ├── ralph-harness/           # 工作流引擎+技能来源4(2)
+│   ├── everything-claude-code/  # 技能来源2(264)+验证
 │   ├── awesome-mcp-servers/     # MCP目录
-│   └── OpenCLI/                 # 技能来源3+MCP→CLI
+│   └── OpenCLI/                 # 技能来源3(6)+MCP→CLI
 └── workspace/                   # 工作区
 ```
 
@@ -81,7 +89,7 @@ harness/
 
 ### Skill索引表 (`skill-index.json`) — 查询优先级最高
 
-- 156个核心skill（从604个筛选），按category（需求分析/开发/测试/部署/安全/性能/数据库/工具）× phase（plan/prd/generator/evaluator/verify）分类
+- 694个skill（从1630个文件合并去重），12个category × 5个phase 分类，由 `scripts/build_skill_index.py` 自动生成
 - 先查此表：Claude Code自主分析CLI需求 → skill辅助发现额外CLI → 合并后查CLI索引表
 
 ### CLI索引表 (`cli-index.json`) — 查询优先级次之
