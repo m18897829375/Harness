@@ -1,7 +1,7 @@
 {
   "$schema": "cli-index.schema.json",
   "description": "CLI工具索引表——按需搜索。优先CLI工具，通过OpenCLI将MCP转化为CLI。查询顺序：Skill索引表 → CLI索引表",
-  "last_updated": "2026-06-09",
+  "last_updated": "2026-06-11",
   "total_tools": 34,
   "tools": [
     {
@@ -142,7 +142,10 @@
         {"name": "browser", "usage": "opencli browser navigate/snapshot/click/type", "description": "浏览器自动化（需要Chrome扩展，仅登录态Cookie场景）"},
         {"name": "claude", "usage": "opencli claude <subcmd>", "description": "Claude AI对话（需要登录态）"},
         {"name": "gemini", "usage": "opencli gemini <subcmd>", "description": "Google Gemini对话"},
-        {"name": "deepseek", "usage": "opencli deepseek <subcmd>", "description": "DeepSeek对话"}
+        {"name": "deepseek", "usage": "opencli deepseek <subcmd>", "description": "DeepSeek对话"},
+        {"name": "v2ray-status", "usage": "opencli v2ray status", "description": "查看VPN代理状态（系统代理开关+进程检测）"},
+        {"name": "v2ray-on", "usage": "opencli v2ray on [--proxy <addr>]", "description": "开启系统代理（默认SOCKS5://127.0.0.1:10808）"},
+        {"name": "v2ray-off", "usage": "opencli v2ray off", "description": "关闭系统代理恢复直连"}
       ],
       "category": "api-client",
       "install_required": true
