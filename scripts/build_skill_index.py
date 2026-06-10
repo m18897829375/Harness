@@ -178,11 +178,8 @@ def scan_source(source_name, skills_dir):
         # Extract keywords from name
         keywords = name.replace('-', ' ').split()[:8]
 
-        # Try to get relative path to BASE
-        try:
-            rel_path = str(sk_md.relative_to(BASE))
-        except ValueError:
-            rel_path = str(sk_md)
+        # Use absolute path — works from any directory (including workspace/)
+        abs_path = str(sk_md.resolve())
 
         results.append({
             'name': name,
@@ -191,7 +188,7 @@ def scan_source(source_name, skills_dir):
             'phase': classify_phase(sk_md.parent, name),
             'description': description[:250] if description else f'{name}',
             'trigger_keywords': keywords,
-            'file_path': rel_path
+            'file_path': abs_path
         })
         count += 1
 
