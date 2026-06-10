@@ -13,3 +13,4 @@
 [submodule "subprojects/OpenCLI"]
 	path = subprojects/OpenCLI
 	url = https://github.com/m18897829375/OpenCLI
+	ignore = untracked
