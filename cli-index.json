@@ -143,7 +143,7 @@
         {"name": "claude", "usage": "opencli claude <subcmd>", "description": "Claude AI对话（需要登录态）"},
         {"name": "gemini", "usage": "opencli gemini <subcmd>", "description": "Google Gemini对话"},
         {"name": "deepseek", "usage": "opencli deepseek <subcmd>", "description": "DeepSeek对话"},
-        {"name": "v2ray", "usage": "opencli v2ray status/on/off", "description": "v2rayN TUN模式控制（修改guiNConfig.json开关TUN，不重启v2rayN，无需管理员终端）"}
+        {"name": "v2ray", "usage": "opencli v2ray status/on/off", "description": "v2rayN TUN模式控制（修改guiNConfig.json开关TUN，不重启v2rayN）"}
       ],
       "category": "api-client",
       "install_required": true
