@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 """Build skill-index.json from all subprojects."""
 import json, os, re
 from pathlib import Path
@@ -75,10 +75,10 @@ def classify_category(skill_dir, name):
     # High-specificity checks first
     if any(k in combined for k in ['healthcare', 'clinical', 'phi',
         'medical', 'cdss', 'emr']):
-        return '医疗'
+        return 'healthcare'
     if any(k in combined for k in ['compliance', 'iso-', 'fda-', 'gdpr',
         'soc2', 'regulatory', 'ra-qm', 'mdr-', 'capa-', 'qms-', 'isms-']):
-        return '合规'
+        return 'compliance'
     if any(k in combined for k in ['marketing', 'seo', 'content-engine',
         'content-product', 'content-strateg', 'content-human', 'brand-',
         'campaign', 'social-', 'growth-marketer', 'email-sequence',
@@ -95,7 +95,7 @@ def classify_category(skill_dir, name):
         'lead-intelligence', 'investor-materials', 'investor-outreach',
         'article-writing', 'video-editing', 'remotion-video',
         'manim-video']):
-        return '营销'
+        return 'marketing'
     if any(k in combined for k in ['finance-billing', 'business-investment',
         'saas-metrics-coach', 'financial-analyst',
         'deal-desk', 'pricing-strategist', 'channel-economics',
@@ -105,26 +105,26 @@ def classify_category(skill_dir, name):
         'ito-basket', 'ito-data-atlas', 'ito-market', 'ito-trade',
         'cost-aware-llm', 'cost-tracking', 'cost-report',
         'token-budget', 'context-budget']):
-        return '金融'
+        return 'finance'
     if any(k in combined for k in ['security', 'pen-test', 'adversarial-review',
         'threat-detection', 'incident-response', 'gateguard',
         'database-protection', 'red-team', 'safety-guard', 'hookify-rules',
         'cloud-security', 'ai-security', 'security-bounty',
         'secrets-detection', 'owasp']):
-        return '安全'
+        return 'security'
     if any(k in combined for k in ['performance', 'optimizer',
         'benchmark-optimization', 'latency-critical', 'data-throughput',
         'parallel-execution-optimizer', 'connections-optimizer']):
-        return '性能'
+        return 'performance'
     if any(k in combined for k in ['database', 'postgres', 'sql', 'prisma',
         'redis', 'mysql', 'clickhouse', 'database-migration',
         'snowflake-development', 'database-designer', 'database-schema']):
-        return '数据库'
+        return 'database'
     if any(k in combined for k in ['deploy', 'docker-', 'kubernetes',
         'ci-cd', 'pm2', 'devops', 'ship-gate', 'helm-chart', 'terraform',
         'vite-proxy', 'dev-server-listen', 'release-manager',
         'flox-environments', 'uncloud', 'deployment-patterns']):
-        return '部署'
+        return 'deployment'
     if any(k in combined for k in ['test', 'tdd', 'e2e', 'a11y', 'code-review',
         'evaluat', 'qa-', 'debug', 'bug', 'quality', 'silent-failure',
         'type-design', 'pr-test', 'comment-analyzer', 'verification-loop',
@@ -132,14 +132,14 @@ def classify_category(skill_dir, name):
         'code-tour', 'codebase-onboarding', 'security-scan', 'security-review',
         'ai-regression', 'plankton-code', 'skill-stocktake', 'skill-health',
         'test-coverage', 'quality-gate', 'prd-verify']):
-        return '测试'
+        return 'testing'
     if any(k in combined for k in ['product-team', 'product-manager',
         'product-strategist', 'product-discovery', 'product-analytics',
         'product-lens', 'product-capability', 'agile-product',
         'ux-research', 'code-to-prd', 'spec-to-repo', 'saas-scaffolder',
         'competitive-teardown', 'roadmap-communicator', 'experiment-designer',
         'research-summarizer']):
-        return '需求分析'
+        return 'requirements'
     if any(k in combined for k in ['c-level', 'ceo-advisor', 'cto-advisor',
         'coo-advisor', 'cpo-advisor', 'cmo-advisor', 'cro-advisor',
         'ciso-advisor', 'chro-advisor', 'general-counsel', 'vpe-advisor',
@@ -150,14 +150,14 @@ def classify_category(skill_dir, name):
         'internal-comms', 'knowledge-ops', 'procurement-optimizer',
         'project-management', 'senior-pm', 'scrum-master', 'jira-expert',
         'confluence-expert', 'atlassian', 'customer-success-manager']):
-        return '管理'
+        return 'management'
     if any(k in combined for k in ['plan', 'brainstorm', 'strategy',
         'deep-research', 'research-ops', 'research-summarizer',
         'grill-me', 'grill-with-docs', 'multi-plan', 'strategic-compact',
         'council', 'project-init', 'model-route', 'prp-prd',
         'plan-orchestrate', 'blueprint']):
-        return '需求分析'
-    return '开发'
+        return 'requirements'
+    return 'development'
 
 def scan_source(source_name, skills_dir):
     """Scan a source directory for SKILL.md files."""

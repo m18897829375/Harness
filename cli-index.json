@@ -1,8 +1,8 @@
-{
+﻿{
   "$schema": "cli-index.schema.json",
   "description": "CLI工具索引表——按需搜索。优先CLI工具，通过OpenCLI将MCP转化为CLI。查询顺序：Skill索引表 → CLI索引表",
   "last_updated": "2026-06-11",
-  "total_tools": 34,
+  "total_tools": 35,
   "tools": [
     {
       "name": "git",
@@ -416,6 +416,18 @@
         {"name": "run", "usage": "/santa-loop", "description": "启动双审查循环"}
       ],
       "category": "code-quality",
+      "install_required": false
+    },
+    {
+      "name": "search-index",
+      "source": "native-cli",
+      "description": "搜索skill索引表和CLI工具索引表——支持关键词、category、phase多条件组合搜索",
+      "commands": [
+        {"name": "skill", "usage": "python3 scripts/search_index.py --type skill --keyword <keyword> [--category <cat>] [--phase <phase>]", "description": "搜索skill索引表(694个skill)"},
+        {"name": "cli", "usage": "python3 scripts/search_index.py --type cli --keyword <keyword> [--category <cat>]", "description": "搜索CLI工具索引表(35个工具)"},
+        {"name": "exact", "usage": "python3 scripts/search_index.py --type skill|cli --name <name>", "description": "按name精确匹配"}
+      ],
+      "category": "agent-ops",
       "install_required": false
     }
   ],
