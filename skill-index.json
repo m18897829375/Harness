@@ -2,10 +2,10 @@
   "$schema": "skill-index.schema.json",
   "description": "Skill索引表——Claude Skills + ECC + OpenCLI 三来源合并去重。按需搜索(grep)，禁止全量加载。先查此表再查CLI索引表。",
   "last_updated": "2026-06-10",
-  "total_skills": 602,
+  "total_skills": 603,
   "by_source": {
-    "claude-skills-main": 330,
-    "everything-claude-code": 264,
+    "claude-skills-main": 332,
+    "everything-claude-code": 263,
     "OpenCLI": 6,
     "ralph-harness": 2
   },
@@ -127,7 +127,7 @@
         "trade",
         "compliance"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\customs-trade-compliance\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\customs-trade-compliance\\SKILL.md"
     },
     {
       "name": "eu-ai-act-specialist",
@@ -201,12 +201,12 @@
       "source": "everything-claude-code",
       "category": "compliance",
       "phase": "generator",
-      "description": "HIPAA準拠実装、セキュリティ対策、監査ログ、およびデータ保護戦略。",
+      "description": "HIPAA-specific entrypoint for healthcare privacy and security work. Use when a task is explicitly framed around HIPAA, PHI handling, covered entities, BAAs, breach posture, or US healthcare compliance requirements.",
       "trigger_keywords": [
         "hipaa",
         "compliance"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\hipaa-compliance\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\hipaa-compliance\\SKILL.md"
     },
     {
       "name": "information-security-manager-iso27001",
@@ -413,7 +413,7 @@
         "clickhouse",
         "io"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\clickhouse-io\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\clickhouse-io\\SKILL.md"
     },
     {
       "name": "database-designer",
@@ -457,12 +457,12 @@
       "source": "everything-claude-code",
       "category": "database",
       "phase": "generator",
-      "description": "日本語翻訳：このファイルは mysql-patterns 用の日本語翻訳が必要です",
+      "description": "MySQL and MariaDB schema, query, indexing, transaction, replication, and connection-pool patterns for production backends.",
       "trigger_keywords": [
         "mysql",
         "patterns"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\mysql-patterns\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\mysql-patterns\\SKILL.md"
     },
     {
       "name": "postgres-patterns",
@@ -493,24 +493,24 @@
       "source": "everything-claude-code",
       "category": "database",
       "phase": "generator",
-      "description": "生物医学文献、MeSH クエリ、PMID 検索、引用取得、および API を利用した文献モニタリングのための PubMed および NCBI E-utilities の直接検索ワークフロー。",
+      "description": "Direct PubMed and NCBI E-utilities search workflows for biomedical literature, MeSH queries, PMID lookup, citation retrieval, and API-backed literature monitoring.",
       "trigger_keywords": [
         "pubmed",
         "database"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\scientific-db-pubmed-database\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\scientific-db-pubmed-database\\SKILL.md"
     },
     {
       "name": "redis-patterns",
       "source": "everything-claude-code",
       "category": "database",
       "phase": "generator",
-      "description": "Redisデータ構造パターン、キャッシング戦略、分散ロック、レート制限、Pub/Sub、本番アプリケーション用コネクション管理。",
+      "description": "Redis data structure patterns, caching strategies, distributed locks, rate limiting, pub/sub, and connection management for production applications.",
       "trigger_keywords": [
         "redis",
         "patterns"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\redis-patterns\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\redis-patterns\\SKILL.md"
     },
     {
       "name": "snowflake-development",
@@ -542,12 +542,12 @@
       "source": "everything-claude-code",
       "category": "database",
       "phase": "generator",
-      "description": "公式記録の検索、PatentSearch クエリ、TSDR チェック、譲渡データ、および再現可能な IP 調査ログのための USPTO 特許・商標データワークフロー。",
+      "description": "USPTO patent and trademark data workflow for official record lookup, PatentSearch queries, TSDR checks, assignment data, and reproducible IP research logs.",
       "trigger_keywords": [
         "uspto",
         "database"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\scientific-db-uspto-database\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\scientific-db-uspto-database\\SKILL.md"
     },
     {
       "name": "ci-cd-pipeline-builder",
@@ -604,12 +604,12 @@
       "source": "everything-claude-code",
       "category": "deployment",
       "phase": "generator",
-      "description": "Floxで再現可能なクロスプラットフォーム開発環境を作成します — Nixに基づく宣言的な環境マネージャー。次の場合は必ずこのスキルを使用してください: システムレベルの依存関係（コンパイラー、データベース、openssl・libvips・BLAS・LAPACKなどのネイティブライブラリー）を持つプロジェクトを設定する場合; Python、Node.js、Rust、Go、C/C++、Java、Ruby、Elixir、PHP、その他の言語の再現可能なツールチェーンを設定する場合; macOSとLi",
+      "description": "Create reproducible, cross-platform development environments with Flox — a declarative environment manager built on Nix. ALWAYS use this skill when the user needs to: set up a project with system-level dependencies (compilers, databases, native libra",
       "trigger_keywords": [
         "flox",
         "environments"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\flox-environments\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\flox-environments\\SKILL.md"
     },
     {
       "name": "helm-chart-builder",
@@ -712,24 +712,24 @@
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "WCAG 2.2 レベル AA 標準を用いてインクルーシブなデジタルプロダクトを設計・実装・監査します。Web 用のセマンティック ARIA および Web・ネイティブプラットフォーム（iOS/Android）のアクセシビリティトレイトを生成するために使用します。",
+      "description": "Design, implement, and audit inclusive digital products using WCAG 2.2 Level AA",
       "trigger_keywords": [
         "accessibility"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\accessibility\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\accessibility\\SKILL.md"
     },
     {
       "name": "agent-architecture-audit",
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "エージェントおよび LLM アプリケーション向けのフルスタック診断。12 層のエージェントスタックにおけるラッパーリグレッション、メモリ汚染、ツール規律の失敗、隠れた修復ループ、レンダリング破損を監査します。重要度順の発見事項とコードファーストの修正を生成します。エージェントアプリケーション、自律ループ、または LLM を活用した機能を構築する開発者に必須です。",
+      "description": "Full-stack diagnostic for agent and LLM applications. Audits the 12-layer agent stack for wrapper regression, memory pollution, tool discipline failures, hidden repair loops, and rendering corruption. Produces severity-ranked findings with code-first",
       "trigger_keywords": [
         "agent",
         "architecture",
         "audit"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\agent-architecture-audit\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\agent-architecture-audit\\SKILL.md"
     },
     {
       "name": "agent-designer",
@@ -748,38 +748,38 @@
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "カスタムタスクでコーディングエージェント（Claude Code、Aider、Codex など）をヘッドツーヘッドで比較し、合格率、コスト、時間、一貫性のメトリクスを測定します",
+      "description": "Head-to-head comparison of coding agents (Claude Code, Aider, Codex, etc.) on custom tasks with pass rate, cost, time, and consistency metrics",
       "trigger_keywords": [
         "agent",
         "eval"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\agent-eval\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\agent-eval\\SKILL.md"
     },
     {
       "name": "agent-harness-construction",
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "AI エージェントのアクション空間、ツール定義、観測フォーマットを設計・最適化して完了率を向上させます。",
+      "description": "Design and optimize AI agent action spaces, tool definitions, and observation formatting for higher completion rates.",
       "trigger_keywords": [
         "agent",
         "harness",
         "construction"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\agent-harness-construction\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\agent-harness-construction\\SKILL.md"
     },
     {
       "name": "agent-payment-x402",
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "タスクごとのバジェット、支出コントロール、ノンカストディアルウォレットを備えた x402 決済実行を AI エージェントに追加します。agentwallet-sdk を通じて Base をサポートし、OKX Payments / OKX エージェント決済プロトコルを通じて X Layer をサポートします。",
+      "description": "Add x402 payment execution to AI agents with per-task budgets, spending controls, and non-custodial wallets. Supports Base through agentwallet-sdk and X Layer through OKX Payments / OKX Agent Payments Protocol.",
       "trigger_keywords": [
         "agent",
         "payment",
         "x402"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\agent-payment-x402\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\agent-payment-x402\\SKILL.md"
     },
     {
       "name": "agent-sort",
@@ -834,25 +834,25 @@
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "Claude Code 上に永続的なマルチエージェントオペレーティングシステムを構築します。カーネルアーキテクチャ、スペシャリストエージェント、スラッシュコマンド、ファイルベースのメモリ、スケジュールされた自動化、外部データベースなしの状態管理をカバーします。",
+      "description": "Build persistent multi-agent operating systems on Claude Code. Covers kernel architecture, specialist agents, slash commands, file-based memory, scheduled automation, and state management without external databases.",
       "trigger_keywords": [
         "agentic",
         "os"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\agentic-os\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\agentic-os\\SKILL.md"
     },
     {
       "name": "ai-first-engineering",
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "AI エージェントが大量の実装出力を生成するチームのためのエンジニアリング運用モデル。",
+      "description": "Engineering operating model for teams where AI agents generate a large share of implementation output.",
       "trigger_keywords": [
         "ai",
         "first",
         "engineering"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\ai-first-engineering\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\ai-first-engineering\\SKILL.md"
     },
     {
       "name": "andreessen",
@@ -870,38 +870,38 @@
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "Android と Kotlin Multiplatform プロジェクトのクリーンアーキテクチャパターン — モジュール構造、依存関係ルール、UseCase、Repository、データ層パターン。",
+      "description": "Clean Architecture patterns for Android and Kotlin Multiplatform projects — module structure, dependency rules, UseCases, Repositories, and data layer patterns.",
       "trigger_keywords": [
         "android",
         "clean",
         "architecture"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\android-clean-architecture\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\android-clean-architecture\\SKILL.md"
     },
     {
       "name": "angular-developer",
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "Angular コードを生成し、アーキテクチャ ガイダンスを提供します。プロジェクトの作成、コンポーネント、またはサービスを作成するとき、または反応性（シグナル、linkedSignal、リソース）、フォーム、依存性注入、ルーティング、SSR、アクセシビリティ（ARIA）、アニメーション、スタイリング（コンポーネント スタイル、Tailwind CSS）、テスト、または CLI ツール作成のベスト プラクティスについてトリガーされます。",
+      "description": "Generates Angular code and provides architectural guidance. Trigger when creating projects, components, or services, or for best practices on reactivity (signals, linkedSignal, resource), forms, dependency injection, routing, SSR, accessibility (ARIA",
       "trigger_keywords": [
         "angular",
         "developer"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\angular-developer\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\angular-developer\\SKILL.md"
     },
     {
       "name": "api-connector-builder",
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "ターゲット リポジトリの既存統合パターンに正確に一致する新しい API コネクターまたはプロバイダーを構築します。2 番目のアーキテクチャを発明せずに、1 つ以上の統合を追加するときに使用します。",
+      "description": "Build a new API connector or provider by matching the target repo's existing integration pattern exactly. Use when adding one more integration without inventing a second architecture.",
       "trigger_keywords": [
         "api",
         "connector",
         "builder"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\api-connector-builder\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\api-connector-builder\\SKILL.md"
     },
     {
       "name": "api-design",
@@ -933,39 +933,39 @@
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "コーディングセッション中にアーキテクチャ決定を構造化ADRとして記録し、自動的に決定の瞬間を検出し、コンテキスト、検討された代替案、根拠を記録します。今後の開発者がコードベースの形成理由を理解するためのADRログを維持します。",
+      "description": "Capture architectural decisions made during Claude Code sessions as structured ADRs. Auto-detects decision moments, records context, alternatives considered, and rationale. Maintains an ADR log so future developers understand why the codebase is shap",
       "trigger_keywords": [
         "architecture",
         "decision",
         "records"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\architecture-decision-records\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\architecture-decision-records\\SKILL.md"
     },
     {
       "name": "automation-audit-ops",
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "ECC用の証拠ベースの自動化インベントリとオーバーラップ監査ワークフロー。ユーザーがどのジョブ、フック、コネクタ、MCPサーバー、またはラッパーがライブか、壊れているか、冗長であるか、修正前に不足しているかを知りたい場合に使用します。",
+      "description": "Evidence-first automation inventory and overlap audit workflow for ECC. Use when the user wants to know which jobs, hooks, connectors, MCP servers, or wrappers are live, broken, redundant, or missing before fixing anything.",
       "trigger_keywords": [
         "automation",
         "audit",
         "ops"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\automation-audit-ops\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\automation-audit-ops\\SKILL.md"
     },
     {
       "name": "autonomous-agent-harness",
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "Claude Codeを永続的なメモリ、スケジュール済み操作、コンピュータ使用、タスクキューイングを備えた完全自動エージェントシステムに変換します。スタンドアロンエージェントフレームワーク（Hermes、AutoGPT）を、Claude Codeのネイティブcrons、dispatch、MCPツール、メモリを活用して置き換えます。ユーザーが継続的な自動操作、スケジュール済みタスク、または自己指令エージェントループを望む場合に使用します。",
+      "description": "Transform Claude Code into a fully autonomous agent system with persistent memory, scheduled operations, computer use, and task queuing. Replaces standalone agent frameworks (Hermes, AutoGPT) by leveraging Claude Code's native crons, dispatch, MCP to",
       "trigger_keywords": [
         "autonomous",
         "agent",
         "harness"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\autonomous-agent-harness\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\autonomous-agent-harness\\SKILL.md"
     },
     {
       "name": "autonomous-loops",
@@ -1045,11 +1045,11 @@
       "source": "everything-claude-code",
       "category": "development",
       "phase": "plan",
-      "description": "このスキルを使用して、パフォーマンスベースラインを測定し、PR前後の回帰を検出し、スタック代替案を比較します。",
+      "description": "Use this skill to measure performance baselines, detect regressions before/after PRs, and compare stack alternatives.",
       "trigger_keywords": [
         "benchmark"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\benchmark\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\benchmark\\SKILL.md"
     },
     {
       "name": "blender-motion-state-inspection",
@@ -1116,12 +1116,12 @@
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "このスキルを使用して、デプロイメント、マージ、または依存関係アップグレード後にデプロイされたURLの回帰を監視します。",
+      "description": "Use this skill to monitor and verify a deployed URL after releases — checks HTTP endpoints, SSE streams, static assets, console errors, and performance regressions after deploys, merges, or dependency upgrades. Smoke / canary / post-deploy verificati",
       "trigger_keywords": [
         "canary",
         "watch"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\canary-watch\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\canary-watch\\SKILL.md"
     },
     {
       "name": "capture",
@@ -1145,7 +1145,7 @@
         "relationship",
         "management"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\carrier-relationship-management\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\carrier-relationship-management\\SKILL.md"
     },
     {
       "name": "caveman",
@@ -1187,24 +1187,24 @@
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "showコマンド、コンフィグ階層、ワイルドカードマスク、ACL配置、インターフェースハイジーン、安全な変更ウィンドウ検証のためのCisco IOSおよびIOS-XEレビューパターン。",
+      "description": "Cisco IOS and IOS-XE review patterns for show commands, config hierarchy, wildcard masks, ACL placement, interface hygiene, and safe change-window verification.",
       "trigger_keywords": [
         "cisco",
         "ios",
         "patterns"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\cisco-ios-patterns\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\cisco-ios-patterns\\SKILL.md"
     },
     {
       "name": "ck",
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "Claude Codeの永続的なプロジェクト単位のメモリ。セッション開始時にプロジェクトコンテキストを自動読み込み、gitアクティビティでセッションを追跡し、ネイティブメモリに書き込みます。コマンドは決定的なNode.jsスクリプトを実行します — 動作はモデルバージョン間で一貫しています。",
+      "description": "Persistent per-project memory for Claude Code. Auto-loads project context on session start, tracks sessions with git activity, and writes to native memory. Commands run deterministic Node.js scripts — behavior is consistent across model versions.",
       "trigger_keywords": [
         "ck"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\ck\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\ck\\SKILL.md"
     },
     {
       "name": "claude-coach",
@@ -1223,25 +1223,25 @@
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "Claude DevFleet経由でマルチエージェントコーディングタスクをオーケストレーション — プロジェクトを計画し、分離された作業ツリー内で平行エージェントを派遣し、進捗を監視し、構造化レポートを読む。",
+      "description": "Orchestrate multi-agent coding tasks via Claude DevFleet — plan projects, dispatch parallel agents in isolated worktrees, monitor progress, and read structured reports.",
       "trigger_keywords": [
         "claude",
         "devfleet"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\claude-devfleet\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\claude-devfleet\\SKILL.md"
     },
     {
       "name": "click-path-audit",
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "ユーザー向けボタン/タッチポイントを完全な状態変更シーケンスを通して追跡し、機能が個別に機能するが互いにキャンセルされたり、間違った最終状態を生成したり、UIを矛盾した状態にしたままにするバグを見つけます。次の場合に使用します：体系的なデバッグがバグを見つけたが、ユーザーは壊れたボタンを報告する場合、または共有状態ストアに触れる主要なリファクター後。",
+      "description": "Trace every user-facing button/touchpoint through its full state change sequence to find bugs where functions individually work but cancel each other out, produce wrong final state, or leave the UI in an inconsistent state. Use when: systematic debug",
       "trigger_keywords": [
         "click",
         "path",
         "audit"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\click-path-audit\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\click-path-audit\\SKILL.md"
     },
     {
       "name": "codehealth-mcp",
@@ -1284,25 +1284,25 @@
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "KMPプロジェクト向けのCompose MultiplatformおよびJetpack Composeパターン — 状態管理、ナビゲーション、テーマ設定、パフォーマンス、プラットフォーム固有のUI。",
+      "description": "Compose Multiplatform and Jetpack Compose patterns for KMP projects — state management, navigation, theming, performance, and platform-specific UI.",
       "trigger_keywords": [
         "compose",
         "multiplatform",
         "patterns"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\compose-multiplatform-patterns\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\compose-multiplatform-patterns\\SKILL.md"
     },
     {
       "name": "configure-ecc",
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "Everything Claude Code のインタラクティブなインストーラー — スキルとルールの選択とインストールをユーザーレベルまたはプロジェクトレベルのディレクトリへガイドし、パスを検証し、必要に応じてインストールされたファイルを最適化します。",
+      "description": "Interactive installer for Everything Claude Code — guides users through selecting and installing skills and rules to user-level or project-level directories, verifies paths, and optionally optimizes installed files.",
       "trigger_keywords": [
         "configure",
         "ecc"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\configure-ecc\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\configure-ecc\\SKILL.md"
     },
     {
       "name": "content-hash-cache-pattern",
@@ -1323,38 +1323,38 @@
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "品質ゲート、評価、リカバリーコントロールを備えた継続的な自律エージェントループのパターン。",
+      "description": "Patterns for continuous autonomous agent loops with quality gates, evals, and recovery controls.",
       "trigger_keywords": [
         "continuous",
         "agent",
         "loop"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\continuous-agent-loop\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\continuous-agent-loop\\SKILL.md"
     },
     {
       "name": "continuous-learning",
       "source": "everything-claude-code",
       "category": "development",
       "phase": "verify",
-      "description": "[OBSOLETO - usar continuous-learning-v2] Extractor de skill por hook Stop v1 heredado. v2 es un superconjunto estricto con aprendizaje basado en instintos, con alcance de proyecto y hooks confiables. No invocar v1; dirigir solicitudes de aprendizaje ",
+      "description": "[DEPRECATED - use continuous-learning-v2] Legacy v1 stop-hook skill extractor. v2 is a strict superset with instinct-based, project-scoped, hook-reliable learning. Do not invoke v1; route continuous learning, session learning, and pattern extraction ",
       "trigger_keywords": [
         "continuous",
         "learning"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\es\\skills\\continuous-learning\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\continuous-learning\\SKILL.md"
     },
     {
       "name": "continuous-learning-v2",
       "source": "everything-claude-code",
       "category": "development",
       "phase": "verify",
-      "description": "Sistema de aprendizaje basado en instintos que observa sesiones mediante hooks, crea instintos atómicos con puntuación de confianza y los evoluciona en skills/comandos/agentes. v2.1 agrega instintos con alcance de proyecto para prevenir contaminación",
+      "description": "Instinct-based learning system that observes sessions via hooks, creates atomic instincts with confidence scoring, and evolves them into skills/commands/agents. v2.1 adds project-scoped instincts to prevent cross-project contamination.",
       "trigger_keywords": [
         "continuous",
         "learning",
         "v2"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\es\\skills\\continuous-learning-v2\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\continuous-learning-v2\\SKILL.md"
     },
     {
       "name": "coverage",
@@ -1385,38 +1385,38 @@
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "本番環境対応のDartおよびFlutterパターンは、null安全性、不変状態、非同期構成、ウィジェットアーキテクチャ、人気のある状態管理フレームワーク（BLoC、Riverpod、Provider）、GoRouterナビゲーション、Dioネットワーキング、Freezedコード生成、クリーンアーキテクチャをカバー。",
+      "description": "Production-ready Dart and Flutter patterns covering null safety, immutable state, async composition, widget architecture, popular state management frameworks (BLoC, Riverpod, Provider), GoRouter navigation, Dio networking, Freezed code generation, an",
       "trigger_keywords": [
         "dart",
         "flutter",
         "patterns"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\dart-flutter-patterns\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\dart-flutter-patterns\\SKILL.md"
     },
     {
       "name": "dashboard-builder",
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "Grafana、SigNoz、および同様のプラットフォーム用の実際のオペレータ質問に答える監視ダッシュボードを構築します。メトリクスを虚栄ボードではなく機能するダッシュボードに変える場合に使用します。",
+      "description": "Build monitoring dashboards that answer real operator questions for Grafana, SigNoz, and similar platforms. Use when turning metrics into a working dashboard instead of a vanity board.",
       "trigger_keywords": [
         "dashboard",
         "builder"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\dashboard-builder\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\dashboard-builder\\SKILL.md"
     },
     {
       "name": "data-scraper-agent",
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "任意のパブリックソース（ジョブボード、価格、ニュース、GitHub、スポーツなど）用の完全自動化されたAI搭載データ収集エージェントを構築します。スケジュールでスクレイプし、無料LLM（Gemini Flash）でデータを豊かにし、Notion/Sheets/Supabaseに結果を保存し、ユーザーフィードバックから学習します。GitHub Actions上で100％無料で実行。ユーザーがパブリックデータを自動的に監視、収集、または追跡したい場合に使用します。",
+      "description": "Build a fully automated AI-powered data collection agent for any public source — job boards, prices, news, GitHub, sports, anything. Scrapes on a schedule, enriches data with a free LLM (Gemini Flash), stores results in Notion/Sheets/Supabase, and le",
       "trigger_keywords": [
         "data",
         "scraper",
         "agent"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\data-scraper-agent\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\data-scraper-agent\\SKILL.md"
     },
     {
       "name": "dependency-auditor",
@@ -1447,24 +1447,24 @@
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "アクセシビリティ、レスポンシブネス、テーマ設定、コンポーネント群、トークンを備えた本番環境対応デザインシステムの構築。Figma、Storybook、コンポーネントライブラリ統合。",
+      "description": "Use this skill to generate or audit design systems, check visual consistency, and review PRs that touch styling.",
       "trigger_keywords": [
         "design",
         "system"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\design-system\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\design-system\\SKILL.md"
     },
     {
       "name": "django-celery",
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "DjangoおよびCeleryを使用した非同期タスク処理。タスクキューイング、ワーカー管理、エラー処理、スケジューリング。Redis/RabbitMQ ブローカー統合。",
+      "description": "Django + Celery async task patterns — configuration, task design, beat scheduling, retries, canvas workflows, monitoring, and testing. Use when adding background jobs, scheduled tasks, or async processing to a Django app.",
       "trigger_keywords": [
         "django",
         "celery"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\django-celery\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\django-celery\\SKILL.md"
     },
     {
       "name": "django-patterns",
@@ -1488,7 +1488,7 @@
         "django",
         "verification"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\django-verification\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\django-verification\\SKILL.md"
     },
     {
       "name": "dmux-workflows",
@@ -1530,12 +1530,12 @@
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "C#と.NET言語固有のパターン、規約、依存性注入、async/await、およびロバストで保守可能な.NETアプリケーション構築のためのベストプラクティス。",
+      "description": "Idiomatic C# and .NET patterns, conventions, dependency injection, async/await, and best practices for building robust, maintainable .NET applications.",
       "trigger_keywords": [
         "dotnet",
         "patterns"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\dotnet-patterns\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\dotnet-patterns\\SKILL.md"
     },
     {
       "name": "dynamic-workflow-mode",
@@ -1555,50 +1555,50 @@
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "ECC の現在のエージェント、スキル、コマンド、フック、ルール、インストールプロファイル、およびプロジェクトオンボーディングをガイドしています。ライブリポジトリサーフェスを読んでから回答するようユーザーをガイドします。",
+      "description": "Guide users through ECC's current agents, skills, commands, hooks, rules, install profiles, and project onboarding by reading the live repository surface before answering.",
       "trigger_keywords": [
         "ecc",
         "guide"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\ecc-guide\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\ecc-guide\\SKILL.md"
     },
     {
       "name": "ecc-tools-cost-audit",
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "ECC ツール、エージェント、スキル、および実装のコスト監査を実施します。プロンプト入力トークンを分析して、計算効率を定量化します。",
+      "description": "Evidence-first ECC Tools burn and billing audit workflow. Use when investigating runaway PR creation, quota bypass, premium-model leakage, duplicate jobs, or GitHub App cost spikes in the ECC Tools repo.",
       "trigger_keywords": [
         "ecc",
         "tools",
         "cost",
         "audit"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\ecc-tools-cost-audit\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\ecc-tools-cost-audit\\SKILL.md"
     },
     {
       "name": "email-ops",
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "ECC用の証拠ベースのメールボックストリアージ、ドラフト作成、送信検証、および送信済みメールセーフフォローアップワークフロー。ユーザーがメールを整理したり、実際のメールサーフェスを通じてドラフトまたは送信したい、または送信済みメールに何が到着したかを証明したい場合に使用します。",
+      "description": "Evidence-first mailbox triage, drafting, send verification, and sent-mail-safe follow-up workflow for ECC. Use when the user wants to organize email, draft or send through the real mail surface, or prove what landed in Sent.",
       "trigger_keywords": [
         "email",
         "ops"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\email-ops\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\email-ops\\SKILL.md"
     },
     {
       "name": "energy-procurement",
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "電気とガス調達、料金最適化、需要料金管理、再生可能エネルギーPPA評価、およびマルチファシリティーエネルギー戦略のための符号化された専門知識。",
+      "description": ">",
       "trigger_keywords": [
         "energy",
         "procurement"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\energy-procurement\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\energy-procurement\\SKILL.md"
     },
     {
       "name": "engineering-advanced-skills",
@@ -1630,13 +1630,13 @@
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "オブザーバビリティ、セキュリティ境界、およびライフサイクル管理を備えた長寿命エージェントワークロードを運用します。",
+      "description": "Operate long-lived agent workloads with observability, security boundaries, and lifecycle management.",
       "trigger_keywords": [
         "enterprise",
         "agent",
         "ops"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\enterprise-agent-ops\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\enterprise-agent-ops\\SKILL.md"
     },
     {
       "name": "env-secrets-manager",
@@ -1668,12 +1668,12 @@
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "TypeScript、Python、Goにわたる堅牢なエラー処理のパターン。型付きエラー、エラー境界、リトライ、サーキットブレーカー、ユーザー向けエラーメッセージをカバーします。",
+      "description": "Patterns for robust error handling across TypeScript, Python, and Go. Covers typed errors, error boundaries, retries, circuit breakers, and user-facing error messages.",
       "trigger_keywords": [
         "error",
         "handling"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\error-handling\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\error-handling\\SKILL.md"
     },
     {
       "name": "eval",
@@ -1826,27 +1826,27 @@
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "デバイス上基盤モデルの実装パターン、量子化、最適化、およびプライバシーを考慮した推論。",
+      "description": "Apple FoundationModels framework for on-device LLM — text generation, guided generation with @Generable, tool calling, and snapshot streaming in iOS 26+.",
       "trigger_keywords": [
         "foundation",
         "models",
         "on",
         "device"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\foundation-models-on-device\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\foundation-models-on-device\\SKILL.md"
     },
     {
       "name": "frontend-design-direction",
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "フロントエンド設計の方向性、美的原則、および一貫した設計言語実装。",
+      "description": "Set an ECC-specific frontend design direction for production UI work. Use when building or improving websites, dashboards, applications, components, landing pages, visual tools, or any web UI that needs stronger product-specific design judgment.",
       "trigger_keywords": [
         "frontend",
         "design",
         "direction"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\frontend-design-direction\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\frontend-design-direction\\SKILL.md"
     },
     {
       "name": "frontend-patterns",
@@ -1890,13 +1890,13 @@
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "GAN（生成的敵対ネットワーク）スタイルの評価ハーネス、画像生成パターン、および品質メトリクス。",
+      "description": "GAN-inspired Generator-Evaluator agent harness for building high-quality applications autonomously. Based on Anthropic's March 2026 harness design paper.",
       "trigger_keywords": [
         "gan",
         "style",
         "harness"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\gan-style-harness\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\gan-style-harness\\SKILL.md"
     },
     {
       "name": "gcp-cloud-architect",
@@ -1927,23 +1927,23 @@
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "ゲノムデータベースへのクイック検索、配列検索、BLAST スタイルの検索、エンリッチメントチェック、および再現可能なバイオインフォマティクス証拠ログのための gget CLI および Python ワークフロー。",
+      "description": "gget CLI and Python workflow for quick genomic database queries, sequence lookup, BLAST-style searches, enrichment checks, and reproducible bioinformatics evidence logs.",
       "trigger_keywords": [
         "gget"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\scientific-pkg-gget\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\scientific-pkg-gget\\SKILL.md"
     },
     {
       "name": "git-workflow",
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "Gitワークフロー、ブランチ戦略、コミットメッセージ規約、およびプルリクエストプロセス。",
+      "description": "Git workflow patterns including branching strategies, commit conventions, merge vs rebase, conflict resolution, and collaborative development best practices for teams of all sizes.",
       "trigger_keywords": [
         "git",
         "workflow"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\git-workflow\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\git-workflow\\SKILL.md"
     },
     {
       "name": "git-worktree-manager",
@@ -1963,12 +1963,12 @@
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "GitHub操作、自動化、APIインテグレーション、およびCI/CDワークフロー。",
+      "description": "GitHub repository operations, automation, and management. Issue triage, PR management, CI/CD operations, release management, and security monitoring using the gh CLI. Use when the user wants to manage GitHub issues, PRs, CI status, releases, contribu",
       "trigger_keywords": [
         "github",
         "ops"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\github-ops\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\github-ops\\SKILL.md"
     },
     {
       "name": "golang-patterns",
@@ -2000,13 +2000,13 @@
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "Google Workspace API操作、Sheets自動化、Gmail統合、およびドキュメント管理。",
+      "description": "Operate across Google Drive, Docs, Sheets, and Slides as one workflow surface for plans, trackers, decks, and shared documents. Use when the user needs to find, summarize, edit, migrate, or clean up Google Workspace assets without dropping to raw too",
       "trigger_keywords": [
         "google",
         "workspace",
         "ops"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\google-workspace-ops\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\google-workspace-ops\\SKILL.md"
     },
     {
       "name": "grants",
@@ -2035,89 +2035,89 @@
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "Hermesデータインポート、マッピング、変換、およびデータインテグリティ検証。",
+      "description": "Convert local Hermes operator workflows into sanitized ECC skills and release-pack artifacts. Use when preparing a Hermes workflow for public ECC reuse without leaking private workspace state, credentials, or local-only paths.",
       "trigger_keywords": [
         "hermes",
         "imports"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\hermes-imports\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\hermes-imports\\SKILL.md"
     },
     {
       "name": "hexagonal-architecture",
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "ヘキサゴナルアーキテクチャ（ポート・アダプタパターン）、境界の分離、および外部依存関係の管理。",
+      "description": "Design, implement, and refactor Ports & Adapters systems with clear domain boundaries, dependency inversion, and testable use-case orchestration across TypeScript, Java, Kotlin, and Go services.",
       "trigger_keywords": [
         "hexagonal",
         "architecture"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\hexagonal-architecture\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\hexagonal-architecture\\SKILL.md"
     },
     {
       "name": "homelab-network-readiness",
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "ホームラボネットワーク準備、セキュリティ評価、パフォーマンステスト、および展開準備。",
+      "description": "Readiness checklist for homelab VLAN segmentation, local DNS filtering, and WireGuard-style remote access before changing router, firewall, DHCP, or VPN configuration.",
       "trigger_keywords": [
         "homelab",
         "network",
         "readiness"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\homelab-network-readiness\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\homelab-network-readiness\\SKILL.md"
     },
     {
       "name": "homelab-network-setup",
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "ホームラボネットワーク基盤設定、デバイス設定、接続性、およびネットワークセグメンテーション。",
+      "description": "Practical home and homelab network planning for gateways, switches, access points, IP ranges, DHCP reservations, DNS, cabling, and common beginner mistakes.",
       "trigger_keywords": [
         "homelab",
         "network",
         "setup"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\homelab-network-setup\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\homelab-network-setup\\SKILL.md"
     },
     {
       "name": "homelab-pihole-dns",
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "ホームラボ用Pi-hole DNS設定、広告ブロック、プライバシー、およびカスタムドメイン解決。",
+      "description": "Pi-hole installation, blocklist management, DNS-over-HTTPS setup, DHCP integration, local DNS records, and troubleshooting broken DNS resolution on a home network.",
       "trigger_keywords": [
         "homelab",
         "pihole",
         "dns"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\homelab-pihole-dns\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\homelab-pihole-dns\\SKILL.md"
     },
     {
       "name": "homelab-vlan-segmentation",
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "ホームラボVLANセグメンテーション、ネットワーク分離、アクセス制御、およびトラフィック管理。",
+      "description": "Segmenting home networks into VLANs for IoT, guest, trusted, and server traffic using UniFi, pfSense/OPNsense, and MikroTik — including switch trunk config, firewall rules, and wireless SSID mapping.",
       "trigger_keywords": [
         "homelab",
         "vlan",
         "segmentation"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\homelab-vlan-segmentation\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\homelab-vlan-segmentation\\SKILL.md"
     },
     {
       "name": "homelab-wireguard-vpn",
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "ホームラボWireGuard VPN設定、リモートアクセス、キー管理、およびエンドツーエンド暗号化。",
+      "description": "WireGuard VPN server setup, peer configuration, key generation, split tunneling vs full tunnel routing, and remote access to a home network from mobile and laptop clients.",
       "trigger_keywords": [
         "homelab",
         "wireguard",
         "vpn"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\homelab-wireguard-vpn\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\homelab-wireguard-vpn\\SKILL.md"
     },
     {
       "name": "inbox-setup",
@@ -2210,25 +2210,25 @@
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "SF Symbols（Apple ネイティブ 5,000 件以上）または Iconify API（200 以上のコレクションから 275,000 件以上のオープンソースアイコン）から Xcode アセットカタログ用の PNG イメージセットとして iOS アプリアイコンを生成します。アイコンの生成、アイコンアセットの作成、アセットカタログへのアイコン追加、または iOS プロジェクト向けアイコンの検索を行う際に使用します。",
+      "description": "Generate iOS app icons as PNG imagesets for Xcode asset catalogs from SF Symbols (5000+ Apple-native) or Iconify API (275k+ open source icons from 200+ collections). Use when generating icons, creating icon assets, adding icons to asset catalog, or s",
       "trigger_keywords": [
         "ios",
         "icon",
         "gen"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\ios-icon-gen\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\ios-icon-gen\\SKILL.md"
     },
     {
       "name": "iterative-retrieval",
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "サブエージェントのコンテキスト問題を解決するために、コンテキスト取得を段階的に洗練するパターン",
+      "description": "Pattern for progressively refining context retrieval to solve the subagent context problem",
       "trigger_keywords": [
         "iterative",
         "retrieval"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\iterative-retrieval\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\iterative-retrieval\\SKILL.md"
     },
     {
       "name": "java-coding-standards",
@@ -2248,12 +2248,12 @@
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "Jira チケットの取得、要件分析、チケットステータスの更新、コメントの追加、またはイシューのトランジションを行う際に使用します。MCP または直接 REST 呼び出しによる Jira API パターンを提供します。",
+      "description": "Use this skill when retrieving Jira tickets, analyzing requirements, updating ticket status, adding comments, or transitioning issues. Provides Jira API patterns via MCP or direct REST calls.",
       "trigger_keywords": [
         "jira",
         "integration"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\jira-integration\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\jira-integration\\SKILL.md"
     },
     {
       "name": "jpa-patterns",
@@ -2284,39 +2284,39 @@
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "Android および KMP 向けの Kotlin コルーチンと Flow パターン — 構造化並行性、Flow オペレーター、StateFlow、エラーハンドリング、テスト。",
+      "description": "Kotlin Coroutines and Flow patterns for Android and KMP — structured concurrency, Flow operators, StateFlow, error handling, and testing.",
       "trigger_keywords": [
         "kotlin",
         "coroutines",
         "flows"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\kotlin-coroutines-flows\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\kotlin-coroutines-flows\\SKILL.md"
     },
     {
       "name": "kotlin-exposed-patterns",
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "JetBrains Exposed ORM パターン（DSL クエリ、DAO パターン、トランザクション、HikariCP 接続プーリング、Flyway マイグレーション、リポジトリパターンを含む）。",
+      "description": "JetBrains Exposed ORM patterns including DSL queries, DAO pattern, transactions, HikariCP connection pooling, Flyway migrations, and repository pattern.",
       "trigger_keywords": [
         "kotlin",
         "exposed",
         "patterns"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\kotlin-exposed-patterns\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\kotlin-exposed-patterns\\SKILL.md"
     },
     {
       "name": "kotlin-ktor-patterns",
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "Ktor サーバーパターン（ルーティング DSL、プラグイン、認証、Koin DI、kotlinx.serialization、WebSocket、testApplication テストを含む）。",
+      "description": "Ktor server patterns including routing DSL, plugins, authentication, Koin DI, kotlinx.serialization, WebSockets, and testApplication testing.",
       "trigger_keywords": [
         "kotlin",
         "ktor",
         "patterns"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\kotlin-ktor-patterns\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\kotlin-ktor-patterns\\SKILL.md"
     },
     {
       "name": "kotlin-patterns",
@@ -2335,62 +2335,62 @@
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "Patrones de arquitectura Laravel, routing/controladores, Eloquent ORM, capas de servicio, colas, eventos, caché y API resources para aplicaciones en producción.",
+      "description": "Laravel architecture patterns, routing/controllers, Eloquent ORM, service layers, queues, events, caching, and API resources for production apps.",
       "trigger_keywords": [
         "laravel",
         "patterns"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\es\\skills\\laravel-patterns\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\laravel-patterns\\SKILL.md"
     },
     {
       "name": "laravel-plugin-discovery",
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "Laravel プラグイン検出、パッケージ管理、依存関係解決、およびサービスプロバイダ統合。",
+      "description": "Discover and evaluate Laravel packages via LaraPlugins.io MCP. Use when the user wants to find plugins, check package health, or assess Laravel/PHP compatibility.",
       "trigger_keywords": [
         "laravel",
         "plugin",
         "discovery"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\laravel-plugin-discovery\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\laravel-plugin-discovery\\SKILL.md"
     },
     {
       "name": "laravel-verification",
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "Bucle de verificación para proyectos Laravel: verificaciones de entorno, linting, análisis estático, pruebas con cobertura, escaneos de seguridad y preparación para despliegue.",
+      "description": "Verification loop for Laravel projects: env checks, linting, static analysis, tests with coverage, security scans, and deployment readiness.",
       "trigger_keywords": [
         "laravel",
         "verification"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\es\\skills\\laravel-verification\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\laravel-verification\\SKILL.md"
     },
     {
       "name": "liquid-glass-design",
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "日本語翻訳：このファイルは liquid-glass-design 用の日本語翻訳が必要です",
+      "description": "iOS 26 Liquid Glass design system — dynamic glass material with blur, reflection, and interactive morphing for SwiftUI, UIKit, and WidgetKit.",
       "trigger_keywords": [
         "liquid",
         "glass",
         "design"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\liquid-glass-design\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\liquid-glass-design\\SKILL.md"
     },
     {
       "name": "literature-review",
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "学術、生物医学、技術、科学的なトピックに対するシステマティックな文献レビューワークフロー。検索計画、ソースのスクリーニング、統合、引用確認、証拠ログを含む。",
+      "description": "Systematic literature-review workflow for academic, biomedical, technical, and scientific topics, including search planning, source screening, synthesis, citation checks, and evidence logging.",
       "trigger_keywords": [
         "literature",
         "review"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\scientific-thinking-literature-review\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\scientific-thinking-literature-review\\SKILL.md"
     },
     {
       "name": "litreview",
@@ -2420,13 +2420,13 @@
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "日本語翻訳：このファイルは logistics-exception-management 用の日本語翻訳が必要です",
+      "description": ">",
       "trigger_keywords": [
         "logistics",
         "exception",
         "management"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\logistics-exception-management\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\logistics-exception-management\\SKILL.md"
     },
     {
       "name": "loop",
@@ -2444,14 +2444,14 @@
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "日本語翻訳：このファイルは make-interfaces-feel-better 用の日本語翻訳が必要です",
+      "description": "Apply concrete design-engineering details that make interfaces feel polished. Use when reviewing or improving UI spacing, typography, borders, shadows, motion, hit areas, icons, text wrapping, and interaction states.",
       "trigger_keywords": [
         "make",
         "interfaces",
         "feel",
         "better"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\make-interfaces-feel-better\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\make-interfaces-feel-better\\SKILL.md"
     },
     {
       "name": "markdown-html-orchestrator",
@@ -2544,12 +2544,12 @@
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "日本語翻訳：このファイルは messages-ops 用の日本語翻訳が必要です",
+      "description": "Evidence-first live messaging workflow for ECC. Use when the user wants to read texts or DMs, recover a recent one-time code, inspect a thread before replying, or prove which message source was actually checked.",
       "trigger_keywords": [
         "messages",
         "ops"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\messages-ops\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\messages-ops\\SKILL.md"
     },
     {
       "name": "migrate",
@@ -2603,48 +2603,48 @@
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "日本語翻訳：このファイルは motion-advanced 用の日本語翻訳が必要です",
+      "description": "Advanced motion patterns for React / Next.js — drag & drop, gestures, text animations, SVG path drawing, custom hooks, imperative sequences (useAnimate), loaders, and the full API decision tree. Requires motion-foundations.",
       "trigger_keywords": [
         "motion",
         "advanced"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\motion-advanced\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\motion-advanced\\SKILL.md"
     },
     {
       "name": "motion-foundations",
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "日本語翻訳：このファイルは motion-foundations 用の日本語翻訳が必要です",
+      "description": "Motion tokens, spring presets, performance rules, device adaptation, accessibility enforcement, and SSR safety for React / Next.js using motion/react. Foundation layer — all other motion skills depend on this.",
       "trigger_keywords": [
         "motion",
         "foundations"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\motion-foundations\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\motion-foundations\\SKILL.md"
     },
     {
       "name": "motion-patterns",
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "日本語翻訳：このファイルは motion-patterns 用の日本語翻訳が必要です",
+      "description": "Production-ready animation patterns for React / Next.js — button, modal, toast, stagger, page transitions, exit animations, scroll, and layout — built on motion-foundations tokens and springs.",
       "trigger_keywords": [
         "motion",
         "patterns"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\motion-patterns\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\motion-patterns\\SKILL.md"
     },
     {
       "name": "motion-ui",
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "日本語翻訳：このファイルは motion-ui 用の日本語翻訳が必要です",
+      "description": "Production-ready UI motion system for React/Next.js. Use when implementing animations, transitions, or motion patterns.",
       "trigger_keywords": [
         "motion",
         "ui"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\motion-ui\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\motion-ui\\SKILL.md"
     },
     {
       "name": "ms365-tenant-manager",
@@ -2664,12 +2664,12 @@
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "日本語翻訳：このファイルは nanoclaw-repl 用の日本語翻訳が必要です",
+      "description": "Operate and extend NanoClaw v2, ECC's zero-dependency session-aware REPL built on claude -p.",
       "trigger_keywords": [
         "nanoclaw",
         "repl"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\nanoclaw-repl\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\nanoclaw-repl\\SKILL.md"
     },
     {
       "name": "nestjs-patterns",
@@ -2688,52 +2688,52 @@
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "日本語翻訳：このファイルは netmiko-ssh-automation 用の日本語翻訳が必要です",
+      "description": "Safe Python Netmiko patterns for read-only collection, bounded batch SSH, TextFSM parsing, guarded config changes, timeouts, and network automation error handling.",
       "trigger_keywords": [
         "netmiko",
         "ssh",
         "automation"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\netmiko-ssh-automation\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\netmiko-ssh-automation\\SKILL.md"
     },
     {
       "name": "network-bgp-diagnostics",
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "日本語翻訳：このファイルは network-bgp-diagnostics 用の日本語翻訳が必要です",
+      "description": "Diagnostics-only BGP troubleshooting patterns for neighbor state, route exchange, prefix policy, AS path inspection, and safe evidence collection.",
       "trigger_keywords": [
         "network",
         "bgp",
         "diagnostics"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\network-bgp-diagnostics\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\network-bgp-diagnostics\\SKILL.md"
     },
     {
       "name": "network-config-validation",
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "日本語翻訳：このファイルは network-config-validation 用の日本語翻訳が必要です",
+      "description": "Pre-deployment checks for router and switch configuration, including dangerous commands, duplicate addresses, subnet overlaps, stale references, management-plane risk, and IOS-style security hygiene.",
       "trigger_keywords": [
         "network",
         "config",
         "validation"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\network-config-validation\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\network-config-validation\\SKILL.md"
     },
     {
       "name": "network-interface-health",
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "ルーター、スイッチ、Linuxホスト上のインターフェースエラー、ドロップ、CRC、デュプレックス不一致、フラッピング、速度ネゴシエーション問題、カウンタートレンドを診断する。",
+      "description": "Diagnose interface errors, drops, CRCs, duplex mismatches, flapping, speed negotiation issues, and counter trends on routers, switches, and Linux hosts.",
       "trigger_keywords": [
         "network",
         "interface",
         "health"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\network-interface-health\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\network-interface-health\\SKILL.md"
     },
     {
       "name": "nextjs-turbopack",
@@ -2752,12 +2752,12 @@
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "JavaScriptとTypeScriptにおけるEthereumハッシュバグを防ぐ。NodeのSHA3-256はNIST SHA3であり、Ethereum Keccak-256ではなく、セレクター、署名、ストレージスロット、アドレス導出を静かに破壊する。",
+      "description": "Prevent Ethereum hashing bugs in JavaScript and TypeScript. Node's sha3-256 is NIST SHA3, not Ethereum Keccak-256, and silently breaks selectors, signatures, storage slots, and address derivation.",
       "trigger_keywords": [
         "nodejs",
         "keccak256"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\nodejs-keccak256\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\nodejs-keccak256\\SKILL.md"
     },
     {
       "name": "notebooklm",
@@ -2775,25 +2775,25 @@
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "Nutrient DWS API を使用してドキュメントの処理、変換、OCR、抽出、編集、署名、フォーム入力を行います。PDF、DOCX、XLSX、PPTX、HTML、画像に対応しています。",
+      "description": "Process, convert, OCR, extract, redact, sign, and fill documents using the Nutrient DWS API. Works with PDFs, DOCX, XLSX, PPTX, HTML, and images.",
       "trigger_keywords": [
         "nutrient",
         "document",
         "processing"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\nutrient-document-processing\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\nutrient-document-processing\\SKILL.md"
     },
     {
       "name": "nuxt4-patterns",
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "ハイドレーション安全性、パフォーマンス、ルートルール、遅延ロード、useFetchとuseAsyncDataを使ったSSR安全なデータフェッチングのためのNuxt 4アプリパターン。",
+      "description": "Nuxt 4 app patterns for hydration safety, performance, route rules, lazy loading, and SSR-safe data fetching with useFetch and useAsyncData.",
       "trigger_keywords": [
         "nuxt4",
         "patterns"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\nuxt4-patterns\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\nuxt4-patterns\\SKILL.md"
     },
     {
       "name": "observability-designer",
@@ -2818,7 +2818,7 @@
         "persona",
         "forge"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\openclaw-persona-forge\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\openclaw-persona-forge\\SKILL.md"
     },
     {
       "name": "opencli-adapter-author",
@@ -2859,6 +2859,19 @@
     },
     {
       "name": "opencli-browser-sitemap",
+      "source": "claude-skills-main",
+      "category": "development",
+      "phase": "generator",
+      "description": "当使用 opencli browser 驱动网站且有站点地图（sitemap）上下文可用、需要或为避免盲目导航而请求时使用。引导 agent 按需加载站点地图文件，选择适配器/浏览器回退路径，从状态签名恢复，并标记过时的站点地图条目，但不得以此覆盖实时浏览器状态。",
+      "trigger_keywords": [
+        "opencli",
+        "browser",
+        "sitemap"
+      ],
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\claude-skills-main\\skills\\opencli-browser-sitemap\\SKILL.md"
+    },
+    {
+      "name": "opencli-browser-sitemap",
       "source": "OpenCLI",
       "category": "development",
       "phase": "generator",
@@ -2887,12 +2900,12 @@
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "オープンソースパイプライン: プライベートプロジェクトをフォーク、サニタイズし、安全な公開リリースのためにパッケージ化する。3つのエージェント（フォーカー、サニタイザー、パッケージャー）を連鎖させる。トリガー: '/opensource'、'open source this'、'make this public'、'prepare for open source'。",
+      "description": "Open-source pipeline: fork, sanitize, and package private projects for safe public release. Chains 3 agents (forker, sanitizer, packager). Triggers: '/opensource', 'open source this', 'make this public', 'prepare for open source'.",
       "trigger_keywords": [
         "opensource",
         "pipeline"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\opensource-pipeline\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\opensource-pipeline\\SKILL.md"
     },
     {
       "name": "orch-add-feature",
@@ -2999,12 +3012,24 @@
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "堅牢でメンテナブルなPerlアプリケーションを構築するためのModern Perl 5.36+のイディオム、ベストプラクティス、規約。",
+      "description": "Modern Perl 5.36+ idioms, best practices, and conventions for building robust, maintainable Perl applications.",
       "trigger_keywords": [
         "perl",
         "patterns"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\perl-patterns\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\perl-patterns\\SKILL.md"
+    },
+    {
+      "name": "playwright-cli",
+      "source": "claude-skills-main",
+      "category": "development",
+      "phase": "generator",
+      "description": "自动化浏览器交互、测试网页，以及使用 Playwright 测试。",
+      "trigger_keywords": [
+        "playwright",
+        "cli"
+      ],
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\claude-skills-main\\skills\\playwright-cli\\SKILL.md"
     },
     {
       "name": "playwright-pro",
@@ -3047,50 +3072,37 @@
       "source": "everything-claude-code",
       "category": "development",
       "phase": "verify",
-      "description": "日本語翻訳：このファイルは production-audit 用の日本語翻訳が必要です",
+      "description": "Local-evidence production readiness audit for shipped apps, pre-launch reviews, post-merge checks, and \"what breaks in prod?\" questions without sending repo data to an external audit service.",
       "trigger_keywords": [
         "production",
         "audit"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\production-audit\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\production-audit\\SKILL.md"
     },
     {
       "name": "production-scheduling",
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "日本語翻訳：このファイルは production-scheduling 用の日本語翻訳が必要です",
+      "description": ">",
       "trigger_keywords": [
         "production",
         "scheduling"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\production-scheduling\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\production-scheduling\\SKILL.md"
     },
     {
       "name": "project-flow-ops",
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "日本語翻訳：このファイルは project-flow-ops 用の日本語翻訳が必要です",
+      "description": "Operate execution flow across GitHub and Linear by triaging issues and pull requests, linking active work, and keeping GitHub public-facing while Linear remains the internal execution layer. Use when the user wants backlog control, PR triage, or GitH",
       "trigger_keywords": [
         "project",
         "flow",
         "ops"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\project-flow-ops\\SKILL.md"
-    },
-    {
-      "name": "project-guidelines-example",
-      "source": "everything-claude-code",
-      "category": "development",
-      "phase": "generator",
-      "description": "project-guidelines-example",
-      "trigger_keywords": [
-        "project",
-        "guidelines",
-        "example"
-      ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\project-guidelines-example\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\project-flow-ops\\SKILL.md"
     },
     {
       "name": "promote",
@@ -3155,24 +3167,24 @@
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "Patrones de arquitectura Quarkus 3.x LTS con Camel para mensajería, diseño de API RESTful, servicios CDI, acceso a datos con Panache y procesamiento asíncrono.",
+      "description": "Quarkus 3.x LTS architecture patterns with Camel for messaging, RESTful API design, CDI services, data access with Panache, and async processing. Use for Java Quarkus backend work with event-driven architectures.",
       "trigger_keywords": [
         "quarkus",
         "patterns"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\es\\skills\\quarkus-patterns\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\quarkus-patterns\\SKILL.md"
     },
     {
       "name": "quarkus-verification",
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "Bucle de verificación para proyectos Quarkus: build, análisis estático, pruebas con cobertura, escaneos de seguridad, compilación nativa y revisión de diff antes del lanzamiento o PR.",
+      "description": "Verification loop for Quarkus projects: build, static analysis, tests with coverage, security scans, native compilation, and diff review before release or PR.",
       "trigger_keywords": [
         "quarkus",
         "verification"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\es\\skills\\quarkus-verification\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\quarkus-verification\\SKILL.md"
     },
     {
       "name": "rag-architect",
@@ -3251,7 +3263,7 @@
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "構造化テキストの解析に正規表現と大規模言語モデルのどちらを使うかを選択するための意思決定フレームワーク——まず正規表達式から始め、信頼度の低いエッジケースにのみ大規模言語モデルを追加する。",
+      "description": "Decision framework for choosing between regex and LLM when parsing structured text — start with regex, add LLM only for low-confidence edge cases.",
       "trigger_keywords": [
         "regex",
         "vs",
@@ -3259,7 +3271,7 @@
         "structured",
         "text"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\regex-vs-llm-structured-text\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\regex-vs-llm-structured-text\\SKILL.md"
     },
     {
       "name": "remember",
@@ -3277,12 +3289,12 @@
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "クロススタックのソースコード資産監査——各ファイルを分類し、埋め込まれたサードパーティライブラリを検出し、各モジュールに対してインタラクティブなHTMLレポートとともに実用的な4段階の判定を提供する。",
+      "description": "Cross-stack source code asset audit — classifies every file, detects embedded third-party libraries, and delivers actionable four-level verdicts per module with interactive HTML reports.",
       "trigger_keywords": [
         "repo",
         "scan"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\repo-scan\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\repo-scan\\SKILL.md"
     },
     {
       "name": "report",
@@ -3322,13 +3334,13 @@
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "返品承認、受取・検品、処分決定、返金処理、不正検出、保証クレーム管理のための標準化された専門知識。15年以上の経験を持つ返品オペレーションマネージャーの知見に基づく。段階的フレームワーク、処分経済性、不正パターン認識、ベンダー回収プロセスを含む。製品返品、逆物流、返金決定、返品不正検出、保証クレームを扱う場合に使用。license: Apache-2.0",
+      "description": ">",
       "trigger_keywords": [
         "returns",
         "reverse",
         "logistics"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\returns-reverse-logistics\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\returns-reverse-logistics\\SKILL.md"
     },
     {
       "name": "review",
@@ -3346,12 +3358,12 @@
       "source": "everything-claude-code",
       "category": "development",
       "phase": "verify",
-      "description": "スキルをスキャンしてドメイン横断的な原則を抽出し、ルールに蒸留する——既存のルールファイルへの追記、修正、または新規作成",
+      "description": "Scan skills to extract cross-cutting principles and distill them into rules — append, revise, or create new rule files",
       "trigger_keywords": [
         "rules",
         "distill"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\rules-distill\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\rules-distill\\SKILL.md"
     },
     {
       "name": "run",
@@ -3393,12 +3405,12 @@
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "収束ループを持つマルチエージェント敵対的検証。2つの独立したレビューエージェントが両方合格して初めて出力を出荷できます。",
+      "description": "Multi-agent adversarial verification with convergence loop. Two independent review agents must both pass before output ships.",
       "trigger_keywords": [
         "santa",
         "method"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\santa-method\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\santa-method\\SKILL.md"
     },
     {
       "name": "search-first",
@@ -3603,24 +3615,24 @@
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "スキル、ルール、エージェント定義が実際に遵守されているかを可視化する——3種類のプロンプト厳格度レベルのシナリオを自動生成し、エージェントを実行し、動作シーケンスを分類し、完全なツール呼び出しタイムラインの遵守率をレポートする",
+      "description": "Visualize whether skills, rules, and agent definitions are actually followed — auto-generates scenarios at 3 prompt strictness levels, runs agents, classifies behavioral sequences, and reports compliance rates with full tool call timelines",
       "trigger_keywords": [
         "skill",
         "comply"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\skill-comply\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\skill-comply\\SKILL.md"
     },
     {
       "name": "skill-scout",
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "新しいスキルを作成する前に、ローカル・マーケットプレイス・GitHub・Webの既存スキルを検索する。スキルの作成・ビルド・フォーク・検索を行う際に使用。",
+      "description": "Search existing local, marketplace, GitHub, and web skill sources before creating a new skill. Use when the user wants to create, build, fork, or find a skill for a workflow.",
       "trigger_keywords": [
         "skill",
         "scout"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\skill-scout\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\skill-scout\\SKILL.md"
     },
     {
       "name": "slo-architect",
@@ -3687,12 +3699,12 @@
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "Bucle de verificación para proyectos Spring Boot: build, análisis estático, pruebas con cobertura, escaneos de seguridad y revisión de diff antes del lanzamiento o PR.",
+      "description": "Verification loop for Spring Boot projects: build, static analysis, tests with coverage, security scans, and diff review before release or PR.",
       "trigger_keywords": [
         "springboot",
         "verification"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\es\\skills\\springboot-verification\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\springboot-verification\\SKILL.md"
     },
     {
       "name": "statistical-analyst",
@@ -3748,26 +3760,26 @@
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "Swift 6.2のアクセシブルな並行処理——デフォルトはシングルスレッド、@concurrentは明示的なバックグラウンドオフロードに使用し、分離の一貫性はMainActor型に使用する。",
+      "description": "Swift 6.2 Approachable Concurrency — single-threaded by default, @concurrent for explicit background offloading, isolated conformances for main actor types.",
       "trigger_keywords": [
         "swift",
         "concurrency",
         "6",
         "2"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\swift-concurrency-6-2\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\swift-concurrency-6-2\\SKILL.md"
     },
     {
       "name": "swiftui-patterns",
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "@Observableを使用した状態管理、ビュー合成、ナビゲーション、パフォーマンス最適化、モダンなiOS/macOS UIのベストプラクティスを備えたSwiftUIアーキテクチャパターン。",
+      "description": "SwiftUI architecture patterns, state management with @Observable, view composition, navigation, performance optimization, and modern iOS/macOS UI best practices.",
       "trigger_keywords": [
         "swiftui",
         "patterns"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\swiftui-patterns\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\swiftui-patterns\\SKILL.md"
     },
     {
       "name": "syllabus",
@@ -3810,12 +3822,12 @@
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "並列チームを構成して派遣するためのインタラクティブなエージェント選択ツール",
+      "description": "Interactive agent picker for composing and dispatching parallel teams",
       "trigger_keywords": [
         "team",
         "builder"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\team-builder\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\team-builder\\SKILL.md"
     },
     {
       "name": "tech-debt-tracker",
@@ -3835,62 +3847,62 @@
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "ECCのための証拠優先のリポジトリ実行ワークフロー。ユーザーがコマンドの実行、リポジトリの確認、CIの失敗のデバッグ、正確な実行と検証の証明を伴う狭い修正のプッシュを必要とする場合に使用する。",
+      "description": "Evidence-first repo execution workflow for ECC. Use when the user wants a command run, a repo checked, a CI failure debugged, or a narrow fix pushed with exact proof of what was executed and verified.",
       "trigger_keywords": [
         "terminal",
         "ops"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\terminal-ops\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\terminal-ops\\SKILL.md"
     },
     {
       "name": "tinystruct-patterns",
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "tinystructフレームワークでアプリケーションモジュールまたはマイクロサービスを開発する際に使用。ルーティング、コンテキスト管理、BuilderによるJSON処理、CLI/HTTPデュアルモードのパターンをカバー。",
+      "description": "Expert guidance for developing with the tinystruct Java framework. Use when working on the tinystruct codebase or any project built on tinystruct — including creating Application classes, @Action-mapped routes, unit tests, ActionRegistry, HTTP/CLI du",
       "trigger_keywords": [
         "tinystruct",
         "patterns"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\tinystruct-patterns\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\tinystruct-patterns\\SKILL.md"
     },
     {
       "name": "ui-demo",
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "Playwrightを使用して美しいUIデモ動画を録画する。ユーザーがWebアプリのデモ、ウォークスルー、スクリーン録画、またはチュートリアル動画の作成を求める場合に使用する。可視カーソル、自然なリズム、プロフェッショナルな仕上がりのWebM動画を生成する。",
+      "description": "Record polished UI demo videos using Playwright. Use when the user asks to create a demo, walkthrough, screen recording, or tutorial video of a web application. Produces WebM videos with visible cursor, natural pacing, and professional feel.",
       "trigger_keywords": [
         "ui",
         "demo"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\ui-demo\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\ui-demo\\SKILL.md"
     },
     {
       "name": "ui-to-vue",
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "UIスクリーンショットやデザインエクスポートをVue 3コンポーネントに一括変換する際に使用。Vant、Element Plus、Ant Design Vueに対応。",
+      "description": "Use when the user has UI screenshots or design exports that need batch conversion into Vue 3 components, especially with Vant, Element Plus, or Ant Design Vue.",
       "trigger_keywords": [
         "ui",
         "to",
         "vue"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\ui-to-vue\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\ui-to-vue\\SKILL.md"
     },
     {
       "name": "unified-notifications-ops",
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "GitHub、Linear、デスクトップアラート、フック、接続された通信インターフェースを網羅する、統合されたECCネイティブワークフローとして通知を運用する。真の問題がアラートルーティング、重複排除、エスカレーション、またはインボックス崩壊である場合に使用する。",
+      "description": "Operate notifications as one ECC-native workflow across GitHub, Linear, desktop alerts, hooks, and connected communication surfaces. Use when the real problem is alert routing, deduplication, escalation, or inbox collapse.",
       "trigger_keywords": [
         "unified",
         "notifications",
         "ops"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\unified-notifications-ops\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\unified-notifications-ops\\SKILL.md"
     },
     {
       "name": "universal-scraping-architect",
@@ -3910,24 +3922,24 @@
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "ビデオとオーディオの表示、理解、アクション。表示：ローカルファイル、URL、RTSP/ライブストリーム、またはリアルタイムのデスクトップ録画からコンテンツを取得し、リアルタイムコンテキストと再生可能なストリームリンクを返す。理解：フレームを抽出し、ビジュアル/セマンティック/時間的インデックスを構築し、タイムスタンプと自動クリップでモーメントを検索する。アクション：トランスコードと正規化（コーデック、フレームレート、解像度、アスペクト比）、タイムライン編集（字幕、テキスト/画像オーバーレイ、ブラ",
+      "description": "See, Understand, Act on video and audio. See- ingest from local files, URLs, RTSP/live feeds, or live record desktop; return realtime context and playable stream links. Understand- extract frames, build visual/semantic/temporal indexes, and search mo",
       "trigger_keywords": [
         "videodb"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\videodb\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\videodb\\SKILL.md"
     },
     {
       "name": "visa-doc-translate",
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "ビザ申請書類（画像）を英語に翻訳し、原文と翻訳を含むバイリンガルPDFを作成する",
+      "description": "Translate visa application documents (images) to English and create a bilingual PDF with original and translation",
       "trigger_keywords": [
         "visa",
         "doc",
         "translate"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\visa-doc-translate\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\visa-doc-translate\\SKILL.md"
     },
     {
       "name": "vite-patterns",
@@ -3939,7 +3951,7 @@
         "vite",
         "patterns"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\vite-patterns\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\vite-patterns\\SKILL.md"
     },
     {
       "name": "workflow-builder",
@@ -3958,13 +3970,13 @@
       "source": "everything-claude-code",
       "category": "development",
       "phase": "generator",
-      "description": "アクティブなリポジトリ、MCPサーバー、プラグイン、コネクター、環境サーフェス、ツールのセットアップを監査し、最も価値の高いECCネイティブスキル、フック、エージェント、オペレーターワークフローを推奨する。ユーザーがClaude Codeのセットアップを支援してほしい場合や、環境で実際に何が使えるかを理解したい場合に使用する。",
+      "description": "Audit the active repo, MCP servers, plugins, connectors, env surfaces, and harness setup, then recommend the highest-value ECC-native skills, hooks, agents, and operator workflows. Use when the user wants help setting up Claude Code or understanding ",
       "trigger_keywords": [
         "workspace",
         "surface",
         "audit"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\workspace-surface-audit\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\workspace-surface-audit\\SKILL.md"
     },
     {
       "name": "write-a-skill",
@@ -4069,51 +4081,51 @@
       "source": "everything-claude-code",
       "category": "finance",
       "phase": "generator",
-      "description": "エージェント、スキル、MCPサーバー、ルールにわたってClaude Codeのコンテキストウィンドウ消費を監査します。肥大化、冗長なコンポーネントを特定し、優先順位付けされたトークン節約の推奨事項を生成します。",
+      "description": "Audits Claude Code context window consumption across agents, skills, MCP servers, and rules. Identifies bloat, redundant components, and produces prioritized token-savings recommendations.",
       "trigger_keywords": [
         "context",
         "budget"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\context-budget\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\context-budget\\SKILL.md"
     },
     {
       "name": "cost-aware-llm-pipeline",
       "source": "everything-claude-code",
       "category": "finance",
       "phase": "generator",
-      "description": "LLM APIの使用量のコスト最適化パターン — タスクの複雑さによるモデルルーティング、予算追跡、リトライロジック、プロンプトキャッシング。",
+      "description": "Cost optimization patterns for LLM API usage — model routing by task complexity, budget tracking, retry logic, and prompt caching.",
       "trigger_keywords": [
         "cost",
         "aware",
         "llm",
         "pipeline"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\cost-aware-llm-pipeline\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\cost-aware-llm-pipeline\\SKILL.md"
     },
     {
       "name": "cost-tracking",
       "source": "everything-claude-code",
       "category": "finance",
       "phase": "generator",
-      "description": "ローカルのコスト追跡データベースからClaude Codeのトークン使用量、支出、予算を追跡・レポートします。コスト、支出、使用量、トークン、予算、またはプロジェクト、ツール、セッション、日付によるコスト内訳について質問する場合に使用します。",
+      "description": "Track and report Claude Code token usage, spending, and budgets from a local cost-tracking database. Use when the user asks about costs, spending, usage, tokens, budgets, or cost breakdowns by project, tool, session, or date.",
       "trigger_keywords": [
         "cost",
         "tracking"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\cost-tracking\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\cost-tracking\\SKILL.md"
     },
     {
       "name": "customer-billing-ops",
       "source": "everything-claude-code",
       "category": "finance",
       "phase": "generator",
-      "description": "Stripeなどの接続された請求ツールを使用して、サブスクリプション、返金、チャーントリアージ、請求ポータルの回復、プラン分析などの顧客請求ワークフローを操作します。顧客を助けたい、サブスクリプション状態を検査したい、または収益に影響する請求操作を管理したい場合に使用します。",
+      "description": "Operate customer billing workflows such as subscriptions, refunds, churn triage, billing-portal recovery, and plan analysis using connected billing tools like Stripe. Use when the user needs to help a customer, inspect subscription state, or manage r",
       "trigger_keywords": [
         "customer",
         "billing",
         "ops"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\customer-billing-ops\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\customer-billing-ops\\SKILL.md"
     },
     {
       "name": "deal-desk",
@@ -4132,39 +4144,39 @@
       "source": "everything-claude-code",
       "category": "finance",
       "phase": "generator",
-      "description": "DeFi自動マーケットメーカー（AMM）スマートコントラクトセキュリティ監査パターン。フラッシュローン、スリッページ、サンドイッチング攻撃、価格操作、再入攻撃、不正確な整数演算をカバー。",
+      "description": "Security checklist for Solidity AMM contracts, liquidity pools, and swap flows. Covers reentrancy, CEI ordering, donation or inflation attacks, oracle manipulation, slippage, admin controls, and integer math.",
       "trigger_keywords": [
         "defi",
         "amm",
         "security"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\defi-amm-security\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\defi-amm-security\\SKILL.md"
     },
     {
       "name": "evm-token-decimals",
       "source": "everything-claude-code",
       "category": "finance",
       "phase": "generator",
-      "description": "EVMチェーン全体でサイレントな小数点不一致バグを防ぐ。ランタイムでの小数点照会、チェーン対応キャッシング、ブリッジドトークンの精度ドリフト、ボット・ダッシュボード・DeFiツール向けの安全な正規化をカバーします。",
+      "description": "Prevent silent decimal mismatch bugs across EVM chains. Covers runtime decimal lookup, chain-aware caching, bridged-token precision drift, and safe normalization for bots, dashboards, and DeFi tools.",
       "trigger_keywords": [
         "evm",
         "token",
         "decimals"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\evm-token-decimals\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\evm-token-decimals\\SKILL.md"
     },
     {
       "name": "finance-billing-ops",
       "source": "everything-claude-code",
       "category": "finance",
       "phase": "generator",
-      "description": "ECCの証拠優先の収益、価格設定、返金、チーム請求、請求モデルの実態確認ワークフロー。ユーザーが販売スナップショット、価格比較、重複請求の診断、または汎用的な支払いアドバイスではなくコードに裏付けられた請求の実態を必要とする場合に使用します。",
+      "description": "Evidence-first revenue, pricing, refunds, team-billing, and billing-model truth workflow for ECC. Use when the user wants a sales snapshot, pricing comparison, duplicate-charge diagnosis, or code-backed billing reality instead of generic payments adv",
       "trigger_keywords": [
         "finance",
         "billing",
         "ops"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\finance-billing-ops\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\finance-billing-ops\\SKILL.md"
     },
     {
       "name": "financial-analyst",
@@ -4236,14 +4248,14 @@
       "source": "everything-claude-code",
       "category": "finance",
       "phase": "generator",
-      "description": "日本語翻訳：このファイルは llm-trading-agent-security 用の日本語翻訳が必要です",
+      "description": "Security patterns for autonomous trading agents with wallet or transaction authority. Covers prompt injection, spend limits, pre-send simulation, circuit breakers, MEV protection, and key handling.",
       "trigger_keywords": [
         "llm",
         "trading",
         "agent",
         "security"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\llm-trading-agent-security\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\llm-trading-agent-security\\SKILL.md"
     },
     {
       "name": "prediction-market-oracle-research",
@@ -4315,13 +4327,13 @@
       "source": "everything-claude-code",
       "category": "finance",
       "phase": "generator",
-      "description": "回答する前に、どれだけの回答深度を消費するかについてユーザーに情報に基づいた選択を提供する。ユーザーが回答の長さ、深さ、またはトークンバジェットを明示的に制御したい場合にこのスキルを使用する。トリガー条件：\"token budget\", \"token count\", \"token usage\", \"token limit\", \"response length\", \"answer depth\", \"short version\", \"brief answer\", \"detailed answer\",",
+      "description": ">-",
       "trigger_keywords": [
         "token",
         "budget",
         "advisor"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\token-budget-advisor\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\token-budget-advisor\\SKILL.md"
     },
     {
       "name": "clinical-research",
@@ -4340,65 +4352,65 @@
       "source": "everything-claude-code",
       "category": "healthcare",
       "phase": "generator",
-      "description": "臨床意思決定支援システム（CDSS）パターン、医学的推論、およびエビデンスベースの実装。",
+      "description": "Clinical Decision Support System (CDSS) development patterns. Drug interaction checking, dose validation, clinical scoring (NEWS2, qSOFA), alert severity classification, and integration into EMR workflows.",
       "trigger_keywords": [
         "healthcare",
         "cdss",
         "patterns"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\healthcare-cdss-patterns\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\healthcare-cdss-patterns\\SKILL.md"
     },
     {
       "name": "healthcare-emr-patterns",
       "source": "everything-claude-code",
       "category": "healthcare",
       "phase": "generator",
-      "description": "電子医療記録（EMR）パターン、相互運用性、およびHL7/FHIR統合。",
+      "description": "EMR/EHR development patterns for healthcare applications. Clinical safety, encounter workflows, prescription generation, clinical decision support integration, and accessibility-first UI for medical data entry.",
       "trigger_keywords": [
         "healthcare",
         "emr",
         "patterns"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\healthcare-emr-patterns\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\healthcare-emr-patterns\\SKILL.md"
     },
     {
       "name": "healthcare-eval-harness",
       "source": "everything-claude-code",
       "category": "healthcare",
       "phase": "generator",
-      "description": "ヘルスケアAIモデル評価ハーネス、臨床メトリクス、およびレギュレーション遵守の検証。",
+      "description": "Patient safety evaluation harness for healthcare application deployments. Automated test suites for CDSS accuracy, PHI exposure, clinical workflow integrity, and integration compliance. Blocks deployments on safety failures.",
       "trigger_keywords": [
         "healthcare",
         "eval",
         "harness"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\healthcare-eval-harness\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\healthcare-eval-harness\\SKILL.md"
     },
     {
       "name": "healthcare-phi-compliance",
       "source": "everything-claude-code",
       "category": "healthcare",
       "phase": "generator",
-      "description": "保護医療情報（PHI）コンプライアンス、HIPAA準拠、およびデータセキュリティ。",
+      "description": "Protected Health Information (PHI) and Personally Identifiable Information (PII) compliance patterns for healthcare applications. Covers data classification, access control, audit trails, encryption, and common leak vectors.",
       "trigger_keywords": [
         "healthcare",
         "phi",
         "compliance"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\healthcare-phi-compliance\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\healthcare-phi-compliance\\SKILL.md"
     },
     {
       "name": "ralphinho-rfc-pipeline",
       "source": "everything-claude-code",
       "category": "healthcare",
       "phase": "generator",
-      "description": "RFC駆動の複数エージェントDAG実行パターン、品質ゲート、マージキュー、ワークユニットオーケストレーション。",
+      "description": "RFC-driven multi-agent DAG execution pattern with quality gates, merge queues, and work unit orchestration.",
       "trigger_keywords": [
         "ralphinho",
         "rfc",
         "pipeline"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\ralphinho-rfc-pipeline\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\ralphinho-rfc-pipeline\\SKILL.md"
     },
     {
       "name": "agent-protocol",
@@ -5099,12 +5111,12 @@
       "source": "everything-claude-code",
       "category": "management",
       "phase": "generator",
-      "description": "複数のストレージレイヤー（ローカルファイル、MCP メモリ、ベクターストア、Git リポジトリ）にわたるナレッジベースの管理、取り込み、同期、検索。ユーザーが知識システム全体で保存・整理・同期・重複排除・検索を行いたい場合に使用します。",
+      "description": "Knowledge base management, ingestion, sync, and retrieval across multiple storage layers (local files, MCP memory, vector stores, Git repos). Use when the user wants to save, organize, sync, deduplicate, or search across their knowledge systems.",
       "trigger_keywords": [
         "knowledge",
         "ops"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\knowledge-ops\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\knowledge-ops\\SKILL.md"
     },
     {
       "name": "ma-playbook",
@@ -5712,24 +5724,24 @@
       "source": "everything-claude-code",
       "category": "marketing",
       "phase": "generator",
-      "description": "日本語翻訳：このファイルは lead-intelligence 用の日本語翻訳が必要です",
+      "description": "AI-native lead intelligence and outreach pipeline. Replaces Apollo, Clay, and ZoomInfo with agent-powered signal scoring, mutual ranking, warm path discovery, source-derived voice modeling, and channel-specific outreach across email, LinkedIn, and X.",
       "trigger_keywords": [
         "lead",
         "intelligence"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\lead-intelligence\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\lead-intelligence\\SKILL.md"
     },
     {
       "name": "manim-video",
       "source": "everything-claude-code",
       "category": "marketing",
       "phase": "generator",
-      "description": "日本語翻訳：このファイルは manim-video 用の日本語翻訳が必要です",
+      "description": "Build reusable Manim explainers for technical concepts, graphs, system diagrams, and product walkthroughs, then hand off to the wider ECC video stack if needed. Use when the user wants a clean animated explainer rather than a generic talking-head scr",
       "trigger_keywords": [
         "manim",
         "video"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\manim-video\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\manim-video\\SKILL.md"
     },
     {
       "name": "market-research",
@@ -5968,13 +5980,13 @@
       "source": "everything-claude-code",
       "category": "marketing",
       "phase": "generator",
-      "description": "Remotion のベストプラクティス - React で動画を作成する。3D、アニメーション、音声、字幕、チャート、トランジションなどをカバーするドメイン固有の29のルール。",
+      "description": "Best practices for Remotion - Video creation in React. 29 domain-specific rules covering 3D, animations, audio, captions, charts, transitions, and more.",
       "trigger_keywords": [
         "remotion",
         "video",
         "creation"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\remotion-video-creation\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\remotion-video-creation\\SKILL.md"
     },
     {
       "name": "rfp-responder",
@@ -6017,11 +6029,11 @@
       "source": "everything-claude-code",
       "category": "marketing",
       "phase": "generator",
-      "description": "テクニカル SEO、オンページ最適化、構造化データ、Core Web Vitals、およびコンテンツ戦略にわたる SEO 改善の監査、計画、実施。ユーザーが検索可視性の向上、SEO 修正、スキーママークアップ、サイトマップ/robots の作業、またはキーワードマッピングを希望する場合に使用します。",
+      "description": "Audit, plan, and implement SEO improvements across technical SEO, on-page optimization, structured data, Core Web Vitals, and content strategy. Use when the user wants better search visibility, SEO remediation, schema markup, sitemap/robots work, or ",
       "trigger_keywords": [
         "seo"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\seo\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\seo\\SKILL.md"
     },
     {
       "name": "seo-audit",
@@ -6077,13 +6089,13 @@
       "source": "everything-claude-code",
       "category": "marketing",
       "phase": "generator",
-      "description": "XとLinkedInでのウォームイントロ発見、ブリッジスコアリング、ネットワークギャップ分析のための重み付きソーシャルグラフランキング。ユーザーがランキングエンジン自体を必要としている場合（より広いプロモーションやネットワーク維持ワークフローではなく）に使用する。",
+      "description": "Weighted social-graph ranking for warm intro discovery, bridge scoring, and network gap analysis across X and LinkedIn. Use when the user wants the reusable graph-ranking engine itself, not the broader outreach or network-maintenance workflow layered",
       "trigger_keywords": [
         "social",
         "graph",
         "ranker"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\social-graph-ranker\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\social-graph-ranker\\SKILL.md"
     },
     {
       "name": "social-media-analyzer",
@@ -6203,12 +6215,12 @@
       "source": "everything-claude-code",
       "category": "performance",
       "phase": "generator",
-      "description": "レビュー優先の整理、フォロー/追加の推薦、ユーザーの実際の声で書かれたチャネル別ウォームアウトリーチのドラフトを通じて、ユーザーのXとLinkedInネットワークを再編成します。フォローリストを整理したい、現在の優先事項に向けて成長したい、または高品質な関係を中心にソーシャルグラフのバランスを取り直したい場合に使用します。",
+      "description": "Reorganize the user's X and LinkedIn network with review-first pruning, add/follow recommendations, and channel-specific warm outreach drafted in the user's real voice. Use when the user wants to clean up following lists, grow toward current prioriti",
       "trigger_keywords": [
         "connections",
         "optimizer"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\connections-optimizer\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\connections-optimizer\\SKILL.md"
     },
     {
       "name": "data-throughput-accelerator",
@@ -6291,12 +6303,12 @@
       "source": "everything-claude-code",
       "category": "performance",
       "phase": "generator",
-      "description": "日本語翻訳：このファイルは prompt-optimizer 用の日本語翻訳が必要です",
+      "description": ">-",
       "trigger_keywords": [
         "prompt",
         "optimizer"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\prompt-optimizer\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\prompt-optimizer\\SKILL.md"
     },
     {
       "name": "react-performance",
@@ -6345,7 +6357,7 @@
       "trigger_keywords": [
         "blueprint"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\blueprint\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\blueprint\\SKILL.md"
     },
     {
       "name": "code-to-prd",
@@ -6365,11 +6377,11 @@
       "source": "everything-claude-code",
       "category": "requirements",
       "phase": "plan",
-      "description": "曖昧な決定、トレードオフ、ゴー/ノーゴーの判断のために4つの声のカウンシルを召集します。複数の有効なパスが存在し、選択前に構造化された異議が必要な場合に使用します。",
+      "description": "Convene a four-voice council for ambiguous decisions, tradeoffs, and go/no-go calls. Use when multiple valid paths exist and you need structured disagreement before choosing.",
       "trigger_keywords": [
         "council"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\council\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\council\\SKILL.md"
     },
     {
       "name": "deep-research",
@@ -6425,25 +6437,25 @@
       "source": "everything-claude-code",
       "category": "requirements",
       "phase": "generator",
-      "description": "在庫管理、需要予測、補充戦略、およびサプライチェーン最適化。",
+      "description": ">",
       "trigger_keywords": [
         "inventory",
         "demand",
         "planning"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\inventory-demand-planning\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\inventory-demand-planning\\SKILL.md"
     },
     {
       "name": "plan-orchestrate",
       "source": "everything-claude-code",
       "category": "requirements",
       "phase": "plan",
-      "description": "日本語翻訳：このファイルは plan-orchestrate 用の日本語翻訳が必要です",
+      "description": "Read a plan document, decompose it into steps, design a per-step agent chain from the ECC catalogue, and emit ready-to-paste /orchestrate custom prompts. Generative only — never invokes /orchestrate itself. Use when the user has a multi-step plan and",
       "trigger_keywords": [
         "plan",
         "orchestrate"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\plan-orchestrate\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\plan-orchestrate\\SKILL.md"
     },
     {
       "name": "product-analytics",
@@ -6486,12 +6498,12 @@
       "source": "everything-claude-code",
       "category": "requirements",
       "phase": "generator",
-      "description": "日本語翻訳：このファイルは product-lens 用の日本語翻訳が必要です",
+      "description": "Use this skill to validate the \"why\" before building, run product diagnostics, and pressure-test product direction before the request becomes an implementation contract.",
       "trigger_keywords": [
         "product",
         "lens"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\product-lens\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\product-lens\\SKILL.md"
     },
     {
       "name": "product-manager-toolkit",
@@ -6559,12 +6571,12 @@
       "source": "everything-claude-code",
       "category": "requirements",
       "phase": "generator",
-      "description": "証拠優先のECC現状調査ワークフロー。ユーザーが現在の公開証拠と提供されたローカルコンテキストに基づいて最新の事実、比較、情報の充実、または推奨事項を求める場合に使用する。",
+      "description": "Evidence-first current-state research workflow for ECC. Use when the user wants fresh facts, comparisons, enrichment, or a recommendation built from current public evidence and any supplied local context.",
       "trigger_keywords": [
         "research",
         "ops"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\research-ops\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\research-ops\\SKILL.md"
     },
     {
       "name": "research-ops-skills",
@@ -6719,23 +6731,23 @@
       "source": "everything-claude-code",
       "category": "security",
       "phase": "verify",
-      "description": "API、エージェント、およびLLMエンドポイントのアクセス制御と認可パターン。",
+      "description": "Fact-forcing gate that blocks Edit/Write/Bash (including MultiEdit) and demands concrete investigation (importers, data schemas, user instruction) before allowing the action. Measurably improves output quality by +2.25 points vs ungated agents.",
       "trigger_keywords": [
         "gateguard"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\gateguard\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\gateguard\\SKILL.md"
     },
     {
       "name": "hookify-rules",
       "source": "everything-claude-code",
       "category": "security",
       "phase": "generator",
-      "description": "自動フック実装、イベントドリブン実行、およびルール駆動ワークフロー。",
+      "description": "This skill should be used when the user asks to create a hookify rule, write a hook rule, configure hookify, add a hookify rule, or needs guidance on hookify rule syntax and patterns.",
       "trigger_keywords": [
         "hookify",
         "rules"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\hookify-rules\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\hookify-rules\\SKILL.md"
     },
     {
       "name": "incident-response",
@@ -6754,36 +6766,36 @@
       "source": "everything-claude-code",
       "category": "security",
       "phase": "generator",
-      "description": "Buenas prácticas de seguridad en Laravel para autenticación/autorización, validación, CSRF, asignación masiva, subida de archivos, secretos, limitación de velocidad y despliegue seguro.",
+      "description": "Laravel security best practices — authentication, authorization, Eloquent safety, CSRF, XSS prevention, API security, and secure deployment configurations.",
       "trigger_keywords": [
         "laravel",
         "security"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\es\\skills\\laravel-security\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\laravel-security\\SKILL.md"
     },
     {
       "name": "perl-security",
       "source": "everything-claude-code",
       "category": "security",
       "phase": "generator",
-      "description": "テイントモード、入力バリデーション、安全なプロセス実行、DBIパラメータ化クエリ、Webセキュリティ（XSS/SQLi/CSRF）、perlcriticセキュリティポリシーを網羅する包括的なPerlセキュリティ。",
+      "description": "Comprehensive Perl security covering taint mode, input validation, safe process execution, DBI parameterized queries, web security (XSS/SQLi/CSRF), and perlcritic security policies.",
       "trigger_keywords": [
         "perl",
         "security"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\perl-security\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\perl-security\\SKILL.md"
     },
     {
       "name": "quarkus-security",
       "source": "everything-claude-code",
       "category": "security",
       "phase": "generator",
-      "description": "Buenas prácticas de seguridad en Quarkus para autenticación, autorización, JWT/OIDC, RBAC, validación de entrada, CSRF, gestión de secretos y seguridad de dependencias.",
+      "description": "Quarkus Security best practices for authentication, authorization, JWT/OIDC, RBAC, input validation, CSRF, secrets management, and dependency security.",
       "trigger_keywords": [
         "quarkus",
         "security"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\es\\skills\\quarkus-security\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\quarkus-security\\SKILL.md"
     },
     {
       "name": "red-team",
@@ -6802,25 +6814,25 @@
       "source": "everything-claude-code",
       "category": "security",
       "phase": "generator",
-      "description": "本番システムでの作業時や、エージェントを自律的に実行する際に破壊的な操作を防ぐためにこのスキルを使用してください。",
+      "description": "Use this skill to prevent destructive operations when working on production systems or running agents autonomously.",
       "trigger_keywords": [
         "safety",
         "guard"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\safety-guard\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\safety-guard\\SKILL.md"
     },
     {
       "name": "security-bounty-hunter",
       "source": "everything-claude-code",
       "category": "security",
       "phase": "verify",
-      "description": "リポジトリ内の悪用可能なバウンティ対象のセキュリティ問題を発見します。ノイズの多いローカルのみの発見ではなく、実際のレポートに適格なリモートから到達可能な脆弱性に焦点を当てます。",
+      "description": "Hunt for exploitable, bounty-worthy security issues in repositories. Focuses on remotely reachable vulnerabilities that qualify for real reports instead of noisy local-only findings.",
       "trigger_keywords": [
         "security",
         "bounty",
         "hunter"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\security-bounty-hunter\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\security-bounty-hunter\\SKILL.md"
     },
     {
       "name": "security-guidance",
@@ -6864,12 +6876,12 @@
       "source": "everything-claude-code",
       "category": "security",
       "phase": "evaluator",
-      "description": "AgentShield を使用して、Claude Code の設定（.claude/ ディレクトリ）のセキュリティ脆弱性、設定ミス、インジェクションリスクをスキャンします。CLAUDE.md、settings.json、MCP サーバー、フック、エージェント定義をチェックします。",
+      "description": "Scan your Claude Code configuration (.claude/ directory) for security vulnerabilities, misconfigurations, and injection risks using AgentShield. Checks CLAUDE.md, settings.json, MCP servers, hooks, and agent definitions.",
       "trigger_keywords": [
         "security",
         "scan"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\security-scan\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\security-scan\\SKILL.md"
     },
     {
       "name": "senior-security",
@@ -6950,13 +6962,13 @@
       "source": "everything-claude-code",
       "category": "testing",
       "phase": "evaluator",
-      "description": "AI 支援開発のためのリグレッションテスト戦略。データベース依存なしのサンドボックスモード API テスト、自動化されたバグチェックワークフロー、同じモデルがコードを書いてレビューする AI のブラインドスポットを捕捉するパターン。",
+      "description": "Regression testing strategies for AI-assisted development. Sandbox-mode API testing without database dependencies, automated bug-check workflows, and patterns to catch AI blind spots where the same model writes and reviews code.",
       "trigger_keywords": [
         "ai",
         "regression",
         "testing"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\ai-regression-testing\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\ai-regression-testing\\SKILL.md"
     },
     {
       "name": "api-test-suite-builder",
@@ -6977,12 +6989,12 @@
       "source": "everything-claude-code",
       "category": "testing",
       "phase": "evaluator",
-      "description": "このスキルを使用して、機能をデプロイ後にブラウザ自動化を使用した自動ビジュアルテストとUI相互作用検証を自動化します。",
+      "description": "Use this skill to automate visual testing and UI interaction verification using browser automation after deploying features.",
       "trigger_keywords": [
         "browser",
         "qa"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\browser-qa\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\browser-qa\\SKILL.md"
     },
     {
       "name": "code-reviewer",
@@ -7013,12 +7025,12 @@
       "source": "everything-claude-code",
       "category": "testing",
       "phase": "evaluator",
-      "description": "CodeTour `.tour`ファイルを作成 — ペルソナターゲット、ステップバイステップウォークスルー（実際のファイルとラインアンカー付き）。オンボーディングツアー、アーキテクチャウォークスルー、PRツアー、RCAツアー、構造化「これがどのように機能するかを説明」リクエストに使用。",
+      "description": "Create CodeTour `.tour` files — persona-targeted, step-by-step walkthroughs with real file and line anchors. Use for onboarding tours, architecture walkthroughs, PR tours, RCA tours, and structured \"explain how this works\" requests.",
       "trigger_keywords": [
         "code",
         "tour"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\code-tour\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\code-tour\\SKILL.md"
     },
     {
       "name": "codebase-onboarding",
@@ -7037,12 +7049,12 @@
       "source": "everything-claude-code",
       "category": "testing",
       "phase": "evaluator",
-      "description": "不慣れなコードベースを分析し、アーキテクチャマップ、主要なエントリポイント、規約、スターターCLAUDE.mdを含む構造化オンボーディングガイドを生成します。新しいプロジェクトに参加するか、リポでClaude Codeを初めてセットアップする場合に使用します。",
+      "description": "Analyze an unfamiliar codebase and generate a structured onboarding guide with architecture map, key entry points, conventions, and a starter CLAUDE.md. Use when joining a new project or setting up Claude Code for the first time in a repo.",
       "trigger_keywords": [
         "codebase",
         "onboarding"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\codebase-onboarding\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\codebase-onboarding\\SKILL.md"
     },
     {
       "name": "cpp-testing",
@@ -7061,12 +7073,12 @@
       "source": "everything-claude-code",
       "category": "testing",
       "phase": "evaluator",
-      "description": "xUnit、FluentAssertions、モッキング、統合テスト、テスト組織のベストプラクティスを使用したC#と.NETのテストパターン。",
+      "description": "C# and .NET testing patterns with xUnit, FluentAssertions, mocking, integration tests, and test organization best practices.",
       "trigger_keywords": [
         "csharp",
         "testing"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\csharp-testing\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\csharp-testing\\SKILL.md"
     },
     {
       "name": "data-quality-auditor",
@@ -7091,7 +7103,7 @@
         "django",
         "tdd"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\django-tdd\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\django-tdd\\SKILL.md"
     },
     {
       "name": "e2e-testing",
@@ -7110,14 +7122,14 @@
       "source": "everything-claude-code",
       "category": "testing",
       "phase": "evaluator",
-      "description": "ウィジェットのベストプラクティス、状態管理パターン（BLoC、Riverpod、Provider、GetX、MobX、Signals）、Dartのイディオム、パフォーマンス、アクセシビリティ、セキュリティ、クリーンアーキテクチャをカバーするライブラリに依存しないFlutter/Dartのコードレビューチェックリスト。",
+      "description": "Library-agnostic Flutter/Dart code review checklist covering widget best practices, state management patterns (BLoC, Riverpod, Provider, GetX, MobX, Signals), Dart idioms, performance, accessibility, security, and clean architecture.",
       "trigger_keywords": [
         "flutter",
         "dart",
         "code",
         "review"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\flutter-dart-code-review\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\flutter-dart-code-review\\SKILL.md"
     },
     {
       "name": "frontend-a11y",
@@ -7136,12 +7148,12 @@
       "source": "everything-claude-code",
       "category": "testing",
       "phase": "evaluator",
-      "description": "F#テストフレームワーク、プロパティベーステスト、および関数型アプローチ。",
+      "description": "F# testing patterns with xUnit, FsUnit, Unquote, FsCheck property-based testing, integration tests, and test organization best practices.",
       "trigger_keywords": [
         "fsharp",
         "testing"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\fsharp-testing\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\fsharp-testing\\SKILL.md"
     },
     {
       "name": "golang-testing",
@@ -7172,37 +7184,37 @@
       "source": "everything-claude-code",
       "category": "testing",
       "phase": "generator",
-      "description": "Desarrollo guiado por pruebas para Laravel con PHPUnit y Pest, factories, pruebas de base de datos, fakes y objetivos de cobertura.",
+      "description": "Laravel testing strategies with PHPUnit, Pest, model factories, HTTP tests, Sanctum authentication testing, mocking, and coverage.",
       "trigger_keywords": [
         "laravel",
         "tdd"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\es\\skills\\laravel-tdd\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\laravel-tdd\\SKILL.md"
     },
     {
       "name": "perl-testing",
       "source": "everything-claude-code",
       "category": "testing",
       "phase": "evaluator",
-      "description": "日本語翻訳：このファイルは perl-testing 用の日本語翻訳が必要です",
+      "description": "Perl testing patterns using Test2::V0, Test::More, prove runner, mocking, coverage with Devel::Cover, and TDD methodology.",
       "trigger_keywords": [
         "perl",
         "testing"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\perl-testing\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\perl-testing\\SKILL.md"
     },
     {
       "name": "plankton-code-quality",
       "source": "everything-claude-code",
       "category": "testing",
       "phase": "evaluator",
-      "description": "日本語翻訳：このファイルは plankton-code-quality 用の日本語翻訳が必要です",
+      "description": "Write-time code quality enforcement using Plankton — auto-formatting, linting, and Claude-powered fixes on every file edit via hooks.",
       "trigger_keywords": [
         "plankton",
         "code",
         "quality"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\plankton-code-quality\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\plankton-code-quality\\SKILL.md"
     },
     {
       "name": "python-testing",
@@ -7221,24 +7233,24 @@
       "source": "everything-claude-code",
       "category": "testing",
       "phase": "evaluator",
-      "description": "日本語翻訳：このファイルは quality-nonconformance 用の日本語翻訳が必要です",
+      "description": ">",
       "trigger_keywords": [
         "quality",
         "nonconformance"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\quality-nonconformance\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\quality-nonconformance\\SKILL.md"
     },
     {
       "name": "quarkus-tdd",
       "source": "everything-claude-code",
       "category": "testing",
       "phase": "generator",
-      "description": "Desarrollo guiado por pruebas para Quarkus 3.x LTS usando JUnit 5, Mockito, REST Assured, pruebas Camel y JaCoCo. Usar al agregar funcionalidades, corregir bugs o refactorizar servicios orientados a eventos.",
+      "description": "Test-driven development for Quarkus 3.x LTS using JUnit 5, Mockito, REST Assured, Camel testing, and JaCoCo. Use when adding features, fixing bugs, or refactoring event-driven services.",
       "trigger_keywords": [
         "quarkus",
         "tdd"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\es\\skills\\quarkus-tdd\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\quarkus-tdd\\SKILL.md"
     },
     {
       "name": "react-testing",
@@ -7281,24 +7293,24 @@
       "source": "everything-claude-code",
       "category": "testing",
       "phase": "generator",
-      "description": "論文、提案書、文献レビュー、方法論セクション、証拠の質、引用サポート、研究論文フィードバックのための構造化された学術的作業評価。",
+      "description": "Structured scholarly-work evaluation for papers, proposals, literature reviews, methods sections, evidence quality, citation support, and research-writing feedback.",
       "trigger_keywords": [
         "scholar",
         "evaluation"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\scientific-thinking-scholar-evaluation\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\scientific-thinking-scholar-evaluation\\SKILL.md"
     },
     {
       "name": "skill-stocktake",
       "source": "everything-claude-code",
       "category": "testing",
       "phase": "evaluator",
-      "description": "Claudeのスキルとコマンドの品質を監査するためのツール。変更されたスキルのみを対象とした高速スキャンと、順次サブエージェントバッチ評価を使用した完全棚卸しモードをサポートする。",
+      "description": "Use when auditing Claude skills and commands for quality. Supports Quick Scan (changed skills only) and Full Stocktake modes with sequential subagent batch evaluation.",
       "trigger_keywords": [
         "skill",
         "stocktake"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\skill-stocktake\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\skill-stocktake\\SKILL.md"
     },
     {
       "name": "skill-tester",
@@ -7317,12 +7329,12 @@
       "source": "everything-claude-code",
       "category": "testing",
       "phase": "generator",
-      "description": "Desarrollo guiado por pruebas para Spring Boot usando JUnit 5, Mockito, MockMvc, Testcontainers y JaCoCo. Usar al agregar funcionalidades, corregir bugs o refactorizar.",
+      "description": "Test-driven development for Spring Boot using JUnit 5, Mockito, MockMvc, Testcontainers, and JaCoCo. Use when adding features, fixing bugs, or refactoring.",
       "trigger_keywords": [
         "springboot",
         "tdd"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\es\\skills\\springboot-tdd\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\springboot-tdd\\SKILL.md"
     },
     {
       "name": "stress-test",
@@ -7421,7 +7433,7 @@
         "desktop",
         "e2e"
       ],
-      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\docs\\ja-JP\\skills\\windows-desktop-e2e\\SKILL.md"
+      "file_path": "C:\\Users\\ASUS\\Desktop\\目标：opencli+ralph harness+awesome mcp server+agent skills\\subprojects\\everything-claude-code\\skills\\windows-desktop-e2e\\SKILL.md"
     }
   ]
 }
