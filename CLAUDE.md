@@ -22,11 +22,12 @@
 PRD 生成后，根据 `prd.json` 中 `techStack` 字段，从 ECC 子项目 **按需复制** 语言规则到项目 `.claude/rules/ecc/`。
 
 **架构**：
-- `~/.claude/rules/ecc/common/` — 全局通用规则，所有项目共用（**只保留 common，删除所有语言目录**）
+- `~/.claude/rules/ecc/common/` — 全局通用规则，所有项目共用（**用户级，只需配置一次**）
 - `subprojects/everything-claude-code/rules/` — 规则源（19 种语言完整副本）
 - `.claude/rules/ecc/<language>/` — 按技术栈按需加载（PRD 后自动执行）
 
-> ⚠️ `~/.claude/rules/ecc/` 只保留 `common/`，删除所有语言目录可节省数万 tokens/会话。
+> ⚠️ `~/.claude/rules/ecc/` 只需保留 `common/`（用户级），删除所有语言目录可节省数万 tokens/会话。
+> **项目级 `.claude/rules/ecc/` 不需要 `common/`**——common 规则从用户目录自动继承，无需重复配置。
 > Skills 不需要精简：subprojects 里的 skill 不进入 System Prompt，只在索引表中被搜索。
 
 **按需加载命令**：
