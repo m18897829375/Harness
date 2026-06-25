@@ -139,3 +139,50 @@ bash subprojects/ralph-harness/ralph.sh --help  # Ralph 可用
 ```
 
 详细工作流和工程约束见 [CLAUDE.md](CLAUDE.md)。
+
+## Rules 按需加载系统
+
+ECC rules 按技术栈按需加载，避免无关规则占用上下文。
+
+### 架构
+
+```
+~/.claude/rules/ecc/common/       ← 全局通用规则（只保留 common）
+subprojects/everything-claude-code/rules/ ← 规则源（19 种语言）
+.claude/rules/ecc/<language>/     ← 按需加载（PRD 后自动执行）
+```
+
+### 工作流
+
+```
+PRD 生成 → 分析 techStack → 从 ECC 子项目复制语言规则到项目
+```
+
+### 命令
+
+```bash
+cp -r subprojects/everything-claude-code/rules/<language> .claude/rules/ecc/
+```
+
+### 技术栈→语言规则映射
+
+| PRD 技术栈关键词 | 需要的 rules 目录 |
+|------|------|
+| React, Next.js, Vue, Vite | web, typescript, react |
+| Python, Django, FastAPI, Flask | python |
+| Go, Golang | golang |
+| Rust, Cargo | rust |
+| Java, Spring, Maven, Gradle | java |
+| Kotlin, KMP | kotlin |
+| Swift, iOS, Xcode | swift |
+| Dart, Flutter | dart |
+| C++, CMake | cpp |
+| .NET, C#, ASP.NET | csharp |
+| PHP, Laravel | php |
+| Ruby, Rails | ruby |
+| Angular | angular, typescript, web |
+| HarmonyOS, ArkTS | arkts |
+| Node.js, Express | typescript |
+| React Native, Expo | react, typescript |
+
+> **重要**：`~/.claude/rules/ecc/` 只保留 `common/`，删除所有语言目录可节省数万 tokens/会话。

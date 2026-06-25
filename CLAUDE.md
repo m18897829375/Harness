@@ -14,22 +14,46 @@
 ## 工作流
 
 ```
-用户需求 → 阶段1 Plan(加载skill分析,禁改代码,curl/playwright搜索,分析完成后精简rules) → 阶段2 PRD(ralph-harness生成,生成后等待ralph指令,禁止自动执行) → ⏸️ 等待用户ralph指令 → 阶段3 Ralph Loop(合同协商→Generator(ReAct+Daemon,按需加载skill/CLI)→Evaluator(ReAct+Daemon,按需加载skill/CLI+ECC验证)→通过则完成/未通过回Generator) → 阶段4 最终验证(ECC验证,不通过回阶段1) → 交付
+用户需求 → 阶段1 Plan(加载skill分析,禁改代码,curl/playwright搜索,分析完成后按需加载rules) → 阶段2 PRD(ralph-harness生成,生成后等待ralph指令,禁止自动执行) → ⏸️ 等待用户ralph指令 → 阶段3 Ralph Loop(合同协商→Generator(ReAct+Daemon,按需加载skill/CLI)→Evaluator(ReAct+Daemon,按需加载skill/CLI+ECC验证)→通过则完成/未通过回Generator) → 阶段4 最终验证(ECC验证,不通过回阶段1) → 交付
 ```
 
-### 阶段1收尾：精简 Rules
+### 阶段1收尾：按需加载 Rules
 
-Plan 阶段分析完产品需求和技术栈后，删除 `.claude/rules/ecc/` 中与当前项目技术栈无关的语言目录，只保留 `common/` + 项目使用的语言目录。
+PRD 生成后，根据 `prd.json` 中 `techStack` 字段，从 ECC 子项目 **按需复制** 语言规则到项目 `.claude/rules/ecc/`。
 
-> ECC rules 安装在项目级 `.claude/rules/ecc/`，不影响其他项目。每条 rule 都进入 System Prompt 消耗 token——删除无关 rules 可节省数万 tokens/会话。
-> 
-> Skills 不需要精简：subprojects 里的 skill 不进入 System Prompt，只在 skill-index.json 中被搜索，不消耗 token。
-> 
-> **如果后续发现漏了某个语言**：直接从 ECC 子项目源码复制到项目 rules：
-> ```bash
-> cp -r subprojects/everything-claude-code/rules/<language> .claude/rules/ecc/
-> ```
-> ECC 子项目包含全部 19 个语言目录，是 rules 的完整来源。
+**架构**：
+- `~/.claude/rules/ecc/common/` — 全局通用规则，所有项目共用（**只保留 common，删除所有语言目录**）
+- `subprojects/everything-claude-code/rules/` — 规则源（19 种语言完整副本）
+- `.claude/rules/ecc/<language>/` — 按技术栈按需加载（PRD 后自动执行）
+
+> ⚠️ `~/.claude/rules/ecc/` 只保留 `common/`，删除所有语言目录可节省数万 tokens/会话。
+> Skills 不需要精简：subprojects 里的 skill 不进入 System Prompt，只在索引表中被搜索。
+
+**按需加载命令**：
+```bash
+cp -r subprojects/everything-claude-code/rules/<language> .claude/rules/ecc/
+```
+
+**技术栈→语言规则映射**：
+
+| PRD 技术栈关键词 | 需要的 rules 目录 |
+|------|------|
+| React, Next.js, Vue, Vite | web, typescript, react |
+| Python, Django, FastAPI, Flask | python |
+| Go, Golang | golang |
+| Rust, Cargo | rust |
+| Java, Spring, Maven, Gradle | java |
+| Kotlin, KMP | kotlin |
+| Swift, iOS, Xcode | swift |
+| Dart, Flutter | dart |
+| C++, CMake | cpp |
+| .NET, C#, ASP.NET | csharp |
+| PHP, Laravel | php |
+| Ruby, Rails | ruby |
+| Angular | angular, typescript, web |
+| HarmonyOS, ArkTS | arkts |
+| Node.js, Express | typescript |
+| React Native, Expo | react, typescript |
 
 ### Ralph Loop 关键步骤
 
