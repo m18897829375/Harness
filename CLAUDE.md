@@ -14,7 +14,7 @@
 ## 工作流
 
 ```
-用户需求 → 阶段1 Plan(加载skill分析,禁改代码,curl/playwright搜索,分析完成后按需加载rules) → 阶段2 PRD(ralph-harness生成,生成后等待ralph指令,禁止自动执行) → ⏸️ 等待用户ralph指令 → 阶段3 Ralph Loop(合同协商→Generator(ReAct+Daemon,按需加载skill/CLI)→Evaluator(ReAct+Daemon,按需加载skill/CLI+ECC验证)→通过则完成/未通过回Generator) → 阶段4 最终验证(ECC验证,不通过回阶段1) → 交付
+用户需求 → 阶段1 Plan(加载skill分析,禁改代码,curl/playwright/Exa搜索,分析完成后按需加载rules) → 阶段2 PRD(ralph-harness生成,生成后等待ralph指令,禁止自动执行) → ⏸️ 等待用户ralph指令 → 阶段3 Ralph Loop(合同协商→Generator(ReAct+Daemon,按需加载skill/CLI)→Evaluator(ReAct+Daemon,按需加载skill/CLI+ECC验证)→通过则完成/未通过回Generator) → 阶段4 最终验证(ECC验证,不通过回阶段1) → 交付
 ```
 
 ### 阶段1收尾：按需加载 Rules
@@ -128,65 +128,54 @@ harness/
 
 > **按需搜索，禁止全量加载。** 索引表是搜索工具，不是参考资料。
 
-### Skill索引表 (`skill-index.json`) — 查询优先级最高
+### Skill 匹配（BM25 引擎，推荐）
 
-- 694个skill（从1630个文件合并去重），12个category × 5个phase 分类，由 `scripts/build_skill_index.py` 自动生成
-- 先查此表：Claude Code自主分析CLI需求 → skill辅助发现额外CLI → 合并后查CLI索引表
-
-### CLI索引表 (`cli-index.json`) — 查询优先级次之
-
-- 34个CLI工具，按13个category分类，每个工具含commands数组
-- 来源标注：native-cli / opencli-converted
-
-### 索引表搜索规则（硬约束）
-
-⚠️ **搜索索引表时必须使用英文关键词，禁止用中文搜索工具名。**
-
-原因：`name` 和 `trigger_keywords` 字段全为英文 kebab-case。中文搜索只能命中 `category` 元数据行，无法命中实际技能名。
-
-**中→英映射参考**：
-
-| 中文概念 | 英文搜索词 |
-|---------|-----------|
-| 测试 | test, testing |
-| 部署 | deploy, deployment |
-| 版本控制 | git, version-control |
-| 需求分析 | requirements, planning |
-| 安全 | security |
-| 性能 | performance, optimization |
-| 数据库 | database |
-
-**标准搜索命令**：
+使用 BM25 倒排索引匹配，分数为连续浮点数（无同分问题），匹配结果 < 2K tokens：
 
 ```bash
-# 搜索 skill
-python3 scripts/search_index.py --type skill --keyword "<英文关键词>"
+# 按任务描述匹配（返回 top 5，自动去重）
+python3 scripts/match_skills.py "<任务描述>"
 
-# 搜索 skill + category 过滤
-python3 scripts/search_index.py --type skill --keyword "<kw>" --category "<category>"
+# JSON 输出 — Claude Code 解析后加载匹配到的 SKILL.md
+python3 scripts/match_skills.py --json --top-k 5 "<描述>"
 
-# 搜索 skill + phase 过滤
-python3 scripts/search_index.py --type skill --keyword "<kw>" --phase "generator"
+# 精确 name 查找（O(1) 哈希表）
+python3 scripts/match_skills.py --name "react-patterns"
 
-# 搜索 CLI 工具
-python3 scripts/search_index.py --type cli --keyword "<kw>"
-
-# 按 name 精确匹配
-python3 scripts/search_index.py --type skill --name "<exact-name>"
+# 重建索引（新增/删除 skill 后）
+python3 scripts/match_skills.py --rebuild
 ```
 
-**禁止的搜索方式**：
+**调用前查询构造规则**：BM25 对高 IDF 领域专有词（`springboot`、`motion`、`liquid-glass`）敏感，对通用词（`fix`、`button`、`component`）迟钝。调用 match_skills.py 前必须优化查询：
 
-| 禁止 | 原因 |
-|------|------|
-| `grep '"category": "X"' | grep 'keyword'` | ❌ 逐行 grep 无法组合 JSON 跨行条件，结果永远为 0 |
-| `grep -i '中文' skill-index.json` | ❌ name/keywords 全英文，中文搜索无法命中 |
-| `cat skill-index.json` 全文加载 | ❌ 71K tokens |
+1. **提取技术栈** → 从任务中取框架名、语言名："PayModal.tsx" → 追加 "React TypeScript"
+2. **提取领域动作** → 从 AC 提取用户真正在做什么："hide duplicate buttons, show retry" → "state handling user interaction"。不要直接复制 "button" 这种通用词
+3. **去除泛化词** → 删除 "fix"、"implement"、"build"、"add" 等（IDF < 2）
+4. **优先用 kebab-case 组合词** → "error handling" 优于 "error"（可能命中 error-handling skill name）
 
-**允许的降级方式**（仅当 Python 不可用时）：
+**加载规则**：match_skills.py 返回 Top-5（含 name、score、description_preview）。Claude Code 阅读每个 description_preview，自主判断是否加载该 skill 的完整 SKILL.md：
+
+- 描述与任务相关 → 加载
+- 描述与任务无关（如 PayModal 查询命中 motion-patterns 动画库）→ 跳过
+- 最少加载 1 个
+- **原则**：宁可少加载正确 skill，不多加载错误 skill
+
+```
+
+### Skill 索引表 (`skill-index.json`) — 数据源
+
+- 619 个 skill，由 `scripts/build_temp_index.py` 生成
+- `build_temp_index.py` 运行后自动触发 `build_match_index.py` 构建 BM25 索引
+
+### CLI 索引表 (`cli-index.json`)
+
+- 34个CLI工具，按13个category分类，每个工具含commands数组
+
+### 旧搜索方式（关键词匹配，备用）
 
 ```bash
-grep -i '"name": ".*keyword.*"' skill-index.json
+python3 scripts/search_index.py --type skill --keyword "<英文关键词>"
+python3 scripts/search_index.py --type skill --name "<exact-name>"
 ```
 
 ## 使用

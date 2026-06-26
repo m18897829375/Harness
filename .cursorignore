@@ -1,0 +1,81 @@
+# ============================================
+# .cursorignore - Cursor IDE 索引排除规则
+# 作用：减少 Cursor 后台索引任务，降低 CPU/内存占用
+# 注意：不影响 Git 提交（与 .gitignore 独立）
+# ============================================
+
+# --- 依赖目录 ---
+node_modules/
+**/node_modules/
+
+# --- 编译输出与 Source Map ---
+*.map
+dist/
+build/
+out/
+coverage/
+
+# --- 缓存目录 ---
+__pycache__/
+**/__pycache__/
+.ruff_cache/
+**/.ruff_cache/
+.ralph/
+**/.ralph/
+.mypy_cache/
+.pytest_cache/
+.eslintcache/
+.parcel-cache/
+.next/
+.nuxt/
+.svelte-kit/
+
+# --- IDE 配置（子项目中的副本不需要索引）---
+.vscode/
+.idea/
+**/.cursor
+**/.codex
+**/.vibe
+**/.hermes
+**/.claude-plugin
+**/.codex-plugin
+
+# --- 第三方 Agent/IDE 配置目录（冗余副本）---
+**/.agents
+**/.kiro
+**/.opencode
+**/.codebuddy
+**/.qwen
+**/.trae
+**/.zed
+**/.gemini
+
+# --- 自动生成索引文件（运行时搜索用，不需要索引内容）---
+skill-index.json
+skill-index-temp.json
+cli-index.json
+cli-manifest.json
+**/skills-index.json
+
+# --- 日志与临时文件 ---
+*.log
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+*.zip
+
+# --- 系统文件 ---
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- 工作区（用户数据，非代码）---
+workspace/
+
+# --- 子项目特定排除 ---
+subprojects/OpenCLI/extension/dist/
+subprojects/OpenCLI/extension/out/
+subprojects/OpenCLI/*.vsix
+subprojects/everything-claude-code/manifests/

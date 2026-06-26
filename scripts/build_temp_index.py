@@ -1,4 +1,4 @@
-"""Scan all 5 subprojects and generate skill-index-temp.json"""
+"""Scan all 5 subprojects and generate skill-index.json"""
 import json, re
 from pathlib import Path
 from collections import defaultdict
@@ -179,10 +179,22 @@ def main():
         sources=dict(source_stats),
         skills=all_skills,
     )
-    out_path = BASE / "skill-index-temp.json"
+    out_path = BASE / "skill-index.json"
     with open(out_path, 'w', encoding='utf-8') as f:
         json.dump(output, f, ensure_ascii=False, indent=2)
     print(f"\nWritten: {out_path} ({out_path.stat().st_size / 1024:.0f} KB)")
+
+    # Auto-build match-index.json
+    import subprocess, sys
+    print("\nBuilding match-index.json...")
+    r = subprocess.run(
+        [sys.executable, str(BASE / "scripts" / "build_match_index.py")],
+        capture_output=True, text=True
+    )
+    if r.returncode != 0:
+        print(f"WARNING: {r.stderr}")
+    else:
+        print(r.stdout.strip())
 
 
 if __name__ == "__main__":
