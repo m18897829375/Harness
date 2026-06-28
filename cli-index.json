@@ -125,9 +125,9 @@
       "name": "opencli",
       "source": "opencli-converted",
       "original_mcp": null,
-      "description": "通用CLI桥接器——将任意网站/API转化为命令行接口。166个适配器，优先用于MCP→CLI转化",
+      "description": "通用CLI桥接器——将任意网站/API转化为命令行接口。163个站点（1049条命令），优先用于MCP→CLI转化",
       "commands": [
-        {"name": "list", "usage": "opencli list", "description": "列出所有可用适配器(166个)"},
+        {"name": "list", "usage": "opencli list", "description": "列出所有可用适配器(163站点/1049命令)"},
         {"name": "validate", "usage": "opencli validate", "description": "校验所有适配器"},
         {"name": "playwright", "usage": "opencli playwright navigate/snapshot/click/type/evaluate/screenshot <url>", "description": "内置Playwright CLI（首选浏览器自动化）"},
         {"name": "github", "usage": "opencli github <subcmd>", "description": "GitHub操作（issues/prs/repos/search等）"},

@@ -50,9 +50,39 @@ process.stdin.on('end', function () {
       record.skill = input.tool_input.skill;
     }
 
-    // Bash 命令摘要
+    // Read 工具读取 SKILL.md → 转为 Skill 记录（只记实际加载的 skill）
+    var readFilePath = (input.tool_input && input.tool_input.file_path) || input.file_path;
+    if (input.tool_name === 'Read' && readFilePath) {
+      var skillMatch = readFilePath.match(/[\\/]skills[\\/]([^\\/]+)[\\/]SKILL\.md$/i);
+      if (skillMatch) {
+        record.tool = 'Skill';
+        record.skill = skillMatch[1];
+        record.params = 'skill=' + skillMatch[1];
+        delete record.command;
+      }
+    }
+
+    // Bash 命令摘要 + CLI 工具识别
     if (input.tool_name === 'Bash' && input.tool_input && input.tool_input.command) {
-      record.command = input.tool_input.command.slice(0, 300);
+      var cmd = input.tool_input.command.trim();
+      record.command = cmd.slice(0, 300);
+
+      // 提取 CLI 工具名（对照 cli-index.json 已知工具列表）
+      var firstWord = cmd.split(/\s+/)[0];
+      var KNOWN_CLI = [
+        'git','npm','node','npx','bash','jq','curl','playwright',
+        'ecc','opencli','tsx','tsc','eslint','pytest','vitest',
+        'go','cargo','gradle','docker','pm2','uv','pip','pnpm',
+        'yarn','bun','mkdocs','ralph','python3','claude',
+      ];
+      if (KNOWN_CLI.indexOf(firstWord) >= 0) {
+        record.cli = firstWord;
+        // opencli 提取子命令（站点适配器名）
+        if (firstWord === 'opencli') {
+          var parts = cmd.split(/\s+/);
+          if (parts.length >= 2) record.cli_subcmd = parts[1];
+        }
+      }
     }
 
     // 写入 JSONL
@@ -86,6 +116,7 @@ function summarizeParams(toolName, input) {
   if (input.model) fields.push('model=' + input.model);
   if (input.skill) fields.push('skill=' + input.skill);
   if (input.command) fields.push('cmd="' + input.command.slice(0, 60) + '"');
+  if (input.file_path) fields.push('file="' + input.file_path + '"');
   return fields.length > 0 ? fields.join(', ') : '(no summary)';
 }
 

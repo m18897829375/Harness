@@ -101,7 +101,7 @@ python3 scripts/match_skills.py --rebuild                        # 重建索引
 
 **加载规则**：match_skills.py 返回 Top-5（含 name、score、description_preview）。Claude Code 自主判断是否加载 SKILL.md：
 - 描述与任务相关 → 加载 | 无关（如 PayModal 命中 motion-patterns）→ 跳过
-- 最少加载 1 个，原则：宁可少加载正确 skill，不多加载错误 skill
+- **最多加载 5 个**，推荐 2-3 个最相关的。原则：宁可少加载正确 skill，不多加载错误 skill
 
 ### 索引表数据源
 

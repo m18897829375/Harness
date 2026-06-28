@@ -144,6 +144,7 @@ def search_by_name(name, idx):
 
 
 def rebuild():
+
     print("重建 match-index.json ...", file=sys.stderr)
     r = subprocess.run(
         [sys.executable, str(BASE / "scripts" / "build_match_index.py")],
