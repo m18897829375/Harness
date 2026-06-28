@@ -59,7 +59,20 @@ cp -r subprojects/everything-claude-code/rules/<language> .claude/rules/ecc/
 3. **网络搜索**: DeepSeek API 不兼容内置 WebFetch/WebSearch。改用 Exa MCP（`mcp__plugin_ecc_exa__web_search_exa`，使用前确认返回条数）、`mcp__github__search_code`、`mcp__plugin_context7_context7__query-docs`，降级用 `curl -sL`。
 4. **CLI优先 > MCP**: 优先使用CLI工具。如只有MCP工具，通过OpenCLI转化为CLI并全局注册。既有MCP又有CLI时，只保留CLI。
 5. **禁止降级处理**: 不能靠编写脚本替代使用CLI工具。必须直接调用。
-6. **子项目权限**: OpenCLI 可写（新增 MCP→CLI 适配器），其余 4 个子项目只读。只读子项目只能通过 `git pull` 同步上游，禁止直接修改。
+6. **子项目只读保护（Security Constraint）**:
+   以下子项目在生产环境中**严格只读**：
+   - `subprojects/claude-skills-main/`
+   - `subprojects/ralph-harness/`
+   - `subprojects/everything-claude-code/`
+   - `subprojects/awesome-mcp-servers/`
+   只读规则（任何违规视为安全事件）：
+   - 禁止在上述目录下**创建**新文件
+   - 禁止**修改**上述目录下的已有文件
+   - 禁止**删除**上述目录下的任何文件
+   - 唯一允许的操作：`git pull` 同步上游更新
+   - 如果必须修改：在独立克隆（如 ralph-main）中开发 → 推送上游 GitHub → `git submodule update --remote` 同步
+   - `subprojects/OpenCLI/` 为可写（新增 MCP→CLI 适配器）
+   每次操作前自查：当前操作是否涉及只读子项目文件？→ 如是，立即停止。
 7. **ReAct + Daemon**: Generator和Evaluator均采用ReAct架构（先思考后调用工具循环），以Daemon模式运行确保中断后执行不中断。
 8. **合同协商**: 每个子任务执行前，Generator和Evaluator必须先协商完成标准，协商成功锁定合同后执行，协商失败返回Generator重新协商。
 9. **索引表按需渐进加载**: Skill索引表和CLI索引表**禁止一次性全部加载到上下文**。每次只搜索并加载当前子任务所需的条目，像Skill一样渐进式加载。索引表是搜索工具，不是参考资料。
