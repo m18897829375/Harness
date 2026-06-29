@@ -34,6 +34,18 @@ cp -r subprojects/everything-claude-code/rules/<language> .claude/rules/ecc/
 
 > ⚠️ **PRD 生成后，必须等待用户输入 ralph 指令才能启动 Ralph Loop，禁止自动执行子任务。**
 
+**PRD 生成后 → 工具预检**：Ralph Loop 的 gen/eva 无法自行登录或安装工具。PRD 生成后须执行预检，提醒用户哪些工具需提前准备：
+
+```bash
+python3 scripts/match_cli.py --preflight
+```
+
+检查输出中两类工具：
+- **需要登录**：OpenCLI 站点适配器（cookie/ui 策略）需用户在 Chrome 中先登录
+- **需要安装**：`mcp_install_cmd` 不为空的 MCP 工具需提前执行安装命令
+
+提醒用户后，再等待 `ralph` 指令。
+
 1. **子任务分析**: 先查skill索引表（BM25 match_skills.py）按需加载skill（辅助发现额外CLI），Claude Code自主判断CLI需求，合并后按需查cli-index.json。**禁止全量加载索引表**
 2. **合同协商**: Generator↔Evaluator协商完成标准，成功锁定执行，失败回Generator重协商
 3. **Generator**: ReAct+Daemon模式，按合同实现，调用skill/CLI工具
@@ -103,18 +115,53 @@ python3 scripts/match_skills.py --rebuild                        # 重建索引
 - 描述与任务相关 → 加载 | 无关（如 PayModal 命中 motion-patterns）→ 跳过
 - **最多加载 5 个**，推荐 2-3 个最相关的。原则：宁可少加载正确 skill，不多加载错误 skill
 
+### CLI 匹配（BM25 引擎）
+
+三个数据源统一检索：cli-index.json（35工具） + OpenCLI manifest（~1049命令） + MCP README（~2282服务器）。
+
+```bash
+python3 scripts/match_cli.py "<查询词>"                                         # 基本搜索（默认Top-3）
+python3 scripts/match_cli.py --json --top-k 3 "<查询词>"                        # JSON输出
+python3 scripts/match_cli.py --source native,opencli "<查询词>"                  # 只看已有CLI
+python3 scripts/match_cli.py --source mcp "<查询词>"                             # 只看MCP服务器
+python3 scripts/match_cli.py --name "git clone"                                  # 精确名称查找
+python3 scripts/match_cli.py --list                                              # 浏览全部条目
+python3 scripts/match_cli.py --list --category version-control                   # 按分类浏览
+python3 scripts/match_cli.py --rebuild                                           # 重建索引
+```
+
+**结果标记**：
+- `[CLI]` — 原生CLI工具（git, npm, docker 等）
+- `[OpenCLI]` — OpenCLI适配器（已转化为CLI的站点）
+- `[MCP→CLI] [待转化]` — MCP服务器，尚未转化为CLI（分数已降权×0.7）
+- MCP 结果附带 GitHub URL + 安装命令 + 转化提示
+
+**CLI 加载规则**：match_cli.py 返回 Top-3 初筛结果。Claude Code 自主判断：
+- **只选 1 个**最相关的 CLI 工具 — 与 skill 不同，CLI 不需要互补集合
+- 初筛后可用 `--name "工具名"` 精确确认
+- MCP 结果含 `[待转化]` 标记和转化提示
+
+**索引结构**：`cli-match-index.json`（~5.4MB）分为两层：
+- 用户可读：`entries[]`（工具目录）+ `name_index`（精确查找用）
+- BM25 内部：`idf`（token 稀有度）+ `doc_tokens`（文档分词）+ `inverted`（倒排索引）
+
+**索引构建**：`build_temp_index.py` 末尾自动触发 `build_cli_match_index.py`，生成 `cli-match-index.json`。
+
 ### 索引表数据源
 
 - **skill-index.json**: 619 个 skill，`build_temp_index.py` 生成后自动触发 `build_match_index.py`
-- **cli-index.json**: 35 个CLI工具，按需 grep 搜索
-- **match-index.json**: BM25 倒排索引，606 skill（去重后）
+- **match-index.json**: BM25 skill 倒排索引，606 skill（去重后）
+- **cli-index.json**: 35 个CLI工具（手工维护）
+- **cli-match-index.json**: BM25 CLI 倒排索引，~3459 条目（native + OpenCLI + MCP 三源统一）
+- **cli-manifest.json**: OpenCLI 适配器清单（`subprojects/OpenCLI/`）
+- **README.md**: MCP 服务器目录（`subprojects/awesome-mcp-servers/`）
 
 ### 旧搜索方式（关键词匹配，备用）
 
 ```bash
 python3 scripts/search_index.py --type skill --keyword "<英文关键词>"
 python3 scripts/search_index.py --type skill --name "<exact-name>"
-python3 scripts/search_index.py --type cli --keyword "<关键词>"
+# CLI 关键词搜索已由 match_cli.py (BM25) 替代
 ```
 
 ## 使用

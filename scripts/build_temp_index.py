@@ -196,6 +196,17 @@ def main():
     else:
         print(r.stdout.strip())
 
+    # Auto-build cli-match-index.json
+    print("\nBuilding cli-match-index.json...")
+    r = subprocess.run(
+        [sys.executable, str(BASE / "scripts" / "build_cli_match_index.py")],
+        capture_output=True, text=True
+    )
+    if r.returncode != 0:
+        print(f"WARNING: {r.stderr}")
+    else:
+        print(r.stdout.strip())
+
 
 if __name__ == "__main__":
     main()

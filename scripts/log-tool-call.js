@@ -62,26 +62,102 @@ process.stdin.on('end', function () {
       }
     }
 
-    // Bash 命令摘要 + CLI 工具识别
+    // Bash 命令摘要 + CLI 工具识别（多规则匹配）
     if (input.tool_name === 'Bash' && input.tool_input && input.tool_input.command) {
       var cmd = input.tool_input.command.trim();
       record.command = cmd.slice(0, 300);
 
-      // 提取 CLI 工具名（对照 cli-index.json 已知工具列表）
-      var firstWord = cmd.split(/\s+/)[0];
-      var KNOWN_CLI = [
-        'git','npm','node','npx','bash','jq','curl','playwright',
-        'ecc','opencli','tsx','tsc','eslint','pytest','vitest',
-        'go','cargo','gradle','docker','pm2','uv','pip','pnpm',
-        'yarn','bun','mkdocs','ralph','python3','claude',
-      ];
-      if (KNOWN_CLI.indexOf(firstWord) >= 0) {
-        record.cli = firstWord;
-        // opencli 提取子命令（站点适配器名）
-        if (firstWord === 'opencli') {
-          var parts = cmd.split(/\s+/);
-          if (parts.length >= 2) record.cli_subcmd = parts[1];
+      // 多规则扫描整条命令，记录到 cli-calls.jsonl
+      var cliCalls = [];
+      var words = cmd.split(/[\s;|&]+/);
+
+      // 规则1: opencli <site> <cmd>
+      var ocMatch = cmd.match(/(?:^|[;|&\s])opencli\s+(\S+)\s+(\S+)/);
+      if (ocMatch && OPENCLI_SET[ocMatch[1]]) {
+        cliCalls.push({tool: 'opencli', site: ocMatch[1], cmd: ocMatch[2], rule: 'opencli'});
+      } else if (ocMatch) {
+        // opencli 但 site 不在注册表中，仍记录
+        cliCalls.push({tool: 'opencli', site: ocMatch[1], cmd: ocMatch[2], rule: 'opencli'});
+      }
+
+      // 规则2: 已知原生工具（从 registry 匹配，全词匹配）
+      for (var i = 0; i < words.length; i++) {
+        if (NATIVE_SET[words[i]] && words[i] !== 'opencli') {
+          // 避免重复（同一条命令中同一工具多次出现只记一次）
+          var dup = false;
+          for (var d = 0; d < cliCalls.length; d++) {
+            if (cliCalls[d].tool === words[i]) { dup = true; break; }
+          }
+          if (!dup) {
+            cliCalls.push({tool: words[i], rule: 'native'});
+          }
         }
+      }
+
+      // 规则3: npx <package>
+      var npxMatch = cmd.match(/(?:^|[;|&\s])npx\s+(?:-y\s+)?(\S+)/);
+      if (npxMatch) {
+        var dupNpx = false;
+        for (var d2 = 0; d2 < cliCalls.length; d2++) {
+          if (cliCalls[d2].tool === 'npx') { dupNpx = true; break; }
+        }
+        if (!dupNpx) cliCalls.push({tool: 'npx', pkg: npxMatch[1], rule: 'npx'});
+      }
+
+      // 填充 record.cli（向后兼容）
+      if (cliCalls.length > 0) {
+        record.cli = cliCalls[0].tool;
+        record.cli_all = cliCalls.map(function(c) { return c.tool; });
+        record.cli_rule = cliCalls[0].rule;
+        // 将 tool 从 "Bash" 重写为 "CLI:<工具名>"，方便过滤
+        record.tool = 'CLI:' + cliCalls[0].tool;
+        // opencli 提取子命令
+        if (cliCalls[0].tool === 'opencli') {
+          record.cli_subcmd = cliCalls[0].site;
+        }
+      }
+
+      // 写入独立 CLI 日志
+      if (cliCalls.length > 0) {
+        var ralphDir2 = findProjectDir() ? path.join(findProjectDir(), '.ralph') : null;
+        if (!ralphDir2) { ralphDir2 = path.join(process.cwd(), '.ralph'); }
+        if (!fs.existsSync(ralphDir2)) { fs.mkdirSync(ralphDir2, { recursive: true }); }
+        var cliLogFile = path.join(ralphDir2, 'cli-calls.jsonl');
+        for (var j = 0; j < cliCalls.length; j++) {
+          var entry = {
+            ts: ts,
+            role: record.role,
+            tool: cliCalls[j].tool,
+            rule: cliCalls[j].rule,
+            full_command: cmd.slice(0, 500),
+          };
+          if (cliCalls[j].site) entry.site = cliCalls[j].site;
+          if (cliCalls[j].cmd) entry.cmd = cliCalls[j].cmd;
+          if (cliCalls[j].pkg) entry.pkg = cliCalls[j].pkg;
+          fs.appendFileSync(cliLogFile, JSON.stringify(entry) + '\n', 'utf8');
+        }
+      }
+    }
+
+    // ── Index Search 调用识别 ──────────────────────────────────────────
+    if (input.tool_name === 'Bash' && input.tool_input && input.tool_input.command) {
+      var cmd = input.tool_input.command.trim();
+      var idxMatch = cmd.match(/python3\s+(?:[^\s]*\/)?scripts\/(match_cli\.py|match_skills\.py|search_index\.py)\s*(.*)/);
+      if (idxMatch) {
+        record.index_search = idxMatch[1].replace('.py', '');
+        var argsStr = idxMatch[2] || '';
+        // 提取查询词（双引号包裹的字符串）
+        var qm = argsStr.match(/"([^"]+)"/);
+        if (qm) record.search_query = qm[1].slice(0, 200);
+        // 提取参数
+        if (argsStr.includes('--json')) record.search_json = true;
+        if (argsStr.includes('--rebuild')) record.search_rebuild = true;
+        var tkm = argsStr.match(/--top-k\s+(\d+)/);
+        if (tkm) record.search_top_k = parseInt(tkm[1], 10);
+        var sm = argsStr.match(/--source\s+(\S+)/);
+        if (sm) record.search_source = sm[1];
+        var tm = argsStr.match(/--type\s+(skill|cli)/);
+        if (tm) record.search_type = tm[1];
       }
     }
 
@@ -101,7 +177,29 @@ process.stdin.on('end', function () {
   process.exit(0);
 });
 
-// ── 检测当前角色 ────────────────────────────────────────────────────────
+// ── 加载 CLI 工具注册表 ──────────────────────────────────────────────────
+var NATIVE_TOOLS = [];
+var OPENCLI_SITES = [];
+try {
+  var projectDir = findProjectDir();
+  var regPath = path.join(projectDir, 'cli-tool-registry.json');
+  if (fs.existsSync(regPath)) {
+    var reg = JSON.parse(fs.readFileSync(regPath, 'utf8'));
+    NATIVE_TOOLS = reg.native_tools || [];
+    OPENCLI_SITES = reg.opencli_sites || [];
+  }
+} catch (e) { /* registry 不存在时回退到硬编码 */ }
+if (NATIVE_TOOLS.length === 0) {
+  NATIVE_TOOLS = ['git','npm','node','npx','bash','jq','curl','playwright','docker','pip','go','cargo'];
+}
+if (OPENCLI_SITES.length === 0) {
+  OPENCLI_SITES = ['bilibili','twitter','zhihu','github'];
+}
+// 快速查找 Set
+var NATIVE_SET = {};
+for (var ni = 0; ni < NATIVE_TOOLS.length; ni++) { NATIVE_SET[NATIVE_TOOLS[ni]] = true; }
+var OPENCLI_SET = {};
+for (var oi = 0; oi < OPENCLI_SITES.length; oi++) { OPENCLI_SET[OPENCLI_SITES[oi]] = true; }
 function detectRole() {
   if (process.env.RALPH_ROLE) return process.env.RALPH_ROLE;
   return 'main';

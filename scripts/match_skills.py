@@ -205,6 +205,19 @@ def main():
                 print(f"    {r['description_preview']}")
             print()
 
+    # 写入搜索结果日志（供 analyze-tool-usage.sh 统计）
+    ralph_dir = BASE / ".ralph"
+    if ralph_dir.exists() and results:
+        import datetime as dt
+        log_entry = {
+            "ts": dt.datetime.now(dt.timezone.utc).isoformat(),
+            "script": "match_skills",
+            "query": args.query or args.name,
+            "matched": [r["name"] for r in results[:args.top_k]],
+        }
+        with open(ralph_dir / "search-results.jsonl", "a", encoding="utf-8") as f:
+            f.write(json.dumps(log_entry, ensure_ascii=False) + "\n")
+
 
 if __name__ == "__main__":
     main()
