@@ -1,0 +1,11 @@
+
+## 2026-07-03 — US-F01 实现 (Ralph Generator Build)
+- [SCOPE] 修改文件：workspace/deepseek-websearch-extension/content.js, workspace/deepseek-websearch-extension/manifest.json
+- [PRECHECK] 目标代码状态：content.js 中 onButtonClick 原直接调用 handleWebSearch()，未实现 toggle；manifest.json 已包含 https://api.exa.ai/*。
+- [SEARCH] match_skills 'Chrome extension content script toggle button sendMessage' → 无直接相关 skill；match_cli 'playwright chromium extension test' → 无原生 CLI；typecheck 使用 npx tsc --noEmit。
+- [IMPLEMENT] 添加模块级 isSmartSearchActive = false；添加 toggleSmartSearchActive() 切换状态并更新 web-search-btn-active / aria-pressed；修改 onButtonClick() 为先 toggle，再仅当 nowActive 为 true 时调用 handleWebSearch()。
+- [TYPECHECK] npx tsc --noEmit 通过。
+- [CODE-REVIEW] code-reviewer agent: APPROVE, 0 CRITICAL / 0 HIGH / 1 MEDIUM / 2 LOW。MEDIUM 为搜索后是否自动重置 active 状态；根据 PRD “再次点击取消激活” 的明确要求，保留用户二次点击取消行为，不修改。
+- [SELF-CHECK] 自检轮次 1/3：typecheck PASS, lint PASS（项目无 lint 脚本，以 typecheck 为准）。
+- [DELIVERY] 满足提交条件：typecheck + lint 通过。
+---

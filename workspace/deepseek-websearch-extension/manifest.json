@@ -1,0 +1,34 @@
+{
+  "manifest_version": 3,
+  "name": "DeepSeek Web Search",
+  "version": "0.1.0",
+  "description": "Add Exa-powered web search capability to DeepSeek Expert mode chat.",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://chat.deepseek.com/*",
+    "https://api.exa.ai/*"
+  ],
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "DeepSeek Web Search — API Key 配置"
+  },
+  "background": {
+    "service_worker": "background/service-worker.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://chat.deepseek.com/*"
+      ],
+      "js": [
+        "utils/search-format.js",
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}
