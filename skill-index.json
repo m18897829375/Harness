@@ -1,11 +1,11 @@
 {
   "description": "Skill index - 5 subprojects full scan (no dedup)",
-  "total_skills": 619,
+  "total_skills": 617,
   "sources": {
     "claude-skills-main": 348,
     "everything-claude-code": 261,
     "OpenCLI": 8,
-    "ralph-harness": 2,
+    "ralph-harness": 0,
     "awesome-mcp-servers": 0
   },
   "skills": [
@@ -5561,24 +5561,6 @@
       "description": "基于 opencli 命令的智能搜索路由器。当用户想要使用 OpenCLI、CLI 或 API 搜索、查询、查找或研究信息时，尤其是涉及指定网站、社交媒体、技术资料、新闻、购物、旅游、求职、金融或中文内容时，务必使用此 skill",
       "trigger_keywords": [],
       "file_path": "subprojects\\OpenCLI\\skills\\smart-search\\SKILL.md"
-    },
-    {
-      "name": "prd",
-      "source": "ralph-harness",
-      "category": "requirements",
-      "phase": "plan",
-      "description": "Generate a Product Requirements Document (PRD) for a new feature. Use when planning a feature, starting a new project, or when asked to create a PRD. Triggers on: create a prd, write prd for, plan this feature, requirements for, spec out.",
-      "trigger_keywords": [],
-      "file_path": "subprojects\\ralph-harness\\skills\\prd\\SKILL.md"
-    },
-    {
-      "name": "ralph",
-      "source": "ralph-harness",
-      "category": "requirements",
-      "phase": "plan",
-      "description": "Convert PRDs to prd.json format for the Ralph autonomous agent system. Use when you have an existing PRD and need to convert it to Ralph's JSON format. Triggers on: convert this prd, turn this into ralph format, create prd.json from this, ralph json.",
-      "trigger_keywords": [],
-      "file_path": "subprojects\\ralph-harness\\skills\\ralph\\SKILL.md"
     }
   ]
 }

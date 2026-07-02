@@ -152,6 +152,9 @@ def main():
             fm = extract_fm(sk_md)
             if not fm or not fm['name']:
                 continue
+            # Exclude ralph-harness built-in skills (managed by ralph.sh directly)
+            if fm['name'] in ('prd', 'ralph'):
+                continue
             cat = classify_category(fm['name'], fm['description'], fm['keywords'])
             ph = classify_phase(fm['name'], fm['description'])
             all_skills.append(dict(
