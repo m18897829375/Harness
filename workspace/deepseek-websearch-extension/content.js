@@ -773,6 +773,12 @@ function onButtonClick(event) {
  * in an isolated JavaScript world, direct monkey-patching of content.js'
  * window.fetch would not intercept requests made by DeepSeek's own page code.
  *
+ * The interceptor script must be injected from the service worker (via
+ * chrome.scripting.executeScript) because the chrome.scripting API is not
+ * exposed inside the content-script world. The content script therefore always
+ * asks the service worker to perform the MAIN-world injection by sending
+ * { action: 'INJECT_INTERCEPTOR' }.
+ *
  * The injected script listens for a CustomEvent from the content script that
  * carries formatted search results, then prepends them to the prompt field of
  * the next POST /api/v0/chat/completion request. After one interception the
@@ -783,56 +789,15 @@ function installApiInterceptors() {
     return;
   }
 
-  // Content scripts cannot directly obtain their own tabId, and the
-  // chrome.scripting API is not exposed in the content-script world. When it
-  // is available, use it; otherwise fall back to asking the service worker to
-  // inject the MAIN-world interceptor script.
-  if (typeof chrome !== 'undefined' && chrome.scripting && typeof chrome.scripting.executeScript === 'function') {
-    chrome.runtime.sendMessage(
-      { action: 'GET_TAB_ID' },
-      function (response) {
-        if (chrome.runtime.lastError) {
-          console.warn('[WebSearch] Failed to get tabId for interceptor injection:', chrome.runtime.lastError.message);
-          return;
-        }
+  chrome.runtime.sendMessage({ action: 'INJECT_INTERCEPTOR' }, function () {
+    if (chrome.runtime.lastError) {
+      console.warn('[WebSearch] Service-worker injection failed:', chrome.runtime.lastError.message);
+      return;
+    }
 
-        var tabId = response && typeof response.tabId === 'number' ? response.tabId : -1;
-        if (tabId <= 0) {
-          console.warn('[WebSearch] Invalid tabId (' + tabId + '), falling back to service-worker injection');
-          chrome.runtime.sendMessage({ action: 'INJECT_INTERCEPTOR' }, function () {
-            if (chrome.runtime.lastError) {
-              console.warn('[WebSearch] Service-worker fallback injection failed:', chrome.runtime.lastError.message);
-            } else {
-              apiInterceptorsInstalled = true;
-            }
-          });
-          return;
-        }
-
-        chrome.scripting.executeScript({
-          target: { tabId: tabId },
-          world: 'MAIN',
-          files: ['inject/interceptor.js'],
-        }, function () {
-          if (chrome.runtime.lastError) {
-            console.warn('[WebSearch] MAIN-world interceptor injection failed:', chrome.runtime.lastError.message);
-            return;
-          }
-          apiInterceptorsInstalled = true;
-          console.log('[WebSearch] MAIN-world interceptor installed via chrome.scripting.executeScript');
-        });
-      }
-    );
-  } else {
-    chrome.runtime.sendMessage({ action: 'INJECT_INTERCEPTOR' }, function () {
-      if (chrome.runtime.lastError) {
-        console.warn('[WebSearch] Service-worker injection failed:', chrome.runtime.lastError.message);
-      } else {
-        apiInterceptorsInstalled = true;
-        console.log('[WebSearch] MAIN-world interceptor installed via service-worker fallback');
-      }
-    });
-  }
+    apiInterceptorsInstalled = true;
+    console.log('[WebSearch] MAIN-world interceptor installed via service-worker fallback');
+  });
 }
 
 // === Initialization ===
