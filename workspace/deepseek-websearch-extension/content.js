@@ -36,8 +36,9 @@ var pendingSearchResults = null;
 
 /**
  * Tracks whether the smart search toggle is currently active.
- * The button acts as a toggle: inactive -> click activates and triggers
- * handleWebSearch(); active -> click deactivates and prevents a new search.
+ * The button acts as a persistent toggle: a click flips the active state and
+ * exposes it via document.body.dataset.ralphSmartSearch for the API interceptor
+ * to consume; it no longer triggers handleWebSearch() immediately.
  * @type {boolean}
  */
 var isSmartSearchActive = false;
@@ -343,6 +344,10 @@ function setButtonIdle() {
  */
 function toggleSmartSearchActive() {
   isSmartSearchActive = !isSmartSearchActive;
+
+  // Persist the active state synchronously so the main-world interceptor can
+  // read it via document.body.dataset.ralphSmartSearch.
+  document.body.dataset.ralphSmartSearch = isSmartSearchActive ? 'active' : '';
 
   if (webSearchButton && webSearchButton.isConnected) {
     if (isSmartSearchActive) {
@@ -754,15 +759,9 @@ function onButtonClick(event) {
     return;
   }
 
-  // Guard: don't act on disabled buttons
-  if (btn.getAttribute('aria-disabled') === 'true') {
-    return;
-  }
-
-  var nowActive = toggleSmartSearchActive();
-  if (nowActive) {
-    handleWebSearch();
-  }
+  // Toggle the smart-search active state. The click no longer triggers an
+  // immediate search; activation is consumed later by the API interceptor.
+  toggleSmartSearchActive();
 }
 
 // === API Request Interception ===

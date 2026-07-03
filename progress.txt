@@ -1,12 +1,15 @@
-
-## 2026-07-03 — US-F02 实现 (Ralph Generator Build)
-- [SCOPE] 修改文件：workspace/deepseek-websearch-extension/content.js（合同范围限定，未修改 background/service-worker.js 中遗留的 GET_TAB_ID 分支）
-- [PRECHECK] 目标代码状态：content.js 中 installApiInterceptors() 原包含 chrome.scripting.executeScript 直接调用分支和 GET_TAB_ID 分支，属于本次需移除的死代码。
-- [SEARCH] match_skills "Chrome extension content script remove dead code chrome.scripting.executeScript" → 无直接相关 skill；match_cli "chrome extension test typecheck" → 仅命中 npm test / gradle test 等不相关工具，typecheck 使用 npx tsc --noEmit。
-- [IMPLEMENT] 删除 content.js 中 chrome.scripting.executeScript 直接调用分支；删除 GET_TAB_ID 分支；installApiInterceptors() 现在统一发送 { action: 'INJECT_INTERCEPTOR' } 给 service worker；保留 apiInterceptorsInstalled guard 和成功日志；同步更新 JSDoc 注释说明 MV3 content script world 中 chrome.scripting 不可用。
-- [TYPECHECK] npx tsc --noEmit 通过。
-- [CODE-REVIEW] code-reviewer agent: APPROVE, 0 CRITICAL / 0 HIGH / 1 MEDIUM / 1 LOW。MEDIUM 为 background/service-worker.js 中 GET_TAB_ID 死代码未同步清理；contract scope 限定只修改 content.js，因此不处理。LOW 为日志 "via service-worker fallback" 语义已过时，但保留不影响功能。
-- [SELF-CHECK] 自检轮次 1/3：typecheck PASS, lint PASS（项目无 lint 脚本，以 typecheck 为准）。
-- [DELIVERY] 满足提交条件：typecheck + lint 通过。
-- [COMMIT] feat: US-F02 - 移除 installApiInterceptors 死代码 (QA round: 1/3)
+# Ralph Progress Log
+Started: Fri Jul  3 15:58:15     2026
+---
+## 2026-07-03T08:12:50Z - US-F03
+- Refactored onButtonClick() to call toggleSmartSearchActive() only; removed aria-disabled guard and handleWebSearch() trigger.
+- Extended toggleSmartSearchActive() to synchronously write document.body.dataset.ralphSmartSearch = isSmartSearchActive ? 'active' : ''.
+- Modified workspace/deepseek-websearch-extension/content.js only (onButtonClick + toggleSmartSearchActive).
+- [SEARCH] match_skills 'refactor button click toggle chrome extension content script' → gate blocked first bash call.
+- [SEARCH] match_cli 'chrome extension content script javascript typecheck' → bash script (native), DOMShell (MCP), cws (MCP).
+- [PRECHECK] target code state: onButtonClick checked aria-disabled and called handleWebSearch(); toggleSmartSearchActive did not persist dataset.
+- [SELF-CHECK] 自检轮次: 1/3, typecheck: PASS, lint: N/A.
+- [SCOPE] 修改文件 1 个，均属合同范围: workspace/deepseek-websearch-extension/content.js.
+- **Learnings for future iterations:**
+  - Contract scope intentionally forbids modifying createButton()/injectStyles()/CSS/SVG/Colors, so button class name (.web-search-btn-smart-search), text ('智能搜索'), icon (SMART_SEARCH_ICON_SVG), and aria-disabled='false' cannot be reconciled in this story alone. Next contract revision may need to lift createButton() restriction if these ACs must pass.
 ---
