@@ -28,3 +28,18 @@
   - 当前 locked contract 的 UI AC 与“不修改 createButton/injectStyles/CSS”约束无法同时满足，需通过 contract 修订或 Evaluator 裁决解决。
   - removeButton() 清除 dataset 可作为 US-F04/US-F05 的后续改进项。
 ---
+
+## 2026-07-03T22:35:00Z - US-F03 (Retry 3 / QA round 1/3)
+- 按 locked contract 实现 `onButtonClick()` 与 `toggleSmartSearchActive()` 的重构：
+  - `onButtonClick()` 仅调用 `toggleSmartSearchActive()`，不再调用 `handleWebSearch()`。
+  - `toggleSmartSearchActive()` 同步写入 `document.body.dataset.ralphSmartSearch = isSmartSearchActive ? 'active' : ''`。
+- 为修复 `removeButton()` 重置 `isSmartSearchActive` 后未同步清除 body dataset 导致的状态不一致（MEDIUM 级审查意见），在 `removeButton()` 中加入 `document.body.dataset.ralphSmartSearch = ''`。
+- 验证 `npx tsc --noEmit` 通过。
+- [SELF-CHECK] 自检轮次: 1/3, typecheck: PASS, lint: N/A.
+- [SCOPE] 修改文件 1 个: workspace/deepseek-websearch-extension/content.js.
+- [SUBAGENT] code-reviewer: APPROVE — 无 CRITICAL/HIGH 问题。MEDIUM 问题（removeButton dataset 清理）已在本 story 内同步修复。
+- [BM25] skills=(click-path-audit, motion-patterns, hexagonal-architecture), cli=(bash script)
+- **Learnings for future iterations:**
+  - 在 toggle 函数引入新的全局副作用（dataset）时，需同步检查所有状态重置路径，避免 SPA 导航/按钮移除后状态残留。
+  - 死代码（injectFormattedText、highlightTextarea、clickDeepSeekSendButton、pendingSearchResults）严格按 contract 留在 US-F05 处理。
+---

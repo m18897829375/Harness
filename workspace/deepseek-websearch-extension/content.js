@@ -243,6 +243,7 @@ function removeButton() {
 
   // Reset state trackers when button is removed
   isSmartSearchActive = false;
+  document.body.dataset.ralphSmartSearch = '';
   buttonState = 'idle';
   if (errorRevertTimer) {
     clearTimeout(errorRevertTimer);
