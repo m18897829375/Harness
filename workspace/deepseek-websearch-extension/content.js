@@ -72,8 +72,8 @@ var lastKnownMode = null;
 
 // === SVG Icon ===
 
-/** Globe icon SVG string for the Smart Search button. Uses currentColor so the active/inactive color CSS controls the icon color. */
-var SMART_SEARCH_ICON_SVG = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.5"/><path d="M2 8H14" stroke="currentColor" stroke-width="1.5"/><path d="M8 2C9.5 4 10 6 10 8C10 10 9.5 12 8 14C6.5 12 6 10 6 8C6 6 6.5 4 8 2Z" stroke="currentColor" stroke-width="1.5"/></svg>';
+/** Globe/search icon SVG string for the Web Search button. */
+var WEB_SEARCH_ICON_SVG = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.5"/><path d="M2 8H14" stroke="currentColor" stroke-width="1.5"/><path d="M8 2C9.5 4 10 6 10 8C10 10 9.5 12 8 14C6.5 12 6 10 6 8C6 6 6.5 4 8 2Z" stroke="currentColor" stroke-width="1.5"/></svg>';
 
 /** Spinner SVG icon for loading state. Wrapped in a span with .web-search-spinner class for CSS rotation animation. */
 var SPINNER_SVG = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 2C4.68629 2 2 4.68629 2 8C2 11.3137 4.68629 14 8 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
@@ -112,24 +112,6 @@ function injectStyles() {
     '.web-search-highlight {',
     '  transition: background-color 0.3s ease;',
     '  background-color: rgba(59, 130, 246, 0.1) !important;',
-    '}',
-    '.web-search-btn-smart-search {',
-    '  display: inline-flex;',
-    '  align-items: center;',
-    '  gap: 4px;',
-    '  padding: 4px 8px;',
-    '  border-radius: 6px;',
-    '  font-size: 13px;',
-    '  font-weight: 500;',
-    '  cursor: pointer;',
-    '  color: #1f2329;',
-    '  background-color: #ffffff;',
-    '  border: 1px solid #e5e7eb;',
-    '}',
-    '.web-search-btn-smart-search.active {',
-    '  color: #5b6cf9;',
-    '  background-color: rgba(91, 108, 249, 0.15);',
-    '  border-color: #5b6cf9;',
     '}',
   ].join('\n');
   document.head.appendChild(style);
@@ -194,22 +176,20 @@ function findToolbarContainer() {
 // === Button Lifecycle ===
 
 /**
- * Create the Smart Search button element.
- * Uses .web-search-btn-smart-search class with an .active state class for
- * the persistent toggle visual. The button is always aria-disabled="false"
- * because clicks only toggle state and never trigger a search.
+ * Create the Web Search button element.
+ * Reuses .ds-toggle-button class for visual consistency with native toggles.
  *
  * @returns {HTMLButtonElement}
  */
 function createButton() {
   var btn = document.createElement('button');
-  btn.className = 'web-search-btn-smart-search' + (isSmartSearchActive ? ' active' : '');
+  btn.className = 'ds-toggle-button web-search-btn';
   btn.setAttribute('data-ralph-web-search', '');
-  btn.setAttribute('aria-disabled', 'false');
-  btn.setAttribute('aria-label', '智能搜索');
-  btn.setAttribute('title', '智能搜索');
+  btn.setAttribute('aria-disabled', 'true');
+  btn.setAttribute('aria-label', 'Web 搜索');
+  btn.setAttribute('title', 'Web 搜索 — 通过 Exa API 搜索网络');
   btn.type = 'button';
-  btn.innerHTML = SMART_SEARCH_ICON_SVG + '<span>智能搜索</span>';
+  btn.innerHTML = WEB_SEARCH_ICON_SVG + '<span>Web搜索</span>';
   return btn;
 }
 
@@ -314,7 +294,7 @@ function setButtonError() {
   webSearchButton.classList.add('web-search-btn-error');
   webSearchButton.setAttribute('aria-disabled', 'true');
   webSearchButton.setAttribute('aria-busy', 'false');
-  webSearchButton.innerHTML = SMART_SEARCH_ICON_SVG + '<span>搜索失败</span>';
+  webSearchButton.innerHTML = WEB_SEARCH_ICON_SVG + '<span>搜索失败</span>';
 
   // Auto-revert to idle after 3 seconds
   errorRevertTimer = setTimeout(function () {
@@ -346,9 +326,9 @@ function setButtonIdle() {
   webSearchButton.classList.remove('web-search-btn-loading');
   webSearchButton.classList.remove('web-search-btn-error');
   webSearchButton.setAttribute('aria-busy', 'false');
-  webSearchButton.innerHTML = SMART_SEARCH_ICON_SVG + '<span>智能搜索</span>';
+  webSearchButton.innerHTML = WEB_SEARCH_ICON_SVG + '<span>Web搜索</span>';
 
-  // The button is always clickable in the smart-search toggle architecture.
+  // Restore the correct enabled/disabled state based on API key + textarea content
   updateButtonState();
 }
 
@@ -385,19 +365,30 @@ function toggleSmartSearchActive() {
 // === Button State ===
 
 /**
- * Keep the button's aria-disabled attribute permanently 'false'.
+ * Toggle the button's aria-disabled attribute based on:
+ * 1. Whether an Exa API key is configured (checked via chrome.storage.sync)
+ * 2. Whether the textarea has content
  *
- * In the smart-search toggle architecture, the button click only flips the
- * active state; it never triggers a search directly. Therefore the button
- * should always be clickable and must not be disabled by API key or textarea
- * content state.
+ * The button is only enabled when BOTH conditions are met.
+ * Uses event delegation so it works even after React re-renders replace DOM elements.
  */
 function updateButtonState() {
   if (!webSearchButton || !webSearchButton.isConnected) {
     return;
   }
 
-  webSearchButton.setAttribute('aria-disabled', 'false');
+  var textarea = findTextarea();
+  var hasContent = !!(textarea && textarea.value.trim().length > 0);
+  var enabled = hasContent && hasApiKey;
+
+  webSearchButton.setAttribute('aria-disabled', enabled ? 'false' : 'true');
+
+  // Update tooltip based on the reason the button is disabled
+  if (!hasApiKey) {
+    webSearchButton.setAttribute('title', '请先在扩展弹出窗口中配置 Exa API Key');
+  } else {
+    webSearchButton.setAttribute('title', 'Web 搜索 — 通过 Exa API 搜索网络');
+  }
 }
 
 // === Text Injection ===

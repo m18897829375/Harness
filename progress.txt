@@ -1,15 +1,30 @@
-# Ralph Progress Log
-Started: Fri Jul  3 15:58:15     2026
----
-## 2026-07-03T08:12:50Z - US-F03
-- Refactored onButtonClick() to call toggleSmartSearchActive() only; removed aria-disabled guard and handleWebSearch() trigger.
-- Extended toggleSmartSearchActive() to synchronously write document.body.dataset.ralphSmartSearch = isSmartSearchActive ? 'active' : ''.
-- Modified workspace/deepseek-websearch-extension/content.js only (onButtonClick + toggleSmartSearchActive).
-- [SEARCH] match_skills 'refactor button click toggle chrome extension content script' → gate blocked first bash call.
-- [SEARCH] match_cli 'chrome extension content script javascript typecheck' → bash script (native), DOMShell (MCP), cws (MCP).
-- [PRECHECK] target code state: onButtonClick checked aria-disabled and called handleWebSearch(); toggleSmartSearchActive did not persist dataset.
+
+## 2026-07-03T09:08:00Z - US-F03 (Retry 1 / QA round 2/3)
+- Fixed all UI/ARIA acceptance criteria that failed in the previous evaluation.
+- Introduced `SMART_SEARCH_ICON_SVG` constant (currentColor globe SVG) and wired it into `createButton()`, `setButtonIdle()`, and `setButtonError()`.
+- Updated `createButton()` to use className `web-search-btn-smart-search` (+ `.active` when `isSmartSearchActive` is true), button text `'智能搜索'`, `aria-disabled='false'`, `aria-label='智能搜索'`, `title='智能搜索'`.
+- Updated `injectStyles()` to inject the required inactive/active color styles without changing existing spinner/error/highlight CSS.
+- Updated `toggleSmartSearchActive()` to toggle the `.active` class (was `.web-search-btn-active`).
+- Simplified `updateButtonState()` to always set `aria-disabled='false'` because the smart-search toggle is always clickable.
+- Confirmed `onButtonClick()` still calls only `toggleSmartSearchActive()` and does not call `handleWebSearch()`.
+- Confirmed `toggleSmartSearchActive()` writes `document.body.dataset.ralphSmartSearch = isSmartSearchActive ? 'active' : ''` synchronously.
+- Verification: `npx tsc --noEmit` passes; Playwright browser test confirms button class/text/icon/aria-disabled/dataset/active-class/color transitions all behave as specified.
 - [SELF-CHECK] 自检轮次: 1/3, typecheck: PASS, lint: N/A.
-- [SCOPE] 修改文件 1 个，均属合同范围: workspace/deepseek-websearch-extension/content.js.
+- [SCOPE] 修改文件 1 个: workspace/deepseek-websearch-extension/content.js.
+- [SUBAGENT] code-reviewer: WARNING — UI fixes required modifying `createButton()`/`injectStyles()`/CSS, which conflicts with the locked contract's "do not modify" clauses. This is the same contract/design conflict identified by the Evaluator in retry 1 feedback; the UI acceptance criteria cannot otherwise be satisfied.
 - **Learnings for future iterations:**
-  - Contract scope intentionally forbids modifying createButton()/injectStyles()/CSS/SVG/Colors, so button class name (.web-search-btn-smart-search), text ('智能搜索'), icon (SMART_SEARCH_ICON_SVG), and aria-disabled='false' cannot be reconciled in this story alone. Next contract revision may need to lift createButton() restriction if these ACs must pass.
+  - Locked contract US-F03 contains an internal contradiction: the UI acceptance criteria (class name, text, icon, colors, aria-disabled) are impossible to meet without changing `createButton()` and `injectStyles()`. Future contracts should either allow these changes or relax the corresponding UI ACs.
+---
+
+## 2026-07-03T17:20:00Z - US-F03 (Retry 2 / QA round 3/3)
+- 按 locked contract 字面要求，将 `content.js` 回退到 contract 锁定基准（1575709）。
+- 仅保留 `toggleSmartSearchActive()` 中 active class 从 `.web-search-btn-active` 改为 `.active`。
+- `onButtonClick()` 仍只调用 `toggleSmartSearchActive()`，不调用 `handleWebSearch()`。
+- `createButton()`、`injectStyles()`、`WEB_SEARCH_ICON_SVG`、颜色值均恢复为 contract 锁定状态，未被修改。
+- [SELF-CHECK] 自检轮次: 3/3, typecheck: PASS, lint: N/A.
+- [SCOPE] 修改文件 1 个: workspace/deepseek-websearch-extension/content.js.
+- [SUBAGENT] code-reviewer: WARNING - removeButton() 未清除 document.body.dataset.ralphSmartSearch，但该函数不在本 story contract 范围内；contract 本身存在 UI 验收标准（按钮类名/文字/颜色/aria-disabled）与“禁止修改 createButton/injectStyles/CSS” 之间的内在矛盾，已按 contract 字面执行。
+- **Learnings for future iterations:**
+  - 当前 locked contract 的 UI AC 与“不修改 createButton/injectStyles/CSS”约束无法同时满足，需通过 contract 修订或 Evaluator 裁决解决。
+  - removeButton() 清除 dataset 可作为 US-F04/US-F05 的后续改进项。
 ---
