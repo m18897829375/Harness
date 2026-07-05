@@ -241,9 +241,11 @@ function removeButton() {
     webSearchButton = null;
   }
 
-  // Reset state trackers when button is removed
+  // Reset button state trackers when button is removed.
+  // The active smart-search state is intentionally preserved across SPA
+  // navigation and button re-insertion; do NOT clear
+  // document.body.dataset.ralphSmartSearch here.
   isSmartSearchActive = false;
-  document.body.dataset.ralphSmartSearch = '';
   buttonState = 'idle';
   if (errorRevertTimer) {
     clearTimeout(errorRevertTimer);
@@ -506,36 +508,34 @@ function clickDeepSeekSendButton() {
 // === Search Handler ===
 
 /**
- * Handle a Web Search button click.
+ * Handle a Web Search request triggered by the main-world interceptor.
  *
- * Implements a 4-state button machine:
- *   idle → loading → success (restore idle + highlight textarea)
- *                  → error (red tint + "搜索失败", auto-revert 3s)
+ * Dispatches a web-search request to the service worker via SEARCH_REQUEST,
+ * then forwards the formatted results back to the main world via a
+ * 'ralph-web-search-results-ready' CustomEvent. This story does NOT perform
+ * any auto-send, textarea injection, or highlighting; those actions are reserved
+ * for the new interceptor-driven flow and are removed in US-F05.
  *
  * Guards:
  * - Empty textarea / missing API key: ignored (button already disabled)
  * - Double-click during loading: ignored (buttonState === 'loading')
  * - Stale callbacks after SPA navigation: ignored (button isConnected check)
  *
+ * @param {string} [query] - optional query to search; defaults to current textarea value
  * @see setButtonLoading, setButtonError, setButtonIdle
  */
-function handleWebSearch() {
+function handleWebSearch(query) {
   var textarea = findTextarea();
   if (!textarea) {
     return;
   }
 
-  var query = textarea.value.trim();
-  if (!query) {
+  var searchQuery = typeof query === 'string' && query.trim() ? query : textarea.value.trim();
+  if (!searchQuery) {
     return;
   }
 
   if (!hasApiKey) {
-    return;
-  }
-
-  // Guard: prevent a new search while previous results are still waiting to be sent.
-  if (pendingSearchResults !== null) {
     return;
   }
 
@@ -548,7 +548,7 @@ function handleWebSearch() {
   setButtonLoading();
 
   chrome.runtime.sendMessage(
-    { action: 'SEARCH_REQUEST', query: query },
+    { action: 'SEARCH_REQUEST', query: searchQuery },
     /**
      * @param {{ results?: Array<{ title: string, url: string, text: string }>, error?: string }} response
      */
@@ -559,39 +559,45 @@ function handleWebSearch() {
         return;
       }
 
-      // chrome.runtime.lastError means the background worker is unavailable
+      // chrome.runtime.lastError means the background worker is unavailable.
+      // Dispatch an empty results-ready event so the interceptor releases the
+      // original request immediately rather than waiting for the 15s timeout.
       if (chrome.runtime.lastError) {
         setButtonError();
+        document.dispatchEvent(new CustomEvent('ralph-web-search-results-ready', {
+          detail: null,
+        }));
         return;
       }
 
       if (!response) {
         setButtonError();
+        document.dispatchEvent(new CustomEvent('ralph-web-search-results-ready', {
+          detail: null,
+        }));
         return;
       }
 
       if (response.error) {
         setButtonError();
+        document.dispatchEvent(new CustomEvent('ralph-web-search-results-ready', {
+          detail: null,
+        }));
         return;
       }
 
       if (response.results && response.results.length > 0) {
-        var formattedText = formatSearchResults(response.results, query);
-        pendingSearchResults = formattedText;
+        var formattedText = formatSearchResults(response.results, searchQuery);
         document.dispatchEvent(new CustomEvent('ralph-web-search-results-ready', {
           detail: formattedText,
         }));
         setButtonIdle();
-
-        // Try to auto-send. If the native send button cannot be activated,
-        // fall back to the legacy textarea injection so the user still sees
-        // the search results.
-        if (!clickDeepSeekSendButton()) {
-          injectFormattedText(formattedText);
-          highlightTextarea();
-        }
       } else {
-        // Zero results — restore idle (not an error)
+        // Zero results - dispatch an empty ready event so the interceptor
+        // releases the original request immediately, unchanged.
+        document.dispatchEvent(new CustomEvent('ralph-web-search-results-ready', {
+          detail: null,
+        }));
         setButtonIdle();
       }
     }
@@ -803,6 +809,20 @@ function installApiInterceptors() {
 // === Initialization ===
 
 /**
+ * Listen for the main-world interceptor to request a web search.
+ * When the interceptor dispatches 'ralph-web-search-trigger' it carries the
+ * original prompt in event.detail.prompt; we start a search and will later
+ * dispatch 'ralph-web-search-results-ready' back to the main world.
+ *
+ * @param {Event} event
+ */
+function onWebSearchTrigger(event) {
+  var detail = event && /** @type {CustomEvent} */ (event).detail;
+  var prompt = detail && typeof detail.prompt === 'string' ? detail.prompt : '';
+  handleWebSearch(prompt);
+}
+
+/**
  * Initialize the content script.
  * Waits for DOM readiness, injects the button if in Expert mode,
  * and sets up the MutationObserver + input listener.
@@ -814,6 +834,7 @@ function init() {
   setupObserver();
   document.body.addEventListener('input', onTextareaInput);
   document.body.addEventListener('click', onButtonClick);
+  document.addEventListener('ralph-web-search-trigger', onWebSearchTrigger);
   checkApiKeyStatus();
 }
 
