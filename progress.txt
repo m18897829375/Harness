@@ -1,4 +1,3 @@
-
 ## 2026-07-03T09:08:00Z - US-F03 (Retry 1 / QA round 2/3)
 - Fixed all UI/ARIA acceptance criteria that failed in the previous evaluation.
 - Introduced `SMART_SEARCH_ICON_SVG` constant (currentColor globe SVG) and wired it into `createButton()`, `setButtonIdle()`, and `setButtonError()`.
@@ -23,7 +22,7 @@
 - `createButton()`、`injectStyles()`、`WEB_SEARCH_ICON_SVG`、颜色值均恢复为 contract 锁定状态，未被修改。
 - [SELF-CHECK] 自检轮次: 3/3, typecheck: PASS, lint: N/A.
 - [SCOPE] 修改文件 1 个: workspace/deepseek-websearch-extension/content.js.
-- [SUBAGENT] code-reviewer: WARNING - removeButton() 未清除 document.body.dataset.ralphSmartSearch，但该函数不在本 story contract 范围内；contract 本身存在 UI 验收标准（按钮类名/文字/颜色/aria-disabled）与“禁止修改 createButton/injectStyles/CSS” 之间的内在矛盾，已按 contract 字面执行。
+- [SUBAGENT] code-reviewer: WARNING - removeButton() 未清除 document.body.dataset.ralphSmartSearch，但该函数不在本 story contract 范围内；contract 本身存在 UI 验收标准（按钮类名/文字/颜色/aria-disabled）与“不修改 createButton/injectStyles/CSS”之间的内在矛盾，已按 contract 字面执行。
 - **Learnings for future iterations:**
   - 当前 locked contract 的 UI AC 与“不修改 createButton/injectStyles/CSS”约束无法同时满足，需通过 contract 修订或 Evaluator 裁决解决。
   - removeButton() 清除 dataset 可作为 US-F04/US-F05 的后续改进项。
@@ -42,4 +41,20 @@
 - **Learnings for future iterations:**
   - 在 toggle 函数引入新的全局副作用（dataset）时，需同步检查所有状态重置路径，避免 SPA 导航/按钮移除后状态残留。
   - 死代码（injectFormattedText、highlightTextarea、clickDeepSeekSendButton、pendingSearchResults）严格按 contract 留在 US-F05 处理。
+---
+
+## 2026-07-05T11:05:00Z - US-F04 (QA round: 1/3)
+- 按 locked contract 实现 interceptor 驱动的搜索注入流程：
+  - 重写 `inject/interceptor.js`：fetch/XHR monkey-patches 在 `document.body.dataset.ralphSmartSearch === 'active'` 时拦截 `POST /api/v0/chat/completion`；派发 `ralph-web-search-trigger`（携带原始 prompt）；通过 Promise/deferred send 异步暂扣请求；收到 `ralph-web-search-results-ready` 后注入 `searchResults + '\n\n' + originalPrompt` 并放行；15 秒超时或任何失败/空结果时原样放行（静默降级）。
+  - 修改 `content.js`：新增 `onWebSearchTrigger` 监听主世界 `ralph-web-search-trigger` 并调用 `handleWebSearch(prompt)`；`handleWebSearch()` 在搜索成功后只派发 `ralph-web-search-results-ready`（detail 为格式化文本），不再调用 `clickDeepSeekSendButton()`、`injectFormattedText()`、`highlightTextarea()`，不再赋值 `pendingSearchResults`；失败/零结果路径派发 `detail: null` 的 ready 事件，使 interceptor 立即释放原请求；`removeButton()` 不再清除 `document.body.dataset.ralphSmartSearch`，保持激活状态持久。
+- 注意：`inject/interceptor.js` 位于被 `.gitignore` 忽略的 `workspace/` 目录下，本次使用 `git add -f` 强制跟踪，确保新文件进入提交。
+- 验证：`npx tsc --noEmit` 通过；`code-reviewer` 首次 WARNING，修复失败/零结果立即释放后复评为 APPROVE；无 CRITICAL/HIGH 问题。
+- [SELF-CHECK] 自检轮次: 1/3, typecheck: PASS, lint: N/A.
+- [SCOPE] 修改文件 2 个: workspace/deepseek-websearch-extension/inject/interceptor.js (new), workspace/deepseek-websearch-extension/content.js.
+- [SUBAGENT] code-reviewer: APPROVE（复评后）。
+- [BM25] skills=(release-manager, changelog-generator, full-page-screenshot, launch-strategy, roadmap-communicator — 无高度相关 skill), cli=(tsc build/check, opencli playwright navigate/evaluate, native playwright screenshot/open).
+- **Learnings for future iterations:**
+  - 被 `.gitignore` 忽略的新文件必须显式 `git add -f`，否则 commit 会遗漏关键实现文件。
+  - 在事件驱动拦截器中，失败/空结果路径应显式派发“无结果”信号，避免依赖超时造成按钮状态与请求挂起状态不一致。
+  - `Promise<void>` 在 JSDoc/TypeScript checkJs 中需用 `/** @type {Promise<void>} */ (new Promise(...))` 形式断言，才能允许无参 `resolve()`。
 ---
