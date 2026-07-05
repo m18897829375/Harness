@@ -28,13 +28,6 @@ var reinsertTimer = null;
 var hasApiKey = false;
 
 /**
- * Formatted search results queued for injection into the next DeepSeek
- * chat/completion API request. Cleared to null immediately after one interception.
- * @type {string | null}
- */
-var pendingSearchResults = null;
-
-/**
  * Tracks whether the smart search toggle is currently active.
  * The button acts as a persistent toggle: a click flips the active state and
  * exposes it via document.body.dataset.ralphSmartSearch for the API interceptor
@@ -81,8 +74,8 @@ var SPINNER_SVG = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" x
 // === Style Injection ===
 
 /**
- * Inject a <style> element into the document head for button state classes
- * and textarea highlight animation. Idempotent — does nothing if already injected.
+ * Inject a <style> element into the document head for button state classes.
+ * Idempotent — does nothing if already injected.
  */
 function injectStyles() {
   if (document.getElementById('web-search-styles')) {
@@ -108,10 +101,6 @@ function injectStyles() {
     '  background-color: rgba(239, 68, 68, 0.15) !important;',
     '  border-color: rgba(239, 68, 68, 0.4) !important;',
     '  color: #ef4444 !important;',
-    '}',
-    '.web-search-highlight {',
-    '  transition: background-color 0.3s ease;',
-    '  background-color: rgba(59, 130, 246, 0.1) !important;',
     '}',
   ].join('\n');
   document.head.appendChild(style);
@@ -392,117 +381,6 @@ function updateButtonState() {
   } else {
     webSearchButton.setAttribute('title', 'Web 搜索 — 通过 Exa API 搜索网络');
   }
-}
-
-// === Text Injection ===
-
-/**
- * Replace the textarea content with formatted text and trigger
- * React's synthetic input event so the DeepSeek SPA recognizes
- * the content change.
- *
- * Uses the native HTMLTextAreaElement value setter (bypassing React's
- * override) followed by a bubbling input event. Without the native
- * setter call, React's event system won't update its internal state.
- *
- * @param {string} text — the formatted text to inject
- */
-function injectFormattedText(text) {
-  var textarea = findTextarea();
-  if (!textarea) {
-    return;
-  }
-
-  // Use the native value setter to bypass React's synthetic override.
-  // This ensures React's internal fiber state picks up the change
-  // when the subsequent input event fires.
-  var descriptor = Object.getOwnPropertyDescriptor(
-    window.HTMLTextAreaElement.prototype,
-    'value'
-  );
-  if (descriptor && descriptor.set) {
-    descriptor.set.call(textarea, text);
-  } else {
-    // Fallback: direct assignment (may not trigger React re-render)
-    textarea.value = text;
-  }
-
-  // Dispatch a bubbling input event so React's synthetic event system
-  // updates its internal state. The React event listener on the textarea
-  // (or its ancestor) will pick this up.
-  var inputEvent = new Event('input', {
-    bubbles: true,
-    cancelable: true,
-  });
-  textarea.dispatchEvent(inputEvent);
-}
-
-/**
- * Briefly highlight the textarea after search results are injected.
- * Adds a CSS class with a background-color transition (configured in
- * the injected <style> element), then removes it after 600ms so the
- * transition animates back to the normal background.
- *
- * No-op if the textarea is not found.
- */
-function highlightTextarea() {
-  var textarea = findTextarea();
-  if (!textarea) {
-    return;
-  }
-
-  textarea.classList.add('web-search-highlight');
-  setTimeout(function () {
-    // Re-query in case the original textarea was replaced by React
-    var currentTextarea = findTextarea();
-    if (currentTextarea && currentTextarea.isConnected) {
-      currentTextarea.classList.remove('web-search-highlight');
-    }
-  }, 600);
-}
-
-// === Send Button Click ===
-
-/**
- * Locate and click DeepSeek's native composer send button.
- *
- * Mirrors the selector logic from OpenCLI clis/deepseek/send.js: the send
- * button is the last div[role="button"] inside the textarea's toolbar that
- * is NOT a .ds-toggle-button. It must have an svg icon and aria-disabled="false".
- *
- * @returns {boolean} true if a candidate button was found and clicked, false otherwise
- */
-function clickDeepSeekSendButton() {
-  var textarea = findTextarea();
-  if (!textarea) {
-    return false;
-  }
-
-  var container = textarea.parentElement;
-  while (container && container !== document.body) {
-    if (container.querySelector('div[role="button"]')) {
-      break;
-    }
-    container = container.parentElement;
-  }
-
-  if (!container || container === document.body) {
-    return false;
-  }
-
-  var buttons = container.querySelectorAll('div[role="button"]:not(.ds-toggle-button)');
-  var sendButton = /** @type {HTMLElement | null} */ (buttons[buttons.length - 1]);
-
-  if (!sendButton || sendButton.querySelectorAll('svg').length === 0) {
-    return false;
-  }
-
-  if (sendButton.getAttribute('aria-disabled') !== 'false') {
-    return false;
-  }
-
-  sendButton.click();
-  return true;
 }
 
 // === Search Handler ===
@@ -787,8 +665,7 @@ function onButtonClick(event) {
  *
  * The injected script listens for a CustomEvent from the content script that
  * carries formatted search results, then prepends them to the prompt field of
- * the next POST /api/v0/chat/completion request. After one interception the
- * pending results are cleared to null to prevent duplicate injection.
+ * the next intercepted POST /api/v0/chat/completion request.
  */
 function installApiInterceptors() {
   if (apiInterceptorsInstalled) {

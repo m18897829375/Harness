@@ -58,3 +58,21 @@
   - 在事件驱动拦截器中，失败/空结果路径应显式派发“无结果”信号，避免依赖超时造成按钮状态与请求挂起状态不一致。
   - `Promise<void>` 在 JSDoc/TypeScript checkJs 中需用 `/** @type {Promise<void>} */ (new Promise(...))` 形式断言，才能允许无参 `resolve()`。
 ---
+
+## 2026-07-05T15:45:00Z - US-F05 (QA round: 1/3)
+- 按 locked contract 移除 content.js 中自动发送流程的死代码：
+  - 删除 `clickDeepSeekSendButton()` 函数定义。
+  - 删除 `injectFormattedText()` 函数定义。
+  - 删除 `highlightTextarea()` 函数定义。
+  - 删除 `pendingSearchResults` 模块级变量声明。
+  - 从 `injectStyles()` 中移除 `.web-search-highlight` CSS 规则。
+  - 更新 `injectStyles()`、`handleWebSearch()`、`installApiInterceptors()` 的 JSDoc，删除对已移除函数或变量的引用。
+- 验证 `npx tsc --noEmit` 通过。
+- [SELF-CHECK] 自检轮次: 1/3, typecheck: PASS, lint: N/A.
+- [SCOPE] 修改文件 1 个: workspace/deepseek-websearch-extension/content.js.
+- [SUBAGENT] code-reviewer: APPROVE — 无 CRITICAL/HIGH/MEDIUM/LOW 问题；死代码无残留，JSDoc 更新准确，类型检查通过。
+- [BM25] skills=(code-reviewer), cli=(tsc check)
+- **Learnings for future iterations:**
+  - 死代码移除后应同步检查相关 JSDoc 和注释，避免残留引用导致维护歧义。
+  - content.js 当前被 subprojects/everything-claude-code 等 git status 标记为脏的子模块状态不影响本次提交；只需提交 content.js 文件。
+---
