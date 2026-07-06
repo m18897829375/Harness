@@ -683,15 +683,19 @@ function installApiInterceptors() {
     return;
   }
 
-  chrome.runtime.sendMessage({ action: 'INJECT_INTERCEPTOR' }, function () {
-    if (chrome.runtime.lastError) {
-      console.warn('[WebSearch] Service-worker injection failed:', chrome.runtime.lastError.message);
-      return;
-    }
+  try {
+    chrome.runtime.sendMessage({ action: 'INJECT_INTERCEPTOR' }, function () {
+      if (chrome.runtime.lastError) {
+        console.warn('[WebSearch] Service-worker injection failed:', chrome.runtime.lastError.message);
+        return;
+      }
 
-    apiInterceptorsInstalled = true;
-    console.log('[WebSearch] MAIN-world interceptor installed via service-worker fallback');
-  });
+      apiInterceptorsInstalled = true;
+      console.log('[WebSearch] MAIN-world interceptor installed via service-worker fallback');
+    });
+  } catch (error) {
+    console.warn('[WebSearch] INJECT_INTERCEPTOR sendMessage threw an error:', error instanceof Error ? error.message : String(error));
+  }
 }
 
 // === Initialization ===
