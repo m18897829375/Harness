@@ -425,61 +425,72 @@ function handleWebSearch(query) {
   // Enter loading state
   setButtonLoading();
 
-  chrome.runtime.sendMessage(
-    { action: 'SEARCH_REQUEST', query: searchQuery },
-    /**
-     * @param {{ results?: Array<{ title: string, url: string, text: string }>, error?: string }} response
-     */
-    function (response) {
-      // Stale-callback guard: button may have been destroyed
-      // and re-injected by SPA navigation during the async call.
-      if (!webSearchButton || !webSearchButton.isConnected) {
-        return;
-      }
+  try {
+    chrome.runtime.sendMessage(
+      { action: 'SEARCH_REQUEST', query: searchQuery },
+      /**
+       * @param {{ results?: Array<{ title: string, url: string, text: string }>, error?: string }} response
+       */
+      function (response) {
+        // Stale-callback guard: button may have been destroyed
+        // and re-injected by SPA navigation during the async call.
+        if (!webSearchButton || !webSearchButton.isConnected) {
+          return;
+        }
 
-      // chrome.runtime.lastError means the background worker is unavailable.
-      // Dispatch an empty results-ready event so the interceptor releases the
-      // original request immediately rather than waiting for the 15s timeout.
-      if (chrome.runtime.lastError) {
-        setButtonError();
-        document.dispatchEvent(new CustomEvent('ralph-web-search-results-ready', {
-          detail: null,
-        }));
-        return;
-      }
+        // chrome.runtime.lastError means the background worker is unavailable.
+        // Dispatch an empty results-ready event so the interceptor releases the
+        // original request immediately rather than waiting for the 15s timeout.
+        if (chrome.runtime.lastError) {
+          setButtonError();
+          document.dispatchEvent(new CustomEvent('ralph-web-search-results-ready', {
+            detail: null,
+          }));
+          return;
+        }
 
-      if (!response) {
-        setButtonError();
-        document.dispatchEvent(new CustomEvent('ralph-web-search-results-ready', {
-          detail: null,
-        }));
-        return;
-      }
+        if (!response) {
+          setButtonError();
+          document.dispatchEvent(new CustomEvent('ralph-web-search-results-ready', {
+            detail: null,
+          }));
+          return;
+        }
 
-      if (response.error) {
-        setButtonError();
-        document.dispatchEvent(new CustomEvent('ralph-web-search-results-ready', {
-          detail: null,
-        }));
-        return;
-      }
+        if (response.error) {
+          setButtonError();
+          document.dispatchEvent(new CustomEvent('ralph-web-search-results-ready', {
+            detail: null,
+          }));
+          return;
+        }
 
-      if (response.results && response.results.length > 0) {
-        var formattedText = formatSearchResults(response.results, searchQuery);
-        document.dispatchEvent(new CustomEvent('ralph-web-search-results-ready', {
-          detail: formattedText,
-        }));
-        setButtonIdle();
-      } else {
-        // Zero results - dispatch an empty ready event so the interceptor
-        // releases the original request immediately, unchanged.
-        document.dispatchEvent(new CustomEvent('ralph-web-search-results-ready', {
-          detail: null,
-        }));
-        setButtonIdle();
+        if (response.results && response.results.length > 0) {
+          var formattedText = formatSearchResults(response.results, searchQuery);
+          document.dispatchEvent(new CustomEvent('ralph-web-search-results-ready', {
+            detail: formattedText,
+          }));
+          setButtonIdle();
+        } else {
+          // Zero results - dispatch an empty ready event so the interceptor
+          // releases the original request immediately, unchanged.
+          document.dispatchEvent(new CustomEvent('ralph-web-search-results-ready', {
+            detail: null,
+          }));
+          setButtonIdle();
+        }
       }
-    }
-  );
+    );
+  } catch (error) {
+    // chrome.runtime.sendMessage can throw synchronously when the extension
+    // context is no longer available (e.g., service worker terminated or
+    // extension reloaded). Restore the button immediately without showing an
+    // error state and release the interceptor so the original request proceeds.
+    setButtonIdle();
+    document.dispatchEvent(new CustomEvent('ralph-web-search-results-ready', {
+      detail: null,
+    }));
+  }
 }
 
 // === API Key Status ===

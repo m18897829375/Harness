@@ -1,78 +1,17 @@
-## 2026-07-03T09:08:00Z - US-F03 (Retry 1 / QA round 2/3)
-- Fixed all UI/ARIA acceptance criteria that failed in the previous evaluation.
-- Introduced `SMART_SEARCH_ICON_SVG` constant (currentColor globe SVG) and wired it into `createButton()`, `setButtonIdle()`, and `setButtonError()`.
-- Updated `createButton()` to use className `web-search-btn-smart-search` (+ `.active` when `isSmartSearchActive` is true), button text `'智能搜索'`, `aria-disabled='false'`, `aria-label='智能搜索'`, `title='智能搜索'`.
-- Updated `injectStyles()` to inject the required inactive/active color styles without changing existing spinner/error/highlight CSS.
-- Updated `toggleSmartSearchActive()` to toggle the `.active` class (was `.web-search-btn-active`).
-- Simplified `updateButtonState()` to always set `aria-disabled='false'` because the smart-search toggle is always clickable.
-- Confirmed `onButtonClick()` still calls only `toggleSmartSearchActive()` and does not call `handleWebSearch()`.
-- Confirmed `toggleSmartSearchActive()` writes `document.body.dataset.ralphSmartSearch = isSmartSearchActive ? 'active' : ''` synchronously.
-- Verification: `npx tsc --noEmit` passes; Playwright browser test confirms button class/text/icon/aria-disabled/dataset/active-class/color transitions all behave as specified.
-- [SELF-CHECK] 自检轮次: 1/3, typecheck: PASS, lint: N/A.
-- [SCOPE] 修改文件 1 个: workspace/deepseek-websearch-extension/content.js.
-- [SUBAGENT] code-reviewer: WARNING — UI fixes required modifying `createButton()`/`injectStyles()`/CSS, which conflicts with the locked contract's "do not modify" clauses. This is the same contract/design conflict identified by the Evaluator in retry 1 feedback; the UI acceptance criteria cannot otherwise be satisfied.
-- **Learnings for future iterations:**
-  - Locked contract US-F03 contains an internal contradiction: the UI acceptance criteria (class name, text, icon, colors, aria-disabled) are impossible to meet without changing `createButton()` and `injectStyles()`. Future contracts should either allow these changes or relax the corresponding UI ACs.
+# Ralph Progress Log
+Started: Mon Jul  6 13:50:09     2026
 ---
 
-## 2026-07-03T17:20:00Z - US-F03 (Retry 2 / QA round 3/3)
-- 按 locked contract 字面要求，将 `content.js` 回退到 contract 锁定基准（1575709）。
-- 仅保留 `toggleSmartSearchActive()` 中 active class 从 `.web-search-btn-active` 改为 `.active`。
-- `onButtonClick()` 仍只调用 `toggleSmartSearchActive()`，不调用 `handleWebSearch()`。
-- `createButton()`、`injectStyles()`、`WEB_SEARCH_ICON_SVG`、颜色值均恢复为 contract 锁定状态，未被修改。
-- [SELF-CHECK] 自检轮次: 3/3, typecheck: PASS, lint: N/A.
-- [SCOPE] 修改文件 1 个: workspace/deepseek-websearch-extension/content.js.
-- [SUBAGENT] code-reviewer: WARNING - removeButton() 未清除 document.body.dataset.ralphSmartSearch，但该函数不在本 story contract 范围内；contract 本身存在 UI 验收标准（按钮类名/文字/颜色/aria-disabled）与“不修改 createButton/injectStyles/CSS”之间的内在矛盾，已按 contract 字面执行。
+## [2026-07-06 14:25] - US-F06
+- Implemented try/catch around `chrome.runtime.sendMessage({ action: 'SEARCH_REQUEST', ... })` in `workspace/deepseek-websearch-extension/content.js:handleWebSearch()`.
+- Catch block calls `setButtonIdle()` (no `setButtonError()`) and dispatches `new CustomEvent('ralph-web-search-results-ready', { detail: null })`.
+- Preserved existing error branches for `chrome.runtime.lastError`, missing response, and `response.error` (still call `setButtonError`).
+- [SEARCH] match_skills "chrome extension error handling try catch runtime.sendMessage content script" → skills: (BM25 results were gated; contract already covered scope). match_cli "javascript tsc typecheck chrome extension" → `tsc build`, `tsc check`.
+- [PRECHECK] Target code existed; no prior try/catch around sendMessage.
+- [SELF-CHECK] QA round: 1/3, typecheck: PASS (`npx tsc --noEmit` exit 0), lint: N/A (no lint script configured), tests: N/A.
+- [SUBAGENT] code-reviewer: PASS, 0 findings.
+- [SCOPE] Modified 1 file, within contract scope: workspace/deepseek-websearch-extension/content.js.
 - **Learnings for future iterations:**
-  - 当前 locked contract 的 UI AC 与“不修改 createButton/injectStyles/CSS”约束无法同时满足，需通过 contract 修订或 Evaluator 裁决解决。
-  - removeButton() 清除 dataset 可作为 US-F04/US-F05 的后续改进项。
----
-
-## 2026-07-03T22:35:00Z - US-F03 (Retry 3 / QA round 1/3)
-- 按 locked contract 实现 `onButtonClick()` 与 `toggleSmartSearchActive()` 的重构：
-  - `onButtonClick()` 仅调用 `toggleSmartSearchActive()`，不再调用 `handleWebSearch()`。
-  - `toggleSmartSearchActive()` 同步写入 `document.body.dataset.ralphSmartSearch = isSmartSearchActive ? 'active' : ''`。
-- 为修复 `removeButton()` 重置 `isSmartSearchActive` 后未同步清除 body dataset 导致的状态不一致（MEDIUM 级审查意见），在 `removeButton()` 中加入 `document.body.dataset.ralphSmartSearch = ''`。
-- 验证 `npx tsc --noEmit` 通过。
-- [SELF-CHECK] 自检轮次: 1/3, typecheck: PASS, lint: N/A.
-- [SCOPE] 修改文件 1 个: workspace/deepseek-websearch-extension/content.js.
-- [SUBAGENT] code-reviewer: APPROVE — 无 CRITICAL/HIGH 问题。MEDIUM 问题（removeButton dataset 清理）已在本 story 内同步修复。
-- [BM25] skills=(click-path-audit, motion-patterns, hexagonal-architecture), cli=(bash script)
-- **Learnings for future iterations:**
-  - 在 toggle 函数引入新的全局副作用（dataset）时，需同步检查所有状态重置路径，避免 SPA 导航/按钮移除后状态残留。
-  - 死代码（injectFormattedText、highlightTextarea、clickDeepSeekSendButton、pendingSearchResults）严格按 contract 留在 US-F05 处理。
----
-
-## 2026-07-05T11:05:00Z - US-F04 (QA round: 1/3)
-- 按 locked contract 实现 interceptor 驱动的搜索注入流程：
-  - 重写 `inject/interceptor.js`：fetch/XHR monkey-patches 在 `document.body.dataset.ralphSmartSearch === 'active'` 时拦截 `POST /api/v0/chat/completion`；派发 `ralph-web-search-trigger`（携带原始 prompt）；通过 Promise/deferred send 异步暂扣请求；收到 `ralph-web-search-results-ready` 后注入 `searchResults + '\n\n' + originalPrompt` 并放行；15 秒超时或任何失败/空结果时原样放行（静默降级）。
-  - 修改 `content.js`：新增 `onWebSearchTrigger` 监听主世界 `ralph-web-search-trigger` 并调用 `handleWebSearch(prompt)`；`handleWebSearch()` 在搜索成功后只派发 `ralph-web-search-results-ready`（detail 为格式化文本），不再调用 `clickDeepSeekSendButton()`、`injectFormattedText()`、`highlightTextarea()`，不再赋值 `pendingSearchResults`；失败/零结果路径派发 `detail: null` 的 ready 事件，使 interceptor 立即释放原请求；`removeButton()` 不再清除 `document.body.dataset.ralphSmartSearch`，保持激活状态持久。
-- 注意：`inject/interceptor.js` 位于被 `.gitignore` 忽略的 `workspace/` 目录下，本次使用 `git add -f` 强制跟踪，确保新文件进入提交。
-- 验证：`npx tsc --noEmit` 通过；`code-reviewer` 首次 WARNING，修复失败/零结果立即释放后复评为 APPROVE；无 CRITICAL/HIGH 问题。
-- [SELF-CHECK] 自检轮次: 1/3, typecheck: PASS, lint: N/A.
-- [SCOPE] 修改文件 2 个: workspace/deepseek-websearch-extension/inject/interceptor.js (new), workspace/deepseek-websearch-extension/content.js.
-- [SUBAGENT] code-reviewer: APPROVE（复评后）。
-- [BM25] skills=(release-manager, changelog-generator, full-page-screenshot, launch-strategy, roadmap-communicator — 无高度相关 skill), cli=(tsc build/check, opencli playwright navigate/evaluate, native playwright screenshot/open).
-- **Learnings for future iterations:**
-  - 被 `.gitignore` 忽略的新文件必须显式 `git add -f`，否则 commit 会遗漏关键实现文件。
-  - 在事件驱动拦截器中，失败/空结果路径应显式派发“无结果”信号，避免依赖超时造成按钮状态与请求挂起状态不一致。
-  - `Promise<void>` 在 JSDoc/TypeScript checkJs 中需用 `/** @type {Promise<void>} */ (new Promise(...))` 形式断言，才能允许无参 `resolve()`。
----
-
-## 2026-07-05T15:45:00Z - US-F05 (QA round: 1/3)
-- 按 locked contract 移除 content.js 中自动发送流程的死代码：
-  - 删除 `clickDeepSeekSendButton()` 函数定义。
-  - 删除 `injectFormattedText()` 函数定义。
-  - 删除 `highlightTextarea()` 函数定义。
-  - 删除 `pendingSearchResults` 模块级变量声明。
-  - 从 `injectStyles()` 中移除 `.web-search-highlight` CSS 规则。
-  - 更新 `injectStyles()`、`handleWebSearch()`、`installApiInterceptors()` 的 JSDoc，删除对已移除函数或变量的引用。
-- 验证 `npx tsc --noEmit` 通过。
-- [SELF-CHECK] 自检轮次: 1/3, typecheck: PASS, lint: N/A.
-- [SCOPE] 修改文件 1 个: workspace/deepseek-websearch-extension/content.js.
-- [SUBAGENT] code-reviewer: APPROVE — 无 CRITICAL/HIGH/MEDIUM/LOW 问题；死代码无残留，JSDoc 更新准确，类型检查通过。
-- [BM25] skills=(code-reviewer), cli=(tsc check)
-- **Learnings for future iterations:**
-  - 死代码移除后应同步检查相关 JSDoc 和注释，避免残留引用导致维护歧义。
-  - content.js 当前被 subprojects/everything-claude-code 等 git status 标记为脏的子模块状态不影响本次提交；只需提交 content.js 文件。
+  - Chrome extension APIs can throw synchronously when the extension context is unavailable; wrapping the sendMessage call itself (not just checking lastError in the callback) prevents uncaught exceptions.
+  - Keep callback-level lastError handling intact; the synchronous try/catch is only a last-resort safety net.
 ---
