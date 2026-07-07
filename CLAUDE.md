@@ -14,7 +14,7 @@
 ## 工作流
 
 ```
-用户需求 → 阶段1 Plan(加载skill分析,禁改代码,Exa/curl搜索) → 阶段2 PRD(ralph生成,生成后等待ralph指令) → ⏸️ 等待ralph指令 → 阶段3 Ralph Loop(合同协商→Generator(ReAct+Daemon)→Evaluator(ReAct+Daemon)→通过则完成/未通过回Generator) → 阶段4 最终验证(ECC验证,不通过回阶段1) → 交付
+用户需求 → 阶段1 Plan([research]技术调研→需求分析/技术选型/概要设计/详细设计,禁改代码,Exa/curl搜索) → 阶段2 PRD([prd]生成PRD→[ralph]转为prd.json,生成后等待ralph指令) → ⏸️ 等待ralph指令 → 阶段3 Ralph Loop(合同协商→Generator(ReAct+Daemon)→Evaluator(ReAct+Daemon)→通过则完成/未通过回Generator) → 阶段4 最终验证(ECC验证,不通过回阶段1) → 交付
 ```
 
 ### 阶段1收尾：按需加载 Rules
@@ -57,7 +57,7 @@ python3 scripts/match_cli.py --preflight
 | 子项目 | 角色 | 权限 |
 |--------|------|:---:|
 | `subprojects/claude-skills-main/` | 技能来源1：348个skill | 只读 |
-| `subprojects/ralph-harness/` | 工作流引擎+技能来源4：2个skill(prd/ralph) | 只读 |
+| `subprojects/ralph-harness/` | 工作流引擎+技能来源4：3个skill(prd/ralph/research) | 只读 |
 | `subprojects/everything-claude-code/` | 技能来源2+验证工具：261个skill+子任务验证(阶段3)+最终验证(阶段4) | 只读 |
 | `subprojects/awesome-mcp-servers/` | MCP服务目录，供OpenCLI转化 | 只读 |
 | `subprojects/OpenCLI/` | 技能来源3+MCP→CLI转化(166个适配器) | **可写** |
@@ -166,4 +166,4 @@ python3 scripts/search_index.py --type skill --name "<exact-name>"
 
 ## 使用
 
-新任务：进入Plan模式 → 按需搜索索引表 → 生成PRD → 等待ralph指令启动Ralph Loop。
+新任务：进入Plan模式 → [research]技术调研(需求分析/技术选型/概要设计/详细设计) → [prd]生成PRD → [ralph]转为prd.json + 配置ECC rules → 等待ralph指令启动Ralph Loop。
