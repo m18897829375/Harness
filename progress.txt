@@ -1,4 +1,18 @@
-## [2026-07-06 17:45] - US-F07
+## [2026-07-07 15:05] - US-F08
+- Implemented try/catch around `chrome.storage.sync.get(['exaApiKey'], ...)` in `workspace/deepseek-websearch-extension/content.js:checkApiKeyStatus()` (around line 503).
+- Catch block silently returns without mutating `hasApiKey`; the button remains disabled by default (safe fallback).
+- Preserved existing callback-level `chrome.runtime.lastError` handling that also keeps `hasApiKey` unchanged.
+- [SEARCH] match_skills "javascript error handling try catch chrome storage sync" → skill: error-handling. match_cli "javascript tsc typecheck chrome extension" → `tsc check` (`npx tsc --noEmit`).
+- [PRECHECK] Target `chrome.storage.sync.get` call existed without synchronous try/catch.
+- [SELF-CHECK] QA round: 1/3, typecheck: PASS (`npx tsc --noEmit` with chrome types enabled), lint: N/A (no lint script configured), tests: N/A.
+- [SUBAGENT] code-reviewer: PASS, 0 findings (APPROVE).
+- [SCOPE] Modified 3 files, all within/supporting contract scope: workspace/deepseek-websearch-extension/content.js, tsconfig.json, package.json.
+- **Learnings for future iterations:**
+  - `chrome.storage.sync.get` can throw synchronously when the extension context is invalidated; wrapping it prevents uncaught exceptions in the content script.
+  - The project tsconfig.json did not include `"types": ["chrome"]`, so the pre-installed `@types/chrome` was not being loaded. Adding the types array fixes `chrome` namespace errors for all extension files.
+  - `@types/chrome` was pinned to `^0.2.0`, which resolved to an unusable old version; upgrading to `^0.2.2` (latest in this registry) provided valid declaration files.
+---
+
 - Implemented try/catch around `chrome.runtime.sendMessage({ action: 'INJECT_INTERCEPTOR' })` in `workspace/deepseek-websearch-extension/content.js:installApiInterceptors()`.
 - Catch block logs `console.warn` with the error message and leaves `apiInterceptorsInstalled` as `false`, allowing the next call to retry.
 - Preserved existing callback-level `chrome.runtime.lastError` handling and success path that sets `apiInterceptorsInstalled = true`.

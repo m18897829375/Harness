@@ -500,28 +500,35 @@ function handleWebSearch(query) {
  * Updates the hasApiKey flag and refreshes the button state.
  */
 function checkApiKeyStatus() {
-  chrome.storage.sync.get(
-    /** @type {string[]} */ ['exaApiKey'],
-    /**
-     * @param {{ [key: string]: string | undefined }} items
-     */
-    function (items) {
-      if (chrome.runtime.lastError) {
-        // Read failed — keep current state (safe default: button stays disabled)
-        return;
+  try {
+    chrome.storage.sync.get(
+      /** @type {string[]} */ ['exaApiKey'],
+      /**
+       * @param {{ [key: string]: string | undefined }} items
+       */
+      function (items) {
+        if (chrome.runtime.lastError) {
+          // Read failed — keep current state (safe default: button stays disabled)
+          return;
+        }
+
+        var key = items['exaApiKey'];
+        var wasConfigured = hasApiKey;
+
+        hasApiKey = !!(key && typeof key === 'string' && key.trim() !== '');
+
+        // Only update the button if the state changed, to avoid unnecessary DOM writes
+        if (hasApiKey !== wasConfigured) {
+          updateButtonState();
+        }
       }
-
-      var key = items['exaApiKey'];
-      var wasConfigured = hasApiKey;
-
-      hasApiKey = !!(key && typeof key === 'string' && key.trim() !== '');
-
-      // Only update the button if the state changed, to avoid unnecessary DOM writes
-      if (hasApiKey !== wasConfigured) {
-        updateButtonState();
-      }
-    }
-  );
+    );
+  } catch (error) {
+    // chrome.storage.sync.get can throw synchronously when the extension context is
+    // invalid (e.g., extension reloaded or context invalidated). Preserve the current
+    // hasApiKey state so the button remains disabled by default.
+    return;
+  }
 }
 
 /**

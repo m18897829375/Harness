@@ -1,0 +1,13 @@
+{
+  "name": "deepseek-websearch-extension",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Chrome extension that adds Exa-powered web search to DeepSeek Expert mode",
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.2.2",
+    "typescript": "^5.6.0"
+  }
+}
