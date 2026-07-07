@@ -39,3 +39,18 @@
   - Chrome extension APIs can throw synchronously when the extension context is unavailable; wrapping the sendMessage call itself (not just checking lastError in the callback) prevents uncaught exceptions.
   - Keep callback-level lastError handling intact; the synchronous try/catch is only a last-resort safety net.
 ---
+
+## [2026-07-07 15:30] - US-F09
+- Implemented try/catch around `chrome.storage.sync.get(['exaApiKey'], ...)` in `workspace/deepseek-websearch-extension/background/service-worker.js:handleSearchRequest()`.
+- Catch block uses `error instanceof Error` to safely extract a message, then calls `sendResponse({ error: 'Failed to read stored API key: ' + reason })`.
+- Preserved existing callback-level `chrome.runtime.lastError` handling and the `performSearch` flow unchanged.
+- [SEARCH] match_skills "javascript error handling try catch chrome storage sync service worker sendResponse" → skill: error-handling. match_cli "javascript tsc typecheck chrome extension service worker" → `tsc check` (`npx tsc --noEmit`).
+- [PRECHECK] Target `chrome.storage.sync.get` call existed without synchronous try/catch.
+- [SELF-CHECK] QA round: 1/3, typecheck: PASS (`npx tsc --noEmit` exit 0), lint: N/A (no lint script configured), tests: N/A.
+- [SUBAGENT] code-reviewer: WARNING, 0 CRITICAL/HIGH, 1 MEDIUM (chrome.runtime.lastError handling in callback could also be added). Not addressed because locked contract explicitly states existing callback-level lastError handling remains unchanged; suitable for future story.
+- [SCOPE] Modified 1 file, within contract scope: workspace/deepseek-websearch-extension/background/service-worker.js.
+- **Learnings for future iterations:**
+  - Service worker context invalidation can also cause `chrome.storage.sync.get` to throw synchronously; wrapping it prevents uncaught exceptions.
+  - For typed error variables in catch clauses, `instanceof Error` is a safe narrowing pattern when `--useUnknownInCatchVariables` or strict TS is enabled.
+  - Callback-level `chrome.runtime.lastError` handling remains the primary async error path; the synchronous try/catch is only a last-resort guard.
+---
