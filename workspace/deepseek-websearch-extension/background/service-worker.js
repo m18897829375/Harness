@@ -55,7 +55,6 @@ chrome.runtime.onMessage.addListener(
     if (message.action === 'INJECT_INTERCEPTOR') {
       var injectTabId = sender && sender.tab && sender.tab.id ? sender.tab.id : null;
       if (!injectTabId) {
-        console.warn('[WebSearch] INJECT_INTERCEPTOR received without a valid sender tab id');
         sendResponse({ injected: false });
         return false;
       }
@@ -65,11 +64,9 @@ chrome.runtime.onMessage.addListener(
         files: ['inject/interceptor.js'],
       }, function () {
         if (chrome.runtime.lastError) {
-          console.warn('[WebSearch] Service-worker MAIN-world injection failed:', chrome.runtime.lastError.message);
           sendResponse({ injected: false, error: chrome.runtime.lastError.message });
           return;
         }
-        console.log('[WebSearch] Service-worker MAIN-world interceptor injected for tab', injectTabId);
         sendResponse({ injected: true });
       });
       return true;
@@ -95,16 +92,31 @@ function handleSearchRequest(message, sendResponse) {
        * @param {{ [key: string]: string | undefined }} items
        */
       function (items) {
-        var apiKey = items['exaApiKey'];
+        try {
+          if (chrome.runtime.lastError) {
+            sendResponse({
+              error: 'Failed to read stored API key: ' + chrome.runtime.lastError.message
+            });
+            return;
+          }
 
-        if (!apiKey || typeof apiKey !== 'string' || apiKey.trim() === '') {
+          var apiKey = items['exaApiKey'];
+
+          if (!apiKey || typeof apiKey !== 'string' || apiKey.trim() === '') {
+            sendResponse({
+              error: 'API key not configured. Please set your Exa API key in the extension popup.'
+            });
+            return;
+          }
+
+          performSearch(message.query, apiKey.trim(), sendResponse);
+        } catch (callbackError) {
+          var callbackReason = callbackError instanceof Error ? callbackError.message : String(callbackError);
           sendResponse({
-            error: 'API key not configured. Please set your Exa API key in the extension popup.'
+            error: 'Failed to read stored API key: ' + callbackReason
           });
           return;
         }
-
-        performSearch(message.query, apiKey.trim(), sendResponse);
       }
     );
   } catch (error) {
@@ -112,6 +124,7 @@ function handleSearchRequest(message, sendResponse) {
     sendResponse({
       error: 'Failed to read stored API key: ' + reason
     });
+    return;
   }
 }
 

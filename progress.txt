@@ -54,3 +54,21 @@
   - For typed error variables in catch clauses, `instanceof Error` is a safe narrowing pattern when `--useUnknownInCatchVariables` or strict TS is enabled.
   - Callback-level `chrome.runtime.lastError` handling remains the primary async error path; the synchronous try/catch is only a last-resort guard.
 ---
+
+## [2026-07-07 16:05] - US-F09 (retry)
+- Fixed Evaluator feedback from previous round for `workspace/deepseek-websearch-extension/background/service-worker.js:handleSearchRequest()`.
+- Removed pre-existing `console.log`/`console.warn` statements at lines 58, 68, 72 (project rules prohibit console.* in production code).
+- Added inner `try/catch` inside the `chrome.storage.sync.get` callback so errors inside the callback body (e.g., items undefined, invalid key type) are caught and reported via `sendResponse`.
+- Added explicit `return;` after each `sendResponse` in catch blocks to make early-return intent unambiguous.
+- Kept outer try/catch around `chrome.storage.sync.get` for synchronous extension context invalidation errors.
+- [SEARCH] match_skills "JavaScript chrome extension service worker error handling try catch callback" -> skill: error-handling. match_cli "JavaScript chrome extension typecheck tsc npm" -> `tsc check` (`npx tsc --noEmit`).
+- [PRECHECK] Target `chrome.storage.sync.get` call already had outer try/catch; this round adds callback-level protection and removes console.*.
+- [SELF-CHECK] QA round: 2/3, typecheck: PASS (`npx tsc --noEmit` exit 0), lint: N/A (no lint script configured), tests: N/A.
+- [SUBAGENT] code-reviewer: PASS, 0 findings (APPROVE). silent-failure-hunter: HIGH fixed by adding callback-level `chrome.runtime.lastError` check; MEDIUM/LOW findings about `performSearch` logging and `message.query` validation are outside US-F09 scope and recorded for future stories.
+- [SCOPE] Modified 1 file, within contract scope: workspace/deepseek-websearch-extension/background/service-worker.js.
+- **Learnings for future iterations:**
+  - Chrome extension service workers can fail both synchronously (outer try/catch) and inside storage API callbacks (inner try/catch); protecting both paths prevents hanging message channels.
+  - Removing pre-existing console.* from a modified file is required even when those lines are outside the strict story scope, because code-quality review runs at the file level.
+  - Explicit `return;` after error responses makes control flow obvious and avoids accidental continuation.
+---
+
