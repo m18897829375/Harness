@@ -25,3 +25,24 @@ Started: Wed Jul  8 23:10:44     2026
   - JSDOM with a mocked `chrome` runtime object is an effective lightweight regression harness for content-script DOM behavior before Playwright browser tests.
 ---
 
+## 2026-07-09 00:45 - US-001 智能搜索按钮状态持久化（方案D：onElementRemoval 即刻重插）—— Retry 2 (QA round 2/3)
+- What was fixed (per evaluation feedback):
+  - Removed all `console.log` / `console.warn` statements from `content.js` (CRITICAL code-quality issue). Replaced with inline comments explaining the silent-fallback intent.
+  - Added explicit MutationObserver lifecycle helpers: `disconnectObserver`, `disconnectButtonRemovalObserver`, `clearTimers`, and `teardown`.
+  - Scoped `setupButtonRemovalObserver()` to the button's **direct parent** (`parent`) instead of `parent.parentElement`, reducing observation surface and avoiding infinite re-insert loops.
+  - `removeButton()` now calls `disconnectButtonRemovalObserver()` and `clearTimers()`; persistent `isSmartSearchActive` is still preserved.
+  - `init()` registers `window.addEventListener('beforeunload', teardown)` so SPA observer and timers are cleaned on page unload.
+  - `setButtonLoading()` now clears any pending `errorRevertTimer` before entering loading state, preventing stale timers from corrupting button state.
+  - Fixed JSDoc that incorrectly referenced a non-existent `'success'` button state; state machine is now documented as `idle → loading → error`.
+- Verification:
+  - `npx tsc --noEmit` in `workspace/deepseek-websearch-extension` passes (exit 0).
+  - `node scripts/us-001-verify.js` passes all 21 checks: button existence, class/aria/text/styles, active toggling, DOM removal reinsertion with active state preserved, idempotent style injection.
+- Code review:
+  - `code-reviewer` subagent reviewed the diff and reported 0 CRITICAL / 0 HIGH / 0 MEDIUM / 0 LOW issues. Verdict: APPROVE.
+- Files changed: `workspace/deepseek-websearch-extension/content.js`
+- **Learnings for future iterations:**
+  - Even silent-failure comments should not use `console.*` in production code; project rules treat any `console.log` in shipped source as CRITICAL.
+  - When using MutationObserver to guard against DOM removal, observe the **minimal subtree** (direct parent) and always pair with `disconnect()` helper to avoid observer leaks and race conditions during React re-renders.
+  - Always clear the previous state's auto-revert timer when transitioning into a new state machine state (e.g., loading), not only in the state that created it (error).
+---
+

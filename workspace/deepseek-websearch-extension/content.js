@@ -45,8 +45,8 @@ var isSmartSearchActive = false;
 var apiInterceptorsInstalled = false;
 
 /**
- * Current button state for the 4-state machine:
- * idle → loading → success (back to idle) or error (auto-revert after 3s).
+ * Current button state for the 3-state machine:
+ * idle → loading → error (auto-revert after 3s) or back to idle.
  * @type {'idle' | 'loading' | 'error'}
  */
 var buttonState = 'idle';
@@ -151,7 +151,6 @@ function isExpertMode() {
     return lastKnownMode === 'expert';
   }
   // History conversation pages have no radios — use lastKnownMode fallback
-  console.log('[WebSearch] isExpertMode: lastKnownMode=' + lastKnownMode + ', radios.length=' + radios.length + ', using fallback');
   return lastKnownMode === 'expert';
 }
 
@@ -262,10 +261,7 @@ function injectButton() {
  * Does NOT reset isSmartSearchActive so the active state persists across removals.
  */
 function removeButton() {
-  if (buttonRemovalObserver) {
-    buttonRemovalObserver.disconnect();
-    buttonRemovalObserver = null;
-  }
+  disconnectButtonRemovalObserver();
 
   if (webSearchButton) {
     webSearchButton.remove();
@@ -276,6 +272,39 @@ function removeButton() {
   // isSmartSearchActive is intentionally preserved across SPA navigation
   // and button re-insertion; do NOT clear it here.
   buttonState = 'idle';
+  clearTimers();
+}
+
+/**
+ * Disconnect the SPA navigation MutationObserver.
+ * Safe to call when observer is not set up.
+ */
+function disconnectObserver() {
+  if (observer) {
+    observer.disconnect();
+    observer = null;
+  }
+}
+
+/**
+ * Disconnect the button removal MutationObserver.
+ * Safe to call when observer is not set up.
+ */
+function disconnectButtonRemovalObserver() {
+  if (buttonRemovalObserver) {
+    buttonRemovalObserver.disconnect();
+    buttonRemovalObserver = null;
+  }
+}
+
+/**
+ * Clear all pending timers used by the content script.
+ */
+function clearTimers() {
+  if (reinsertTimer) {
+    clearTimeout(reinsertTimer);
+    reinsertTimer = null;
+  }
   if (errorRevertTimer) {
     clearTimeout(errorRevertTimer);
     errorRevertTimer = null;
@@ -283,14 +312,22 @@ function removeButton() {
 }
 
 /**
- * Set up a MutationObserver on the button's parent container so that if the
+ * Full teardown: disconnect observers and clear timers.
+ * Used when the content script is being unloaded.
+ */
+function teardown() {
+  disconnectObserver();
+  disconnectButtonRemovalObserver();
+  clearTimers();
+}
+
+/**
+ * Set up a MutationObserver on the button's direct parent so that if the
  * button is removed (e.g., by a React re-render), it is re-inserted in the same
  * event loop via setTimeout(..., 0). Idempotent: disconnects any previous observer first.
  */
 function setupButtonRemovalObserver() {
-  if (buttonRemovalObserver) {
-    buttonRemovalObserver.disconnect();
-  }
+  disconnectButtonRemovalObserver();
 
   if (!webSearchButton || !webSearchButton.isConnected) {
     return;
@@ -300,8 +337,6 @@ function setupButtonRemovalObserver() {
   if (!parent) {
     return;
   }
-
-  var observedNode = parent.parentElement || parent;
 
   buttonRemovalObserver = new MutationObserver(function (mutations) {
     if (webSearchButton && webSearchButton.isConnected) {
@@ -314,7 +349,7 @@ function setupButtonRemovalObserver() {
     }, 0);
   });
 
-  buttonRemovalObserver.observe(observedNode, {
+  buttonRemovalObserver.observe(parent, {
     childList: true,
     subtree: true,
   });
@@ -331,6 +366,12 @@ function setupButtonRemovalObserver() {
 function setButtonLoading() {
   if (!webSearchButton || !webSearchButton.isConnected) {
     return;
+  }
+
+  // Cancel any pending error revert timer to prevent stale timer from corrupting state.
+  if (errorRevertTimer) {
+    clearTimeout(errorRevertTimer);
+    errorRevertTimer = null;
   }
 
   buttonState = 'loading';
@@ -777,15 +818,14 @@ function installApiInterceptors() {
   try {
     chrome.runtime.sendMessage({ action: 'INJECT_INTERCEPTOR' }, function () {
       if (chrome.runtime.lastError) {
-        console.warn('[WebSearch] Service-worker injection failed:', chrome.runtime.lastError.message);
+        // Service-worker injection failed; keep flag false so we can retry later.
         return;
       }
 
       apiInterceptorsInstalled = true;
-      console.log('[WebSearch] MAIN-world interceptor installed via service-worker fallback');
     });
   } catch (error) {
-    console.warn('[WebSearch] INJECT_INTERCEPTOR sendMessage threw an error:', error instanceof Error ? error.message : String(error));
+    // INJECT_INTERCEPTOR sendMessage failed synchronously; retry later.
   }
 }
 
@@ -818,6 +858,7 @@ function init() {
   document.body.addEventListener('input', onTextareaInput);
   document.body.addEventListener('click', onButtonClick);
   document.addEventListener('ralph-web-search-trigger', onWebSearchTrigger);
+  window.addEventListener('beforeunload', teardown);
   checkApiKeyStatus();
 }
 
