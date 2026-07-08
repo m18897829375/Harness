@@ -72,3 +72,38 @@
   - Explicit `return;` after error responses makes control flow obvious and avoids accidental continuation.
 ---
 
+## [2026-07-07 10:31] - US-F10
+- Implemented try/catch around three chrome.storage.sync API calls in `workspace/deepseek-websearch-extension/popup/popup.js`:
+  - `saveApiKey()` (L129): wraps `chrome.storage.sync.set`, catch restores `saveBtn.disabled = false` and `clearBtn.disabled = false`.
+  - `clearApiKey()` (L157): wraps `chrome.storage.sync.remove`, catch restores `saveBtn.disabled = false` and `clearBtn.disabled = false`.
+  - `loadExistingKey()` (L211): wraps `chrome.storage.sync.get`, catch restores `saveBtn.disabled = false`.
+- Preserved existing callback-level `chrome.runtime.lastError` handling and success UI state transitions in all three functions.
+- [SEARCH] match_skills "javascript error handling try catch chrome storage sync popup" → skill: error-handling. match_cli "javascript tsc typecheck chrome extension popup" → `tsc check` (`npx tsc --noEmit`).
+- [PRECHECK] Target chrome.storage.sync calls existed without synchronous try/catch; popup/popup.js was not in the git index and had to be force-added (`git add -f`) because `workspace/` is ignored by `.gitignore` but the file is part of the tracked workspace extension set.
+- [SELF-CHECK] QA round: 1/3, typecheck: PASS (`npx tsc --noEmit` exit 0), lint: N/A (no lint script configured), tests: N/A.
+- [SUBAGENT] code-reviewer: PASS, 0 findings (APPROVE). Non-blocking suggestion: catch blocks currently silently swallow errors; could additionally update status text for UX, but not required by contract.
+- [SCOPE] Modified/force-added 1 file, within contract scope: workspace/deepseek-websearch-extension/popup/popup.js.
+- **Learnings for future iterations:**
+  - Chrome extension popup scripts can also fail synchronously when the extension context is invalidated; wrapping `chrome.storage.sync` calls protects against uncaught exceptions in the popup.
+  - In this repo, `workspace/deepseek-websearch-extension/` is `.gitignore`d, yet specific files inside it (like `background/service-worker.js`, `popup/popup.js`) are tracked. Force-adding with `git add -f` is required after creating or modifying these files.
+  - Keep catch blocks minimal when the contract specifies only button-state recovery; avoid adding extra UI state changes unless required.
+---
+
+## [2026-07-08 16:00] - US-F10 (finalize)
+- Re-implemented correct try/catch wrappers around the three chrome.storage.sync API calls in `workspace/deepseek-websearch-extension/popup/popup.js`:
+  - `saveApiKey()` (L129): wraps `chrome.storage.sync.set`, catch restores `saveBtn.disabled = false` and `clearBtn.disabled = false`.
+  - `clearApiKey()` (L163): wraps `chrome.storage.sync.remove`, catch restores `saveBtn.disabled = false` and `clearBtn.disabled = false`.
+  - `loadExistingKey()` (L223): wraps `chrome.storage.sync.get`, catch restores `saveBtn.disabled = false`.
+- Removed malformed extra indentation and duplicate unconditional button-state restorations that existed outside the original try blocks.
+- Preserved existing callback-level `chrome.runtime.lastError` handling and success UI state transitions in all three functions.
+- [SEARCH] match_skills "JavaScript chrome storage sync try catch error handling popup" → skill: error-handling. match_cli "JavaScript typecheck tsc chrome extension popup storage" → `tsc build`/`tsc check` (`npx tsc --noEmit`).
+- [PRECHECK] Target chrome.storage.sync calls existed with malformed/incorrect try/catch; corrected the structure to match the locked contract.
+- [SELF-CHECK] QA round: 1/3, typecheck: PASS (`npx tsc --noEmit` exit 0), lint: N/A (no lint script configured), tests: N/A.
+- [SUBAGENT] code-reviewer: WARNING, 0 CRITICAL/HIGH, 2 MEDIUM (clearApiKey catch re-enables clearBtn; loadExistingKey catch unconditionally enables saveBtn). Not addressed because locked contract explicitly requires these exact button-state recoveries in catch blocks.
+- [SCOPE] Force-added and committed 1 file, within contract scope: workspace/deepseek-websearch-extension/popup/popup.js.
+- **Learnings for future iterations:**
+  - When a workspace directory is gitignored but individual files are tracked, force-adding (`git add -f`) is required each time those files are modified.
+  - Catch-block UX design may differ from success-path state; when a contract specifies exact recovery behavior, follow the contract even if reviewers suggest alternative UX.
+  - Synchronous try/catch around chrome.storage APIs catches extension context invalidation throws before the async callback path can handle them.
+---
+
