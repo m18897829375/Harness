@@ -202,6 +202,18 @@ var OPENCLI_SET = {};
 for (var oi = 0; oi < OPENCLI_SITES.length; oi++) { OPENCLI_SET[OPENCLI_SITES[oi]] = true; }
 function detectRole() {
   if (process.env.RALPH_ROLE) return process.env.RALPH_ROLE;
+  // Fallback: read .ralph/phase file (set by ralph.sh before spawning agent).
+  // More reliable than env var when running under claude-tap proxy on Windows
+  // where the pipeline-set RALPH_ROLE may not propagate to hook child processes.
+  try {
+    var projectDir = findProjectDir();
+    var phaseFile = path.join(projectDir, '.ralph', 'phase');
+    if (fs.existsSync(phaseFile)) {
+      var phase = fs.readFileSync(phaseFile, 'utf8').trim();
+      if (phase.indexOf('generator') !== -1) return 'generator';
+      if (phase.indexOf('evaluator') !== -1) return 'evaluator';
+    }
+  } catch (e) { /* phase file unreadable, fall through */ }
   return 'main';
 }
 
