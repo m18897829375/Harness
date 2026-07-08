@@ -153,7 +153,7 @@ def main():
             if not fm or not fm['name']:
                 continue
             # Exclude ralph-harness built-in skills (managed by ralph.sh directly)
-            if fm['name'] in ('prd', 'ralph'):
+            if fm['name'] in ('prd', 'ralph', 'research'):
                 continue
             cat = classify_category(fm['name'], fm['description'], fm['keywords'])
             ph = classify_phase(fm['name'], fm['description'])
