@@ -1,9 +1,9 @@
 /**
  * DeepSeek Web Search Extension — Content Script
  *
- * Injects a "Web Search" button into DeepSeek's Expert mode textarea toolbar.
- * Uses div[role="radio"] for model detection and .ds-toggle-button for visual
- * consistency (selectors from OpenCLI clis/deepseek/utils.js).
+ * Injects a "智能搜索" button into DeepSeek's Expert mode textarea toolbar.
+ * The button uses data-ralph-web-search for stable event-delegation targeting
+ * and follows the smart-search-button-design.md spec for states and styles.
  *
  * @file content.js
  */
@@ -63,10 +63,17 @@ var errorRevertTimer = null;
  */
 var lastKnownMode = null;
 
-// === SVG Icon ===
+/** @type {MutationObserver | null} Observes the button parent to reinsert the button when removed. */
+var buttonRemovalObserver = null;
 
-/** Globe/search icon SVG string for the Web Search button. */
-var WEB_SEARCH_ICON_SVG = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.5"/><path d="M2 8H14" stroke="currentColor" stroke-width="1.5"/><path d="M8 2C9.5 4 10 6 10 8C10 10 9.5 12 8 14C6.5 12 6 10 6 8C6 6 6.5 4 8 2Z" stroke="currentColor" stroke-width="1.5"/></svg>';
+// === SVG Icons ===
+
+/**
+ * Globe/search icon SVG string for the "智能搜索" button.
+ * 16x16 viewBox with circle, horizontal line, and vertical globe path.
+ * Uses currentColor so it inherits the button text color for inactive/active states.
+ */
+var SMART_SEARCH_ICON_SVG = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.5"/><path d="M2 8H14" stroke="currentColor" stroke-width="1.5"/><path d="M8 2C9.5 4 10 6 10 8C10 10 9.5 12 8 14C6.5 12 6 10 6 8C6 6 6.5 4 8 2Z" stroke="currentColor" stroke-width="1.5"/></svg>';
 
 /** Spinner SVG icon for loading state. Wrapped in a span with .web-search-spinner class for CSS rotation animation. */
 var SPINNER_SVG = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 2C4.68629 2 2 4.68629 2 8C2 11.3137 4.68629 14 8 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
@@ -74,7 +81,7 @@ var SPINNER_SVG = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" x
 // === Style Injection ===
 
 /**
- * Inject a <style> element into the document head for button state classes.
+ * Inject a <style> element into the document head for the smart-search button.
  * Idempotent — does nothing if already injected.
  */
 function injectStyles() {
@@ -85,6 +92,28 @@ function injectStyles() {
   var style = document.createElement('style');
   style.id = 'web-search-styles';
   style.textContent = [
+    '.web-search-btn-smart-search {',
+    '  display: inline-flex;',
+    '  align-items: center;',
+    '  gap: 6px;',
+    '  border-radius: 999px;',
+    '  padding: 6px 12px;',
+    '  font-size: 13px;',
+    '  font-weight: 500;',
+    '  color: #1f2329;',
+    '  background-color: #fff;',
+    '  border: 1px solid rgba(0, 0, 0, 0.08);',
+    '  cursor: pointer;',
+    '  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;',
+    '}',
+    '.web-search-btn-smart-search:hover {',
+    '  background-color: rgba(91, 108, 249, 0.06);',
+    '}',
+    '.web-search-btn-smart-search.active {',
+    '  color: #5b6cf9;',
+    '  background-color: rgba(91, 108, 249, 0.15);',
+    '  border-color: rgba(91, 108, 249, 0.35);',
+    '}',
     '@keyframes web-search-spin {',
     '  from { transform: rotate(0deg); }',
     '  to { transform: rotate(360deg); }',
@@ -165,27 +194,29 @@ function findToolbarContainer() {
 // === Button Lifecycle ===
 
 /**
- * Create the Web Search button element.
- * Reuses .ds-toggle-button class for visual consistency with native toggles.
+ * Create the "智能搜索" button element according to the design spec.
  *
  * @returns {HTMLButtonElement}
  */
 function createButton() {
   var btn = document.createElement('button');
-  btn.className = 'ds-toggle-button web-search-btn';
+  btn.className = 'web-search-btn-smart-search';
   btn.setAttribute('data-ralph-web-search', '');
-  btn.setAttribute('aria-disabled', 'true');
-  btn.setAttribute('aria-label', 'Web 搜索');
-  btn.setAttribute('title', 'Web 搜索 — 通过 Exa API 搜索网络');
+  btn.setAttribute('aria-label', '智能搜索');
+  btn.setAttribute('title', '智能搜索');
+  btn.setAttribute('aria-pressed', 'false');
+  btn.setAttribute('aria-disabled', 'false');
+  btn.setAttribute('aria-busy', 'false');
   btn.type = 'button';
-  btn.innerHTML = WEB_SEARCH_ICON_SVG + '<span>Web搜索</span>';
+  btn.innerHTML = SMART_SEARCH_ICON_SVG + '<span>智能搜索</span>';
   return btn;
 }
 
 /**
- * Inject the Web Search button into the textarea toolbar.
+ * Inject the "智能搜索" button into the textarea toolbar.
  * Inserts after the last existing .ds-toggle-button, or at container end if none found.
  * Does nothing if not in Expert mode or if button already exists in the DOM.
+ * Re-applies the active state when isSmartSearchActive is true.
  */
 function injectButton() {
   // Guard: only inject in Expert mode
@@ -216,25 +247,34 @@ function injectButton() {
 
   webSearchButton = btn;
 
-  // Apply initial disabled state
-  updateButtonState();
+  // Re-apply persistent active state immediately after injection
+  if (isSmartSearchActive) {
+    webSearchButton.classList.add('active');
+    webSearchButton.setAttribute('aria-pressed', 'true');
+  }
+
+  setupButtonRemovalObserver();
 }
 
 /**
- * Remove the injected button from the DOM.
+ * Remove the injected button from the DOM and stop observing its parent.
  * Safe to call when button is not injected (no-op).
+ * Does NOT reset isSmartSearchActive so the active state persists across removals.
  */
 function removeButton() {
+  if (buttonRemovalObserver) {
+    buttonRemovalObserver.disconnect();
+    buttonRemovalObserver = null;
+  }
+
   if (webSearchButton) {
     webSearchButton.remove();
     webSearchButton = null;
   }
 
-  // Reset button state trackers when button is removed.
-  // The active smart-search state is intentionally preserved across SPA
-  // navigation and button re-insertion; do NOT clear
-  // document.body.dataset.ralphSmartSearch here.
-  isSmartSearchActive = false;
+  // Reset button visual-state trackers when the DOM element is removed.
+  // isSmartSearchActive is intentionally preserved across SPA navigation
+  // and button re-insertion; do NOT clear it here.
   buttonState = 'idle';
   if (errorRevertTimer) {
     clearTimeout(errorRevertTimer);
@@ -242,12 +282,50 @@ function removeButton() {
   }
 }
 
+/**
+ * Set up a MutationObserver on the button's parent container so that if the
+ * button is removed (e.g., by a React re-render), it is re-inserted in the same
+ * event loop via setTimeout(..., 0). Idempotent: disconnects any previous observer first.
+ */
+function setupButtonRemovalObserver() {
+  if (buttonRemovalObserver) {
+    buttonRemovalObserver.disconnect();
+  }
+
+  if (!webSearchButton || !webSearchButton.isConnected) {
+    return;
+  }
+
+  var parent = webSearchButton.parentElement;
+  if (!parent) {
+    return;
+  }
+
+  var observedNode = parent.parentElement || parent;
+
+  buttonRemovalObserver = new MutationObserver(function (mutations) {
+    if (webSearchButton && webSearchButton.isConnected) {
+      return;
+    }
+
+    // Button was removed — re-insert in the same event loop.
+    setTimeout(function () {
+      injectButton();
+    }, 0);
+  });
+
+  buttonRemovalObserver.observe(observedNode, {
+    childList: true,
+    subtree: true,
+  });
+}
+
 // === Button State Machine ===
 
 /**
  * Transition the button to loading state.
- * Swaps icon to animated spinner, changes text to "搜索中...",
- * disables the button, and sets aria-busy.
+ * Swaps icon to animated spinner, changes text to "智能搜索中...",
+ * sets aria-busy, and keeps the button clickable (aria-disabled="false").
  * No-op if the button is not in the DOM.
  */
 function setButtonLoading() {
@@ -256,16 +334,16 @@ function setButtonLoading() {
   }
 
   buttonState = 'loading';
-  webSearchButton.classList.add('web-search-btn-loading');
-  webSearchButton.classList.remove('web-search-btn-error');
-  webSearchButton.setAttribute('aria-disabled', 'true');
+  webSearchButton.className = 'web-search-btn-smart-search web-search-btn-loading';
+  webSearchButton.setAttribute('aria-disabled', 'false');
   webSearchButton.setAttribute('aria-busy', 'true');
-  webSearchButton.innerHTML = '<span class="web-search-spinner">' + SPINNER_SVG + '</span><span>搜索中...</span>';
+  webSearchButton.setAttribute('aria-pressed', 'false');
+  webSearchButton.innerHTML = '<span class="web-search-spinner">' + SPINNER_SVG + '</span><span>智能搜索中...</span>';
 }
 
 /**
  * Transition the button to error state.
- * Applies red-tint CSS class, changes text to "搜索失败",
+ * Applies red-tint CSS class, changes text to "智能搜索失败",
  * and schedules an auto-revert to idle after 3 seconds.
  * Clears any pending error revert timer before setting a new one.
  * No-op if the button is not in the DOM.
@@ -282,11 +360,11 @@ function setButtonError() {
   }
 
   buttonState = 'error';
-  webSearchButton.classList.remove('web-search-btn-loading');
-  webSearchButton.classList.add('web-search-btn-error');
-  webSearchButton.setAttribute('aria-disabled', 'true');
+  webSearchButton.className = 'web-search-btn-smart-search web-search-btn-error';
+  webSearchButton.setAttribute('aria-disabled', 'false');
   webSearchButton.setAttribute('aria-busy', 'false');
-  webSearchButton.innerHTML = WEB_SEARCH_ICON_SVG + '<span>搜索失败</span>';
+  webSearchButton.setAttribute('aria-pressed', 'false');
+  webSearchButton.innerHTML = SMART_SEARCH_ICON_SVG + '<span>智能搜索失败</span>';
 
   // Auto-revert to idle after 3 seconds
   errorRevertTimer = setTimeout(function () {
@@ -297,9 +375,9 @@ function setButtonError() {
 
 /**
  * Transition the button to idle state.
- * Restores the original icon and "Web搜索" text, removes loading/error
- * CSS classes, clears aria-busy, and delegates enabled/disabled to
- * updateButtonState() (which checks API key + textarea content).
+ * Restores the original icon and "智能搜索" text, removes loading/error
+ * CSS classes, clears aria-busy, and re-applies the active class if
+ * isSmartSearchActive is true. Keeps the button clickable (aria-disabled="false").
  * Clears any pending error revert timer.
  * No-op if the button is not in the DOM.
  */
@@ -315,12 +393,20 @@ function setButtonIdle() {
   }
 
   buttonState = 'idle';
-  webSearchButton.classList.remove('web-search-btn-loading');
-  webSearchButton.classList.remove('web-search-btn-error');
+  webSearchButton.className = 'web-search-btn-smart-search';
   webSearchButton.setAttribute('aria-busy', 'false');
-  webSearchButton.innerHTML = WEB_SEARCH_ICON_SVG + '<span>Web搜索</span>';
+  webSearchButton.setAttribute('aria-disabled', 'false');
+  webSearchButton.innerHTML = SMART_SEARCH_ICON_SVG + '<span>智能搜索</span>';
 
-  // Restore the correct enabled/disabled state based on API key + textarea content
+  // Re-apply persistent active state if the toggle is still active
+  if (isSmartSearchActive) {
+    webSearchButton.classList.add('active');
+    webSearchButton.setAttribute('aria-pressed', 'true');
+  } else {
+    webSearchButton.setAttribute('aria-pressed', 'false');
+  }
+
+  // Refresh tooltip to match current textarea/API-key state
   updateButtonState();
 }
 
@@ -328,9 +414,9 @@ function setButtonIdle() {
  * Toggle the smart-search active state.
  *
  * Flips the module-level isSmartSearchActive boolean and updates the button
- * DOM class to reflect the active/inactive state. The class name is only a
- * state hook for external observers; no styles, icons, or visual attributes
- * are changed here.
+ * DOM class to reflect the active/inactive state. When active, exposes the
+ * state via document.body.dataset.ralphSmartSearch so the main-world interceptor
+ * can read it without relying on the DOM element.
  *
  * @returns {boolean} the new state after toggling
  */
@@ -357,12 +443,8 @@ function toggleSmartSearchActive() {
 // === Button State ===
 
 /**
- * Toggle the button's aria-disabled attribute based on:
- * 1. Whether an Exa API key is configured (checked via chrome.storage.sync)
- * 2. Whether the textarea has content
- *
- * The button is only enabled when BOTH conditions are met.
- * Uses event delegation so it works even after React re-renders replace DOM elements.
+ * Keep the button's tooltip up to date and ensure aria-disabled is always
+ * "false" so the button remains clickable in all states.
  */
 function updateButtonState() {
   if (!webSearchButton || !webSearchButton.isConnected) {
@@ -371,15 +453,17 @@ function updateButtonState() {
 
   var textarea = findTextarea();
   var hasContent = !!(textarea && textarea.value.trim().length > 0);
-  var enabled = hasContent && hasApiKey;
 
-  webSearchButton.setAttribute('aria-disabled', enabled ? 'false' : 'true');
+  // The button is always clickable per the smart-search design spec.
+  webSearchButton.setAttribute('aria-disabled', 'false');
 
-  // Update tooltip based on the reason the button is disabled
-  if (!hasApiKey) {
-    webSearchButton.setAttribute('title', '请先在扩展弹出窗口中配置 Exa API Key');
+  // Update tooltip based on the reason the user might not see a search happen
+  if (!hasContent) {
+    webSearchButton.setAttribute('title', '输入内容后，点击即可智能搜索');
+  } else if (!hasApiKey) {
+    webSearchButton.setAttribute('title', '配置 Exa API Key 后，点击即可智能搜索');
   } else {
-    webSearchButton.setAttribute('title', 'Web 搜索 — 通过 Exa API 搜索网络');
+    webSearchButton.setAttribute('title', '智能搜索');
   }
 }
 
