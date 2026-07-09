@@ -59,7 +59,7 @@ var errorRevertTimer = null;
  * History conversation pages (/a/chat/s/<uuid>) do not render div[role='radio']
  * elements, so this fallback is used when radios are absent.
  * Updated every time isExpertMode() finds radio elements on the page.
- * @type {null | 'expert' | 'instant'}
+ * @type {string | null}
  */
 var lastKnownMode = null;
 
@@ -145,13 +145,30 @@ function injectStyles() {
  */
 function isExpertMode() {
   var radios = document.querySelectorAll('div[role="radio"]');
+  /** @type {string | null} */
+  var currentMode = lastKnownMode;
   if (radios.length >= 2) {
     // Update lastKnownMode from radio state for fallback on history pages
-    lastKnownMode = radios[1].getAttribute('aria-checked') === 'true' ? 'expert' : 'instant';
-    return lastKnownMode === 'expert';
+    currentMode = radios[1].getAttribute('aria-checked') === 'true' ? 'expert' : 'instant';
+    lastKnownMode = currentMode;
+    return currentMode === 'expert';
   }
   // History conversation pages have no radios — use lastKnownMode fallback
-  return lastKnownMode === 'expert';
+  if (currentMode === 'expert') {
+    var toolbar = findToolbarContainer();
+    if (toolbar) {
+      var toggles = toolbar.querySelectorAll('.ds-toggle-button');
+      for (var i = 0; i < toggles.length; i++) {
+        var text = toggles[i].textContent || '';
+        if (text === '联网搜索' || text.indexOf('搜索') !== -1) {
+          console.log('[isExpertMode] detected native quick-mode search toggle:', text);
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+  return currentMode === 'expert';
 }
 
 // === DOM Helpers ===

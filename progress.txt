@@ -46,3 +46,26 @@ Started: Wed Jul  8 23:10:44     2026
   - Always clear the previous state's auto-revert timer when transitioning into a new state machine state (e.g., loading), not only in the state that created it (error).
 ---
 
+## 2026-07-09 13:05 - US-002 快速模式历史对话排除扩展按钮
+- What was implemented:
+  - Modified `isExpertMode()` in `workspace/deepseek-websearch-extension/content.js` to detect native DeepSeek quick-mode search toggles on history pages.
+  - When no `div[role='radio']` elements exist and `lastKnownMode === 'expert'`, the function calls `findToolbarContainer()` and inspects `.ds-toggle-button` elements.
+  - If a toggle button's `textContent` is `'联网搜索'` or contains `'搜索'`, the function logs the detection and returns `false`, preventing the extension smart-search button from being injected.
+  - If the toolbar container is present but has no `.ds-toggle-button` (toolbar not yet rendered), the function trusts `lastKnownMode` and returns `true`.
+  - Existing `div[role='radio']` index-1 `aria-checked` detection logic is preserved unchanged.
+  - Widened JSDoc type of `lastKnownMode` from `null | 'expert' | 'instant'` to `string | null` to avoid TypeScript narrowing errors when comparing against `'expert'` in the fallback branch.
+- Files changed:
+  - `workspace/deepseek-websearch-extension/content.js`
+  - `workspace/deepseek-websearch-extension/scripts/us-002-verify.js` (new JSDOM self-check)
+  - `workspace/deepseek-websearch-extension/scripts/us-002-playwright-smoke.js` (new Playwright smoke test via local test-page)
+- Verification:
+  - `npx tsc --noEmit` in `workspace/deepseek-websearch-extension` passes.
+  - `node scripts/us-002-verify.js` passes all 5 cases: radio Expert, radio Instant, quick-mode history with native toggle, expert history with unrendered toolbar, instant mode history.
+  - `node scripts/us-002-playwright-smoke.js` passes: Expert mode injects 1 button, Instant mode removes it, toggling back to Expert re-injects it.
+- Subagent review:
+  - `code-reviewer`: WARN — 1 MEDIUM (`console.log` remains in `isExpertMode()` because the locked acceptance criteria explicitly require logging the detection; contract-bound behavior), 1 LOW (string matching may be broad, but matches the locked contract). No CRITICAL or HIGH.
+  - `e2e-runner`: PASS — TypeScript, JSDOM self-check, and Playwright smoke check all pass.
+- [BM25] skills=(none relevant), cli=(npx tsc, npm test, opencli playwright)
+- [SELF-CHECK]: typecheck ✓, JSDOM ✓, Playwright smoke ✓, code-review subagent ✓, e2e-runner subagent ✓
+- [SCOPE]: Only `isExpertMode()` and related `lastKnownMode` JSDoc changed in `content.js`; verification scripts are auxiliary and do not alter UI behavior.
+
