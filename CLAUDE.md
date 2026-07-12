@@ -68,10 +68,11 @@ python3 scripts/match_cli.py --preflight
 
 1. **Plan模式禁改代码**（仅适用阶段1）: 进入Plan模式后，严格禁止修改任何代码。只能讨论、制定计划、使用CLI工具辅助分析、进行网络搜索分析可行性和方案。
 2. **PRD生成后等待ralph指令**（阶段2→3边界）: PRD 生成后**禁止自动执行子任务**，必须等待用户输入 ralph 指令才能启动 Ralph Loop。
-3. **网络搜索**: DeepSeek API 不兼容内置 WebFetch/WebSearch。改用 Exa MCP（`mcp__plugin_ecc_exa__web_search_exa`，使用前确认返回条数）、`mcp__github__search_code`、`mcp__plugin_context7_context7__query-docs`，降级用 `curl -sL`。
-4. **CLI优先 > MCP**: 优先使用CLI工具。如只有MCP工具，通过OpenCLI转化为CLI并全局注册。既有MCP又有CLI时，只保留CLI。
-5. **禁止降级处理**: 不能靠编写脚本替代使用CLI工具。必须直接调用。
-6. **子项目只读保护（Security Constraint）**:
+3. **生成代码输出到 workspace/**: 所有生成的代码、文件、项目**必须**保存在 `workspace/` 目录下。`workspace/` 是项目中唯一的用户代码可写区域。**禁止在项目根目录或其他目录创建源代码文件**（如 `src/`、`package.json`、`index.html` 等）。Generator 和 Evaluator 在创建任何文件前必须确认路径在 `workspace/` 下。其他目录约束：`subprojects/` 只读、`scripts/` 只读、索引表只读、`.claude/` 引擎配置。
+4. **网络搜索**: DeepSeek API 不兼容内置 WebFetch/WebSearch。改用 Exa MCP（`mcp__plugin_ecc_exa__web_search_exa`，使用前确认返回条数）、`mcp__github__search_code`、`mcp__plugin_context7_context7__query-docs`，降级用 `curl -sL`。
+5. **CLI优先 > MCP**: 优先使用CLI工具。如只有MCP工具，通过OpenCLI转化为CLI并全局注册。既有MCP又有CLI时，只保留CLI。
+6. **禁止降级处理**: 不能靠编写脚本替代使用CLI工具。必须直接调用。
+7. **子项目只读保护（Security Constraint）**:
    以下子项目在生产环境中**严格只读**：
    - `subprojects/claude-skills-main/`
    - `subprojects/ralph-harness/`
@@ -85,10 +86,10 @@ python3 scripts/match_cli.py --preflight
    - 如果必须修改：在独立克隆（如 ralph-main）中开发 → 推送上游 GitHub → `git submodule update --remote` 同步
    - `subprojects/OpenCLI/` 为可写（新增 MCP→CLI 适配器）
    每次操作前自查：当前操作是否涉及只读子项目文件？→ 如是，立即停止。
-7. **ReAct + Daemon**: Generator和Evaluator均采用ReAct架构（先思考后调用工具循环），以Daemon模式运行确保中断后执行不中断。
-8. **合同协商**: 每个子任务执行前，Generator和Evaluator必须先协商完成标准，协商成功锁定合同后执行，协商失败返回Generator重新协商。
-9. **索引表按需渐进加载**: Skill索引表和CLI索引表**禁止一次性全部加载到上下文**。每次只搜索并加载当前子任务所需的条目，像Skill一样渐进式加载。索引表是搜索工具，不是参考资料。
-10. **索引表查询顺序**: 先搜索Skill索引表（BM25 match_skills.py优先于search_index.py）→ 加载所需skill作为补充 → 结合Claude Code自主判断 → 搜索CLI索引表 → 最后搜索子项目源码。先查Skill是因为Skill能辅助发现额外的CLI工具。
+8. **ReAct + Daemon**: Generator和Evaluator均采用ReAct架构（先思考后调用工具循环），以Daemon模式运行确保中断后执行不中断。
+9. **合同协商**: 每个子任务执行前，Generator和Evaluator必须先协商完成标准，协商成功锁定合同后执行，协商失败返回Generator重新协商。
+10. **索引表按需渐进加载**: Skill索引表和CLI索引表**禁止一次性全部加载到上下文**。每次只搜索并加载当前子任务所需的条目，像Skill一样渐进式加载。索引表是搜索工具，不是参考资料。
+11. **索引表查询顺序**: 先搜索Skill索引表（BM25 match_skills.py优先于search_index.py）→ 加载所需skill作为补充 → 结合Claude Code自主判断 → 搜索CLI索引表 → 最后搜索子项目源码。先查Skill是因为Skill能辅助发现额外的CLI工具。
 
 ### 设计原则
 
