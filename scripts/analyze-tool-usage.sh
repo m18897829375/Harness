@@ -25,6 +25,12 @@ jq -r '.role' "$LOG_FILE" | sort | uniq -c | sort -rn | while read count role; d
 done
 
 echo ""
+echo "--- 按阶段分布 ---"
+jq -r '.phase // "unknown"' "$LOG_FILE" | sort | uniq -c | sort -rn | while read count phase; do
+  echo "  $phase: $count 次"
+done
+
+echo ""
 echo "--- 按工具类型分布 ---"
 jq -r '"\(.role)|\(.tool)"' "$LOG_FILE" | sort | uniq -c | sort -rn | while read count combo; do
   role="${combo%%|*}"

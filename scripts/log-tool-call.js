@@ -19,10 +19,12 @@ process.stdin.on('end', function () {
     var input = JSON.parse(data);
     var ts = new Date().toISOString();
 
+    var role = detectRole();
     var record = {
       ts: ts,
       tool: input.tool_name || input.tool || 'unknown',
-      role: detectRole(),
+      role: role,
+      phase: detectPhase(role),
       pid: process.pid,
     };
 
@@ -200,21 +202,84 @@ var NATIVE_SET = {};
 for (var ni = 0; ni < NATIVE_TOOLS.length; ni++) { NATIVE_SET[NATIVE_TOOLS[ni]] = true; }
 var OPENCLI_SET = {};
 for (var oi = 0; oi < OPENCLI_SITES.length; oi++) { OPENCLI_SET[OPENCLI_SITES[oi]] = true; }
-function detectRole() {
-  if (process.env.RALPH_ROLE) return process.env.RALPH_ROLE;
-  // Fallback: read .ralph/phase file (set by ralph.sh before spawning agent).
-  // More reliable than env var when running under claude-tap proxy on Windows
-  // where the pipeline-set RALPH_ROLE may not propagate to hook child processes.
+// ── 角色检测（三层判据）──────────────────────────────────────────────────
+// Tier 1: RALPH_ROLE env var (ralph.sh 直接注入，最可靠)
+// Tier 2: RALPH_PROJECT_DIR 缺失 → 主进程（零 I/O，不检查 PID）
+// Tier 3: PID 活性校验（env var 传播失败时的兜底，仅 Windows claude-tap 场景）
+
+function readPhaseFile(ralphDir) {
   try {
-    var projectDir = findProjectDir();
-    var phaseFile = path.join(projectDir, '.ralph', 'phase');
+    var phaseFile = path.join(ralphDir, 'phase');
     if (fs.existsSync(phaseFile)) {
-      var phase = fs.readFileSync(phaseFile, 'utf8').trim();
+      return fs.readFileSync(phaseFile, 'utf8').trim();
+    }
+  } catch (e) { /* unreadable */ }
+  return null;
+}
+
+function hasActiveGenEvaProcess(ralphDir) {
+  try {
+    var files = fs.readdirSync(ralphDir);
+    for (var i = 0; i < files.length; i++) {
+      if (!files[i].endsWith('-pid.txt')) continue;
+      try {
+        var pid = parseInt(fs.readFileSync(path.join(ralphDir, files[i]), 'utf8').trim(), 10);
+        if (pid > 0) { process.kill(pid, 0); return true; }
+      } catch (e) { /* PID not alive or file unreadable */ }
+    }
+  } catch (e) { /* dir unreadable */ }
+  return false;
+}
+
+function inferRoleFromPidFiles(ralphDir) {
+  try {
+    var files = fs.readdirSync(ralphDir);
+    for (var i = 0; i < files.length; i++) {
+      if (!files[i].endsWith('-pid.txt')) continue;
+      try {
+        var pid = parseInt(fs.readFileSync(path.join(ralphDir, files[i]), 'utf8').trim(), 10);
+        if (pid > 0) {
+          process.kill(pid, 0);
+          if (files[i].indexOf('generator') !== -1) return 'generator';
+          if (files[i].indexOf('evaluator') !== -1) return 'evaluator';
+        }
+      } catch (e) { /* not alive */ }
+    }
+  } catch (e) { /* dir unreadable */ }
+  return null;
+}
+
+function detectRole() {
+  // Tier 1: RALPH_ROLE env var — most reliable (set by ralph.sh on spawn)
+  if (process.env.RALPH_ROLE === 'generator') return 'generator';
+  if (process.env.RALPH_ROLE === 'evaluator') return 'evaluator';
+
+  // Tier 2: RALPH_PROJECT_DIR absent → definitely NOT a gen/eva subprocess
+  // Only ralph.sh-spawned processes have this env var (injected at ralph.sh:969)
+  if (!process.env.RALPH_PROJECT_DIR) return 'main';
+
+  // Tier 3: RALPH_PROJECT_DIR present but RALPH_ROLE missing
+  // → env var propagation failed (known Windows claude-tap pipeline edge case)
+  // → Check PID liveness before trusting .ralph/phase
+  var ralphDir = path.join(process.env.RALPH_PROJECT_DIR, '.ralph');
+  if (hasActiveGenEvaProcess(ralphDir)) {
+    var roleFromPid = inferRoleFromPidFiles(ralphDir);
+    if (roleFromPid) return roleFromPid;
+    var phase = readPhaseFile(ralphDir);
+    if (phase) {
       if (phase.indexOf('generator') !== -1) return 'generator';
       if (phase.indexOf('evaluator') !== -1) return 'evaluator';
     }
-  } catch (e) { /* phase file unreadable, fall through */ }
+  }
   return 'main';
+}
+
+function detectPhase(role) {
+  if (role === 'main') return 'main';
+  var projectDir = findProjectDir();
+  var phase = readPhaseFile(path.join(projectDir, '.ralph'));
+  if (phase) return phase;
+  return role;
 }
 
 // ── 参数摘要 ────────────────────────────────────────────────────────────
